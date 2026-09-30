@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="No Such Machine mark">
+  <!-- Original mark: an incomplete instrument frame around an empty center. Not derived from prior site art. -->
+  <rect width="128" height="128" fill="#1a2220"/>
+  <g fill="none" stroke="#eef2ee" stroke-width="3.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M24 40 V24 H40"/>
+    <path d="M88 24 H104 V40"/>
+    <path d="M104 88 V104 H88"/>
+    <path d="M40 104 H24 V88"/>
+    <circle cx="64" cy="64" r="28"/>
+    <path d="M64 36 V52"/>
+    <path d="M64 76 V92"/>
+    <path d="M36 64 H52"/>
+    <path d="M76 64 H92"/>
+  </g>
+  <circle cx="64" cy="64" r="6" fill="#3d6f6a"/>
+</svg>

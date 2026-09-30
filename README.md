@@ -1,23 +1,24 @@
 # No Such Machine
 
-Portfolio site for [Chase Bryan](https://github.com/chasebryan) — a selected
-showcase of ambitious projects, not a dump of every repository.
+Spare portfolio site for [Chase Bryan](https://github.com/chasebryan).
 
 **Live:** [https://nosuchmachine.net](https://nosuchmachine.net)
 
-## Featured now
+## Structure
 
-| Project | Summary | Links |
-| --- | --- | --- |
-| **Orange** | Language and toolchain for cryptography you can check | [repo](https://github.com/chasebryan/orange) · [Orange Book](https://github.com/chasebryan/orange/blob/main/docs/THE_ORANGE_BOOK.md) · [Orange School](https://github.com/chasebryan/orange-school) |
+| Route | Purpose |
+| --- | --- |
+| `/` | Brand home — nosuchmachine.net, path into Orange, Chase’s GitHub |
+| `/projects/orange` | Dedicated Orange page (repo, Orange Book, Orange School) |
 
-Add further featured entries in `src/data/projects.ts`.
+Future projects get their own `/projects/[slug]` pages. The home page stays
+simple — not a project dump. Catalog data lives in `src/data/projects.ts`.
 
 ## Stack
 
 - [Astro](https://astro.build) static site
-- Typed project catalog in `src/data/projects.ts`
-- Static assets under `public/`
+- Original brand SVGs in `public/brand/` (no reused wuci-ji / old site art)
+- Orange identity assets from [chasebryan/orange](https://github.com/chasebryan/orange)
 
 ## Develop
 
@@ -31,8 +32,7 @@ npm run preview  # serve the production build
 ## Deploy
 
 Build produces static files in `dist/`. Suitable for Cloudflare Pages, GitHub
-Pages, or any static host. Set the publish directory to `dist` and the build
-command to `npm run build`.
+Pages, or any static host (`npm run build`, publish `dist`).
 
 ## License
 
