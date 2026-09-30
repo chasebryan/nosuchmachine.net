@@ -1,16 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap");
 
 :root {
-  --bg: #f7f7f4;
-  --ink: #1a1a1a;
-  --muted: #4a4a4a;
-  --quiet: #6e6e6e;
-  --line: #c8c8c2;
-  --link: #0b3d91;
-  --link-visited: #4a2c7a;
-  --panel: #ffffff;
-  --code-bg: #efefea;
+  --bg: #ecebe4;
+  --panel: #f4f3ec;
+  --ink: #161a17;
+  --muted: #3d453f;
+  --quiet: #5c665e;
+  --line: #b7b9ae;
+  --link: #1f4d3a;
+  --link-visited: #3a3a5c;
+  --code-bg: #e4e5dc;
   --accent: #6b1010;
+  --field: #2a3830;
   --font-sans: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
@@ -31,12 +32,27 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--bg);
+  background:
+    linear-gradient(180deg, #e7e6de 0%, var(--bg) 28%, var(--bg) 100%);
   color: var(--ink);
   font-family: var(--font-serif);
   font-size: 1.0625rem;
   line-height: 1.55;
   text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 11px,
+    #161a17 11px 12px
+  );
+  z-index: 0;
 }
 
 img {
@@ -53,12 +69,12 @@ a:visited {
 }
 
 ::selection {
-  background: #d9e2f2;
+  background: #c9d8ce;
   color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--link);
+  outline: 2px solid var(--field);
   outline-offset: 2px;
 }
 
@@ -81,23 +97,34 @@ a:visited {
   color: #fff;
 }
 
-/* ——— Home: document masthead + project index ——— */
-
-.doc {
+.doc,
+.man {
+  position: relative;
+  z-index: 1;
   width: min(100% - 2.5rem, var(--page));
   margin: 0 auto;
   padding: 1.5rem 0 3rem;
-  animation: doc-in 500ms ease both;
+  animation: doc-in 480ms ease both;
 }
 
+.man {
+  width: min(100% - 2.5rem, var(--measure));
+  padding-bottom: 3.5rem;
+}
+
+/* Masthead */
 .doc-mast {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--line);
   font-family: var(--font-sans);
+}
+
+.doc-mast-left {
+  display: grid;
+  gap: 0.2rem;
 }
 
 .doc-site {
@@ -108,10 +135,19 @@ a:visited {
   color: var(--muted);
 }
 
+.doc-beat {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--quiet);
+}
+
 .doc-author {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.7rem;
   text-decoration: none;
   color: var(--ink);
 }
@@ -121,11 +157,12 @@ a:visited {
 }
 
 .doc-author img {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 1px solid var(--line);
   border-radius: 2px;
   object-fit: cover;
+  background: #ddd;
 }
 
 .doc-author span {
@@ -144,8 +181,25 @@ a:visited {
   font-family: var(--font-mono);
 }
 
+/* Frequency-style ruler — institutional, not HUD chrome */
+.doc-ruler {
+  height: 1.1rem;
+  margin: 0.15rem 0 0.35rem;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0 1px,
+    transparent 1px 8px,
+    var(--ink) 8px 9px,
+    transparent 9px 24px
+  );
+  opacity: 0.35;
+  animation: ruler-in 900ms ease both;
+}
+
 .doc-hero {
-  padding: 2.75rem 0 2rem;
+  padding: 2.4rem 0 1.75rem;
   border-bottom: 1px solid var(--line);
 }
 
@@ -163,26 +217,30 @@ a:visited {
 
 .doc-lede {
   margin: 0;
-  max-width: 34rem;
-  font-size: 1.15rem;
+  max-width: 36rem;
+  font-size: 1.12rem;
   color: var(--muted);
 }
 
 .doc-index {
-  padding: 2rem 0 1.5rem;
+  padding: 1.75rem 0 0.5rem;
 }
 
-.doc-index-head {
+.doc-index-head,
+.doc-scope h2,
+.man h2 {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.75rem;
   font-family: var(--font-sans);
 }
 
-.doc-index-head h2 {
-  margin: 0;
+.doc-index-head h2,
+.doc-scope h2,
+.man h2 {
+  display: block;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -194,6 +252,7 @@ a:visited {
   margin: 0;
   font-size: 0.85rem;
   color: var(--quiet);
+  font-family: var(--font-sans);
 }
 
 .doc-index-list {
@@ -209,7 +268,7 @@ a:visited {
 
 .doc-index-list a {
   display: grid;
-  grid-template-columns: minmax(7rem, 10rem) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(7rem, 9rem) minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: baseline;
   padding: 1.15rem 0.15rem;
@@ -223,7 +282,7 @@ a:visited {
 }
 
 .doc-index-list a:hover {
-  background: rgba(11, 61, 145, 0.04);
+  background: rgba(42, 56, 48, 0.05);
 }
 
 .doc-index-name {
@@ -239,13 +298,43 @@ a:visited {
   color: var(--muted);
 }
 
-.doc-index-go {
+.doc-index-meta {
+  display: grid;
+  justify-items: end;
+  gap: 0.35rem;
   font-family: var(--font-sans);
+}
+
+.doc-index-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+
+.doc-index-go {
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--link);
+}
+
+.doc-scope {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.doc-scope ul {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+}
+
+.doc-scope li {
+  margin: 0.35rem 0;
 }
 
 .doc-foot {
@@ -259,24 +348,16 @@ a:visited {
 
 .doc-foot p {
   margin: 0;
-  max-width: 40rem;
+  max-width: 42rem;
 }
 
-/* ——— Orange: handbook / man-page chapter ——— */
-
-.man {
-  width: min(100% - 2.5rem, var(--measure));
-  margin: 0 auto;
-  padding: 1.5rem 0 3.5rem;
-  animation: doc-in 500ms ease both;
-}
-
+/* Orange handbook chapter */
 .man-crumb {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
   align-items: center;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--quiet);
@@ -324,16 +405,6 @@ a:visited {
   color: var(--muted);
 }
 
-.man h2 {
-  margin: 0 0 0.75rem;
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--quiet);
-}
-
 .man-abstract,
 .man-example,
 .man-seealso {
@@ -366,6 +437,7 @@ a:visited {
   overflow-x: auto;
   background: var(--code-bg);
   border: 1px solid var(--line);
+  border-left: 3px solid var(--field);
   font-family: var(--font-mono);
   font-size: 0.82rem;
   line-height: 1.5;
@@ -421,10 +493,11 @@ a:visited {
 }
 
 .man-figure img {
-  width: 7.5rem;
+  width: 5.5rem;
   height: auto;
   border: 1px solid var(--line);
   background: #fff;
+  padding: 0.5rem;
 }
 
 .man-figure figcaption {
@@ -459,11 +532,23 @@ a:visited {
 @keyframes title-in {
   from {
     opacity: 0;
-    transform: translateY(0.4rem);
+    transform: translateY(0.35rem);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes ruler-in {
+  from {
+    opacity: 0;
+    transform: scaleX(0.92);
+    transform-origin: left;
+  }
+  to {
+    opacity: 0.35;
+    transform: scaleX(1);
   }
 }
 
@@ -487,8 +572,10 @@ a:visited {
     gap: 0.35rem;
   }
 
-  .doc-index-go {
-    justify-self: start;
+  .doc-index-meta {
+    justify-items: start;
+    grid-auto-flow: column;
+    gap: 0.75rem;
   }
 
   .doc-mast {

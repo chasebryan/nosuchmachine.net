@@ -26,11 +26,13 @@ if (!project) {
     <nav class="man-crumb" aria-label="Breadcrumb">
       <a href="/">No Such Machine</a>
       <span aria-hidden="true">/</span>
+      <span>Projects</span>
+      <span aria-hidden="true">/</span>
       <span>Orange</span>
     </nav>
 
     <header class="man-head">
-      <p class="man-status">{project.status}</p>
+      <p class="man-status">{project.status} · cryptography</p>
       <h1 id="project-title">{project.name}</h1>
       <p class="man-tagline">{project.tagline}</p>
     </header>
@@ -39,12 +41,10 @@ if (!project) {
       <h2 id="abstract-title">Abstract</h2>
       <p>{project.summary}</p>
       <p>
-        High-assurance cryptography today usually requires a specialist
-        polyglot pipeline: a notation for the specification, another language
-        for speed, a proof assistant for correctness, separate tooling for
-        leakage, and build logs around the outside. Orange addresses the seams
-        — one language, narrowly worded claims, and evidence meant to be
-        replayed offline.
+        Inside No Such Machine’s cryptography and signals work, Orange is the
+        language track: keep mathematical intent, executable realization, and
+        assurance evidence connected instead of scattered across unrelated
+        tools. Claims stay narrow; evidence is meant to be replayed.
       </p>
       <p>
         <strong>Limits.</strong> Pre-alpha and solo-built. The compiler checks
@@ -72,7 +72,7 @@ module sha256 {
     </section>
 
     <section class="man-seealso" aria-labelledby="seealso-title">
-      <h2 id="seealso-title">See also</h2>
+      <h2 id="seealso-title">References</h2>
       <dl>
         {
           project.links.map((link) => (
@@ -96,13 +96,15 @@ module sha256 {
       </dl>
       <figure class="man-figure">
         <img
-          src={project.visual.src}
-          alt={project.visual.alt}
-          width="160"
-          height="160"
+          src="/projects/orange/emblem.svg"
+          alt="Orange project emblem"
+          width="96"
+          height="96"
           decoding="async"
         />
-        <figcaption>Identity mark from the Orange project (not a product claim).</figcaption>
+        <figcaption>
+          Orange project emblem (identity mark — not a verification claim).
+        </figcaption>
       </figure>
     </section>
 
