@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getProject, projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const project = getProject(slug!);
+
+if (!project) {
+  return Astro.redirect("/");
+}
+---
+
+<BaseLayout
+  title={project.name}
+  description={project.summary}
+  ogImage={project.visual.src}
+>
+  <main id="main">
+    <section
+      class="detail-hero"
+      style={`--project-accent: ${project.accent}`}
+      aria-labelledby="project-title"
+    >
+      <div class="shell">
+        <div class="detail-copy">
+          <p class="eyebrow" style="color: rgba(238,242,238,0.55)">
+            Featured project · {project.status}
+          </p>
+          <h1 id="project-title">{project.name}</h1>
+          <p class="hero-lede" style="color: rgba(238,242,238,0.88)">
+            {project.tagline}
+          </p>
+          <div class="hero-actions">
+            {
+              project.links.map((link) => (
+                <a
+                  class={`button ${link.primary ? "button-primary" : "button-ghost"}`}
+                  href={link.href}
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+        <div class="detail-visual">
+          <img
+            src={project.visual.src}
+            alt={project.visual.alt}
+            width="400"
+            height="400"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-body">
+      <div class="shell">
+        <p>{project.summary}</p>
+        <p>
+          Orange aims to keep cryptographic specifications, implementations,
+          claimed properties, and replayable evidence in one coherent language
+          and toolchain — instead of stitching those meanings across unrelated
+          tools. It is pre-alpha and solo-built; nothing in the repository has
+          been independently reviewed or formally verified.
+        </p>
+        <p>
+          Read the deeper design story in
+          <a
+            class="text-link"
+            href="https://github.com/chasebryan/orange/blob/main/docs/THE_ORANGE_BOOK.md"
+            rel="noopener noreferrer">The Orange Book</a
+          >, or follow the competency path in
+          <a
+            class="text-link"
+            href="https://github.com/chasebryan/orange-school"
+            rel="noopener noreferrer">Orange School</a
+          >.
+        </p>
+        <div class="detail-meta">
+          <span>Catalog slug: {project.slug}</span>
+          <a href="/#work">← Back to selected work</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
