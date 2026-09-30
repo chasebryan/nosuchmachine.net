@@ -14,92 +14,93 @@ const project = getProject(slug!);
 if (!project) {
   return Astro.redirect("/");
 }
-
-const isOrange = project.slug === "orange";
 ---
 
 <BaseLayout
   title={project.name}
   description={project.summary}
   ogImage={project.visual.src}
-  theme={isOrange ? "orange" : "home"}
+  theme="orange"
 >
-  <main id="main" class:list={[isOrange && "orange-page"]}>
-    <section class="orange-hero" aria-labelledby="project-title">
-      <div class="orange-field" aria-hidden="true"></div>
-      <div class="shell">
-        <div class="orange-copy">
-          <p class="orange-eyebrow">{project.status}</p>
-          <h1 id="project-title">{project.name}</h1>
-          <p class="orange-tagline">{project.tagline}</p>
-          <div class="hero-actions">
-            {
-              project.links.map((link) => (
-                <a
-                  class={`button ${link.primary ? "button-primary" : "button-ghost"}`}
-                  href={link.href}
-                  rel="noopener noreferrer"
-                >
-                  {link.label}
-                </a>
-              ))
-            }
-          </div>
-        </div>
-        <div class="orange-visual">
+  <main id="main" class="or">
+    <aside class="or-spine" aria-hidden="true">
+      <img src="/projects/orange/emblem.svg" alt="" width="48" height="48" />
+      <span>Orange</span>
+    </aside>
+
+    <article class="or-sheet">
+      <header class="or-mast">
+        <p class="or-kicker">{project.status}</p>
+        <h1 id="project-title">{project.name}</h1>
+        <p class="or-deck">{project.tagline}</p>
+      </header>
+
+      <figure class="or-specimen">
+        <figcaption>Specimen — SHA-256 helpers the compiler already accepts</figcaption>
+        <pre><code>{`edition 2026;
+module sha256 {
+  spec choose(x: Word[32], y: Word[32], z: Word[32]) -> Word[32] {
+    (x & y) ^ (~x & z)
+  }
+  spec majority(x: Word[32], y: Word[32], z: Word[32]) -> Word[32] {
+    (x & y) ^ (x & z) ^ (y & z)
+  }
+}`}</code></pre>
+      </figure>
+
+      <section class="or-prose" aria-labelledby="about-orange">
+        <h2 id="about-orange">Why it exists</h2>
+        <p>{project.summary}</p>
+        <p>
+          Specifications, fast implementations, claimed properties, and evidence
+          usually live in different tools. Orange keeps those crossings inside
+          one language — claims with subjects and assumptions, evidence you can
+          replay, and (eventually) native code with a stable ABI.
+        </p>
+        <p>
+          Pre-alpha, solo-built. The compiler checks and evaluates a typed
+          fragment. It does not yet generate native code or check proofs. Nothing
+          here has been independently reviewed or formally verified.
+        </p>
+      </section>
+
+      <section class="or-sources" aria-labelledby="sources-title">
+        <div class="or-sources-head">
+          <h2 id="sources-title">Sources</h2>
           <img
+            class="or-book"
             src={project.visual.src}
             alt={project.visual.alt}
-            width="400"
-            height="400"
-            fetchpriority="high"
+            width="120"
+            height="120"
             decoding="async"
           />
         </div>
-      </div>
-    </section>
-
-    <section class="orange-body" aria-labelledby="about-orange">
-      <div class="shell">
-        <h2 id="about-orange">Cryptography you can check</h2>
-        <p>{project.summary}</p>
-        <p>
-          A serious cryptographic library carries several meanings at once: the
-          mathematics it is meant to compute, the code that runs on real
-          machines, the security properties it claims, and the evidence behind
-          those claims. Today those meanings usually live in different tools.
-          Orange aims to make the crossings part of the product — one language,
-          narrowly worded claims, and evidence you can replay.
-        </p>
-        <p>
-          Orange is pre-alpha and built by one person. The compiler checks and
-          evaluates a typed fragment of the language. It does not yet generate
-          native code or check proofs, and nothing in the repository has been
-          independently reviewed or formally verified.
-        </p>
-
-        <div class="orange-paths" aria-label="Paths into Orange">
+        <ol>
           {
-            project.links.map((link) => (
-              <a class="orange-path" href={link.href} rel="noopener noreferrer">
-                <span class="orange-path-label">{link.label}</span>
-                <span class="orange-path-hint">
-                  {link.label === "Repository" &&
-                    "Source, fixtures, and toolchain"}
-                  {link.label === "The Orange Book" &&
-                    "Living reader guide for the design"}
-                  {link.label === "Orange School" &&
-                    "Competency path into the language"}
-                </span>
-              </a>
+            project.links.map((link, i) => (
+              <li>
+                <span class="or-num">{String(i + 1).padStart(2, "0")}</span>
+                <a href={link.href} rel="noopener noreferrer">
+                  <strong>{link.label}</strong>
+                  <span>
+                    {link.label === "Repository" &&
+                      "Source, fixtures, and toolchain"}
+                    {link.label === "The Orange Book" &&
+                      "Living reader guide for the design"}
+                    {link.label === "Orange School" &&
+                      "Competency path into the language"}
+                  </span>
+                </a>
+              </li>
             ))
           }
-        </div>
+        </ol>
+      </section>
 
-        <p class="orange-back">
-          <a href="/">← No Such Machine</a>
-        </p>
-      </div>
-    </section>
+      <p class="or-back">
+        <a href="/">Return to No Such Machine</a>
+      </p>
+    </article>
   </main>
 </BaseLayout>

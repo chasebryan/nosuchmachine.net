@@ -1,7 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="No Such Machine">
-  <rect width="64" height="64" fill="#0e1418"/>
-  <path fill="#e7f0ea" d="M10 10h44v44H10z"/>
-  <path fill="#0e1418" d="M18 18h28v28H18z"/>
-  <path fill="#e7f0ea" d="M26 26h12v12H26z"/>
-  <path fill="#d94b1f" d="M30 30h4v4H30z"/>
+  <rect width="64" height="64" fill="#141c18"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#c8f04a">N</text>
 </svg>

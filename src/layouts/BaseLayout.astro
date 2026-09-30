@@ -18,7 +18,7 @@ const {
 const pageTitle =
   title === "No Such Machine" ? "No Such Machine" : `${title} · No Such Machine`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const themeColor = theme === "orange" ? "#f54f1f" : "#b7d0d6";
+const themeColor = theme === "orange" ? "#f54f1f" : "#1c2a24";
 ---
 
 <!doctype html>
@@ -46,26 +46,8 @@ const themeColor = theme === "orange" ? "#f54f1f" : "#b7d0d6";
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{pageTitle}</title>
   </head>
-  <body class:list={[theme === "orange" && "theme-orange"]}>
+  <body class:list={[`body-${theme}`]}>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <a class="nav-mark" href="/">No Such Machine</a>
-      <nav class="site-nav" aria-label="Primary">
-        <a href="/projects/orange/">Orange</a>
-        <a href="https://github.com/chasebryan" rel="noopener noreferrer"
-          >GitHub</a
-        >
-      </nav>
-    </header>
     <slot />
-    <footer class="site-footer">
-      <div class="shell">
-        <span>No Such Machine · Chase Bryan</span>
-        <span>
-          <a href="https://github.com/chasebryan/nosuchmachine.net">Source</a>
-          · AGPL-3.0
-        </span>
-      </div>
-    </footer>
   </body>
 </html>

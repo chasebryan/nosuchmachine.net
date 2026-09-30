@@ -3,17 +3,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Not found" description="That page is not part of the No Such Machine portfolio.">
-  <main id="main" class="section-simple">
-    <div class="shell" style="max-width:34rem;display:grid;gap:1rem;">
-      <h1>No such page.</h1>
-      <p style="margin:0;color:var(--ink-soft);">
-        The portfolio only lists selected work. Return home and start from there.
-      </p>
-      <p style="margin:0;">
-        <a href="/" style="font-family:var(--font-display);font-weight:700;">
-          Back to No Such Machine
-        </a>
-      </p>
+  <main id="main" style="min-height:100svh;display:grid;place-content:center;padding:2rem;font-family:var(--font-mono);">
+    <div style="display:grid;gap:1rem;max-width:28rem;">
+      <h1 style="margin:0;font-family:var(--font-poster);font-size:clamp(2.5rem,10vw,4rem);text-transform:uppercase;line-height:0.9;">
+        No such page
+      </h1>
+      <a href="/" style="color:var(--orange);">Return home</a>
     </div>
   </main>
 </BaseLayout>
