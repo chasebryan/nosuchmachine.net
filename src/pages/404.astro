@@ -2,13 +2,13 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Not found" description="That page is not part of the No Such Machine portfolio.">
-  <main id="main" style="min-height:100svh;display:grid;place-content:center;padding:2rem;font-family:var(--font-mono);">
-    <div style="display:grid;gap:1rem;max-width:28rem;">
-      <h1 style="margin:0;font-family:var(--font-poster);font-size:clamp(2.5rem,10vw,4rem);text-transform:uppercase;line-height:0.9;">
-        No such page
-      </h1>
-      <a href="/" style="color:var(--orange);">Return home</a>
-    </div>
+<BaseLayout title="Not found" description="That page is not part of the No Such Machine index.">
+  <main id="main" class="doc">
+    <p class="doc-site">nosuchmachine.net</p>
+    <section class="doc-hero">
+      <h1>Not found</h1>
+      <p class="doc-lede">That path is not in the index.</p>
+      <p><a href="/">Return to No Such Machine</a></p>
+    </section>
   </main>
 </BaseLayout>

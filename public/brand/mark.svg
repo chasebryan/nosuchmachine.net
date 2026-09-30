@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="No Such Machine mark">
-  <rect width="128" height="128" fill="#141c18"/>
-  <text x="64" y="78" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-size="54" font-weight="900" fill="#c8f04a">N</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="No Such Machine">
+  <rect width="128" height="128" fill="#f7f7f4"/>
+  <rect x="10" y="10" width="108" height="108" fill="none" stroke="#1a1a1a" stroke-width="4"/>
+  <text x="64" y="76" text-anchor="middle" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="42" font-weight="700" fill="#1a1a1a">N</text>
 </svg>

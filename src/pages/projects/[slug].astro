@@ -19,25 +19,48 @@ if (!project) {
 <BaseLayout
   title={project.name}
   description={project.summary}
-  ogImage={project.visual.src}
+  ogImage="/brand/mark.svg"
   theme="orange"
 >
-  <main id="main" class="or">
-    <aside class="or-spine" aria-hidden="true">
-      <img src="/projects/orange/emblem.svg" alt="" width="48" height="48" />
+  <main id="main" class="man">
+    <nav class="man-crumb" aria-label="Breadcrumb">
+      <a href="/">No Such Machine</a>
+      <span aria-hidden="true">/</span>
       <span>Orange</span>
-    </aside>
+    </nav>
 
-    <article class="or-sheet">
-      <header class="or-mast">
-        <p class="or-kicker">{project.status}</p>
-        <h1 id="project-title">{project.name}</h1>
-        <p class="or-deck">{project.tagline}</p>
-      </header>
+    <header class="man-head">
+      <p class="man-status">{project.status}</p>
+      <h1 id="project-title">{project.name}</h1>
+      <p class="man-tagline">{project.tagline}</p>
+    </header>
 
-      <figure class="or-specimen">
-        <figcaption>Specimen — SHA-256 helpers the compiler already accepts</figcaption>
-        <pre><code>{`edition 2026;
+    <section class="man-abstract" aria-labelledby="abstract-title">
+      <h2 id="abstract-title">Abstract</h2>
+      <p>{project.summary}</p>
+      <p>
+        High-assurance cryptography today usually requires a specialist
+        polyglot pipeline: a notation for the specification, another language
+        for speed, a proof assistant for correctness, separate tooling for
+        leakage, and build logs around the outside. Orange addresses the seams
+        — one language, narrowly worded claims, and evidence meant to be
+        replayed offline.
+      </p>
+      <p>
+        <strong>Limits.</strong> Pre-alpha and solo-built. The compiler checks
+        and evaluates a typed fragment. It does not yet generate native code or
+        check proofs. Nothing in the repository has been independently reviewed
+        or formally verified.
+      </p>
+    </section>
+
+    <section class="man-example" aria-labelledby="example-title">
+      <h2 id="example-title">Example</h2>
+      <p class="man-note">
+        Fragment the current compiler accepts — SHA-256 helpers from FIPS 180-4,
+        written the way the standard writes them.
+      </p>
+      <pre><code>{`edition 2026;
 module sha256 {
   spec choose(x: Word[32], y: Word[32], z: Word[32]) -> Word[32] {
     (x & y) ^ (~x & z)
@@ -46,61 +69,45 @@ module sha256 {
     (x & y) ^ (x & z) ^ (y & z)
   }
 }`}</code></pre>
-      </figure>
+    </section>
 
-      <section class="or-prose" aria-labelledby="about-orange">
-        <h2 id="about-orange">Why it exists</h2>
-        <p>{project.summary}</p>
-        <p>
-          Specifications, fast implementations, claimed properties, and evidence
-          usually live in different tools. Orange keeps those crossings inside
-          one language — claims with subjects and assumptions, evidence you can
-          replay, and (eventually) native code with a stable ABI.
-        </p>
-        <p>
-          Pre-alpha, solo-built. The compiler checks and evaluates a typed
-          fragment. It does not yet generate native code or check proofs. Nothing
-          here has been independently reviewed or formally verified.
-        </p>
-      </section>
-
-      <section class="or-sources" aria-labelledby="sources-title">
-        <div class="or-sources-head">
-          <h2 id="sources-title">Sources</h2>
-          <img
-            class="or-book"
-            src={project.visual.src}
-            alt={project.visual.alt}
-            width="120"
-            height="120"
-            decoding="async"
-          />
-        </div>
-        <ol>
-          {
-            project.links.map((link, i) => (
-              <li>
-                <span class="or-num">{String(i + 1).padStart(2, "0")}</span>
+    <section class="man-seealso" aria-labelledby="seealso-title">
+      <h2 id="seealso-title">See also</h2>
+      <dl>
+        {
+          project.links.map((link) => (
+            <div>
+              <dt>
                 <a href={link.href} rel="noopener noreferrer">
-                  <strong>{link.label}</strong>
-                  <span>
-                    {link.label === "Repository" &&
-                      "Source, fixtures, and toolchain"}
-                    {link.label === "The Orange Book" &&
-                      "Living reader guide for the design"}
-                    {link.label === "Orange School" &&
-                      "Competency path into the language"}
-                  </span>
+                  {link.label}
                 </a>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
+              </dt>
+              <dd>
+                {link.label === "Repository" &&
+                  "Source tree, fixtures, and toolchain."}
+                {link.label === "The Orange Book" &&
+                  "Living reader guide for intent, status, and open questions."}
+                {link.label === "Orange School" &&
+                  "Competency path from no assumed background into the language."}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+      <figure class="man-figure">
+        <img
+          src={project.visual.src}
+          alt={project.visual.alt}
+          width="160"
+          height="160"
+          decoding="async"
+        />
+        <figcaption>Identity mark from the Orange project (not a product claim).</figcaption>
+      </figure>
+    </section>
 
-      <p class="or-back">
-        <a href="/">Return to No Such Machine</a>
-      </p>
-    </article>
+    <footer class="man-foot">
+      <a href="/">↑ Index — No Such Machine</a>
+    </footer>
   </main>
 </BaseLayout>

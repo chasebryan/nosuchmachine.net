@@ -1,6 +1,6 @@
 # No Such Machine
 
-Spare portfolio site for [Chase Bryan](https://github.com/chasebryan).
+Institutional index for [Chase Bryan](https://github.com/chasebryan)’s selected work.
 
 **Live:** [https://nosuchmachine.net](https://nosuchmachine.net)
 
@@ -8,31 +8,19 @@ Spare portfolio site for [Chase Bryan](https://github.com/chasebryan).
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Brand home — nosuchmachine.net, path into Orange, Chase’s GitHub |
-| `/projects/orange` | Dedicated Orange page (repo, Orange Book, Orange School) |
+| `/` | Document masthead + project index (GitHub/pfp in the mast) |
+| `/projects/orange/` | Orange handbook-style page |
 
-Future projects get their own `/projects/[slug]` pages. The home page stays
-simple — not a project dump. Catalog data lives in `src/data/projects.ts`.
-
-## Stack
-
-- [Astro](https://astro.build) static site
-- Original brand SVGs in `public/brand/` (no reused wuci-ji / old site art)
-- Orange identity assets from [chasebryan/orange](https://github.com/chasebryan/orange)
+Tone: spare systems documentation (CIA.gov / OpenBSD / FreeBSD lane) — credibility over decoration. No old wuci-ji / nosuchmachine artwork.
 
 ## Develop
 
 ```sh
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # output in dist/
-npm run preview  # serve the production build
+npm run dev
+npm run build
+npm run preview
 ```
-
-## Deploy
-
-Build produces static files in `dist/`. Suitable for Cloudflare Pages, GitHub
-Pages, or any static host (`npm run build`, publish `dist`).
 
 ## License
 

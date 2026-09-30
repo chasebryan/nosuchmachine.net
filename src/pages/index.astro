@@ -3,28 +3,53 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
-  <main id="main" class="home">
-    <div class="home-field" aria-hidden="true"></div>
+  <main id="main" class="doc">
+    <header class="doc-mast">
+      <p class="doc-site">nosuchmachine.net</p>
+      <a class="doc-author" href="https://github.com/chasebryan" rel="noopener noreferrer">
+        <img src="/brand/chase.jpg" alt="" width="32" height="32" decoding="async" />
+        <span>
+          <strong>Chase Bryan</strong>
+          <small>github.com/chasebryan</small>
+        </span>
+      </a>
+    </header>
 
-    <h1 class="home-poster" id="brand-title">
-      <span class="home-poster-line" data-i="1">No</span>
-      <span class="home-poster-line" data-i="2">Such</span>
-      <span class="home-poster-line" data-i="3">Machine</span>
-    </h1>
-
-    <p class="home-domain">nosuchmachine.net</p>
-
-    <footer class="home-colophon">
-      <p class="home-line">
-        Selected work by
-        <a class="home-person" href="https://github.com/chasebryan" rel="noopener noreferrer">
-          <img src="/brand/chase.jpg" alt="" width="36" height="36" decoding="async" />
-          <span>Chase Bryan</span>
-        </a>
+    <section class="doc-hero" aria-labelledby="brand-title">
+      <h1 id="brand-title">No Such Machine</h1>
+      <p class="doc-lede">
+        Selected work in cryptography and exact systems. A short index, not a
+        dump of every repository.
       </p>
-      <p class="home-line home-path">
-        Begin with
-        <a href="/projects/orange/">Orange — cryptography you can check</a>
+    </section>
+
+    <section class="doc-index" aria-labelledby="index-title">
+      <div class="doc-index-head">
+        <h2 id="index-title">Projects</h2>
+        <p>One entry. More only when warranted.</p>
+      </div>
+      <ol class="doc-index-list">
+        <li>
+          <a href="/projects/orange/">
+            <span class="doc-index-name">Orange</span>
+            <span class="doc-index-desc">
+              A language for specifying, implementing, and verifying
+              cryptography.
+            </span>
+            <span class="doc-index-go" aria-hidden="true">Open</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <footer class="doc-foot">
+      <p>
+        No Such Machine is Chase Bryan’s public selection surface.
+        Source:
+        <a href="https://github.com/chasebryan/nosuchmachine.net"
+          >chasebryan/nosuchmachine.net</a
+        >
+        · AGPL-3.0
       </p>
     </footer>
   </main>

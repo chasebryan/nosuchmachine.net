@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="No Such Machine">
-  <rect width="64" height="64" fill="#141c18"/>
-  <text x="32" y="44" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-size="34" font-weight="900" fill="#c8f04a">N</text>
+  <rect width="64" height="64" fill="#f7f7f4"/>
+  <rect x="5" y="5" width="54" height="54" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+  <text x="32" y="42" text-anchor="middle" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#1a1a1a">N</text>
 </svg>

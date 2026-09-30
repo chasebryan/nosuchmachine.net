@@ -18,7 +18,6 @@ const {
 const pageTitle =
   title === "No Such Machine" ? "No Such Machine" : `${title} · No Such Machine`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const themeColor = theme === "orange" ? "#f54f1f" : "#1c2a24";
 ---
 
 <!doctype html>
@@ -27,7 +26,7 @@ const themeColor = theme === "orange" ? "#f54f1f" : "#1c2a24";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content={themeColor} />
+    <meta name="theme-color" content="#f7f7f4" />
     <meta name="description" content={description} />
     <meta name="author" content="Chase Bryan" />
     <meta property="og:site_name" content="No Such Machine" />
@@ -36,17 +35,16 @@ const themeColor = theme === "orange" ? "#f54f1f" : "#1c2a24";
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/brand/mark.svg" />
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{pageTitle}</title>
   </head>
-  <body class:list={[`body-${theme}`]}>
+  <body data-theme={theme}>
     <a class="skip-link" href="#main">Skip to content</a>
     <slot />
   </body>
