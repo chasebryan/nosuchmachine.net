@@ -104,7 +104,6 @@ a:visited {
   width: min(100% - 2.5rem, var(--page));
   margin: 0 auto;
   padding: 1.5rem 0 3rem;
-  animation: doc-in 480ms ease both;
 }
 
 .man {
@@ -194,8 +193,7 @@ a:visited {
     var(--ink) 8px 9px,
     transparent 9px 24px
   );
-  opacity: 0.35;
-  animation: ruler-in 900ms ease both;
+  opacity: 0.45;
 }
 
 .doc-hero {
@@ -212,7 +210,6 @@ a:visited {
   letter-spacing: -0.03em;
   line-height: 0.98;
   color: var(--ink);
-  animation: title-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .doc-lede {
@@ -395,7 +392,6 @@ a:visited {
   letter-spacing: -0.025em;
   line-height: 1;
   color: var(--accent);
-  animation: title-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .man-tagline {
@@ -442,7 +438,6 @@ a:visited {
   font-size: 0.82rem;
   line-height: 1.5;
   color: var(--ink);
-  animation: pre-in 700ms 80ms ease both;
 }
 
 .man-example code {
@@ -518,47 +513,6 @@ a:visited {
 
 .man-foot a:hover {
   border-bottom-color: currentColor;
-}
-
-@keyframes doc-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes title-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.35rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes ruler-in {
-  from {
-    opacity: 0;
-    transform: scaleX(0.92);
-    transform-origin: left;
-  }
-  to {
-    opacity: 0.35;
-    transform: scaleX(1);
-  }
-}
-
-@keyframes pre-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @media (max-width: 720px) {
