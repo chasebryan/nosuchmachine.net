@@ -1,12 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="No Such Machine">
-  <rect width="64" height="64" fill="#1a2220"/>
-  <g fill="none" stroke="#eef2ee" stroke-width="2.5" stroke-linecap="square">
-    <path d="M12 20 V12 H20"/>
-    <path d="M44 12 H52 V20"/>
-    <path d="M52 44 V52 H44"/>
-    <path d="M20 52 H12 V44"/>
-    <circle cx="32" cy="32" r="14"/>
-    <path d="M32 18 V26 M32 38 V46 M18 32 H26 M38 32 H46"/>
-  </g>
-  <circle cx="32" cy="32" r="3.5" fill="#3d6f6a"/>
+  <rect width="64" height="64" fill="#0e1418"/>
+  <path fill="#e7f0ea" d="M10 10h44v44H10z"/>
+  <path fill="#0e1418" d="M18 18h28v28H18z"/>
+  <path fill="#e7f0ea" d="M26 26h12v12H26z"/>
+  <path fill="#d94b1f" d="M30 30h4v4H30z"/>
 </svg>

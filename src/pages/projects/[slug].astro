@@ -14,28 +14,24 @@ const project = getProject(slug!);
 if (!project) {
   return Astro.redirect("/");
 }
+
+const isOrange = project.slug === "orange";
 ---
 
 <BaseLayout
   title={project.name}
   description={project.summary}
   ogImage={project.visual.src}
+  theme={isOrange ? "orange" : "home"}
 >
-  <main id="main">
-    <section
-      class="detail-hero"
-      style={`--project-accent: ${project.accent}`}
-      aria-labelledby="project-title"
-    >
+  <main id="main" class:list={[isOrange && "orange-page"]}>
+    <section class="orange-hero" aria-labelledby="project-title">
+      <div class="orange-field" aria-hidden="true"></div>
       <div class="shell">
-        <div class="detail-copy">
-          <p class="eyebrow" style="color: rgba(238,242,238,0.55)">
-            {project.status}
-          </p>
+        <div class="orange-copy">
+          <p class="orange-eyebrow">{project.status}</p>
           <h1 id="project-title">{project.name}</h1>
-          <p class="hero-lede" style="color: rgba(238,242,238,0.88)">
-            {project.tagline}
-          </p>
+          <p class="orange-tagline">{project.tagline}</p>
           <div class="hero-actions">
             {
               project.links.map((link) => (
@@ -50,7 +46,7 @@ if (!project) {
             }
           </div>
         </div>
-        <div class="detail-visual">
+        <div class="orange-visual">
           <img
             src={project.visual.src}
             alt={project.visual.alt}
@@ -63,9 +59,9 @@ if (!project) {
       </div>
     </section>
 
-    <section class="detail-body" aria-labelledby="about-orange">
+    <section class="orange-body" aria-labelledby="about-orange">
       <div class="shell">
-        <h2 id="about-orange" class="detail-heading">Cryptography you can check</h2>
+        <h2 id="about-orange">Cryptography you can check</h2>
         <p>{project.summary}</p>
         <p>
           A serious cryptographic library carries several meanings at once: the
@@ -82,12 +78,12 @@ if (!project) {
           independently reviewed or formally verified.
         </p>
 
-        <div class="detail-paths" aria-label="Paths into Orange">
+        <div class="orange-paths" aria-label="Paths into Orange">
           {
             project.links.map((link) => (
-              <a class="detail-path" href={link.href} rel="noopener noreferrer">
-                <span class="detail-path-label">{link.label}</span>
-                <span class="detail-path-hint">
+              <a class="orange-path" href={link.href} rel="noopener noreferrer">
+                <span class="orange-path-label">{link.label}</span>
+                <span class="orange-path-hint">
                   {link.label === "Repository" &&
                     "Source, fixtures, and toolchain"}
                   {link.label === "The Orange Book" &&
@@ -100,9 +96,9 @@ if (!project) {
           }
         </div>
 
-        <div class="detail-meta">
+        <p class="orange-back">
           <a href="/">← No Such Machine</a>
-        </div>
+        </p>
       </div>
     </section>
   </main>

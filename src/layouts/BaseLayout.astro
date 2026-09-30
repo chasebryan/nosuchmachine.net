@@ -5,17 +5,20 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  theme?: "home" | "orange";
 }
 
 const {
   title = "No Such Machine",
   description = "No Such Machine — selected work by Chase Bryan, starting with Orange.",
   ogImage = "/brand/mark.svg",
+  theme = "home",
 } = Astro.props;
 
 const pageTitle =
   title === "No Such Machine" ? "No Such Machine" : `${title} · No Such Machine`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const themeColor = theme === "orange" ? "#f54f1f" : "#b7d0d6";
 ---
 
 <!doctype html>
@@ -24,7 +27,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#1a2220" />
+    <meta name="theme-color" content={themeColor} />
     <meta name="description" content={description} />
     <meta name="author" content="Chase Bryan" />
     <meta property="og:site_name" content="No Such Machine" />
@@ -43,12 +46,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{pageTitle}</title>
   </head>
-  <body>
+  <body class:list={[theme === "orange" && "theme-orange"]}>
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="nav-mark" href="/">No Such Machine</a>
       <nav class="site-nav" aria-label="Primary">
-        <a href="/projects/orange">Orange</a>
+        <a href="/projects/orange/">Orange</a>
         <a href="https://github.com/chasebryan" rel="noopener noreferrer"
           >GitHub</a
         >
