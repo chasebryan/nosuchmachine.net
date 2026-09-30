@@ -1,17 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap");
 
 :root {
-  --bg: #ecebe4;
+  --bg: #e8e7df;
   --panel: #f4f3ec;
-  --ink: #161a17;
-  --muted: #3d453f;
-  --quiet: #5c665e;
-  --line: #b7b9ae;
-  --link: #1f4d3a;
-  --link-visited: #3a3a5c;
-  --code-bg: #e4e5dc;
-  --accent: #6b1010;
-  --field: #2a3830;
+  --ink: #0c0f0d;
+  --muted: #222a24;
+  --quiet: #3f4a42;
+  --line: #8f9388;
+  --link: #163d2c;
+  --link-visited: #2e2e4a;
+  --code-bg: #dddfd4;
+  --accent: #5c0e0e;
+  --field: #1e2c24;
   --font-sans: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
@@ -46,11 +46,11 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.045;
+  opacity: 0.028;
   background-image: repeating-linear-gradient(
     90deg,
-    transparent 0 11px,
-    #161a17 11px 12px
+    transparent 0 14px,
+    #0c0f0d 14px 15px
   );
   z-index: 0;
 }
@@ -157,12 +157,12 @@ a:visited {
 }
 
 .doc-author img {
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid var(--line);
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--ink);
   border-radius: 2px;
   object-fit: cover;
-  background: #ddd;
+  background: #c8c8c0;
 }
 
 .doc-author span {
