@@ -1,0 +1,632 @@
+[
+  {
+    "name": "-",
+    "decision": "exclude",
+    "rationale": "README title and license only.",
+    "githubUrl": "https://github.com/chasebryan/-",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-06-15T09:20:30Z",
+    "description": null
+  },
+  {
+    "name": "-wuci-ji",
+    "decision": "selected",
+    "rationale": "The deepest systems/crypto research body in this subset, with concrete implementation and unusually explicit claim boundaries. Suitable as a research project, never as a certified protection product.",
+    "githubUrl": "https://github.com/chasebryan/-wuci-ji",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-09-28T10:15:57Z",
+    "description": "WuciOS is a Daylight-governed experimental OS/substrate research project for disciplined, auditable high-assurance system construction. Current v2.4 work focuses on an Alpine substrate trial with evidence gates, strict authorization boundaries, and no production or external-validation claims."
+  },
+  {
+    "name": "311case_study",
+    "decision": "exclude",
+    "rationale": "Early coursework text rather than a maintained project with a distinctive current implementation.",
+    "githubUrl": "https://github.com/chasebryan/311case_study",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2023-08-31T00:54:12Z",
+    "description": null
+  },
+  {
+    "name": "aesop",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Substantive CTF/teaching cryptanalysis package with CLI/GUI and field guides. Worthwhile alternate, with overlap covered by the selected Sigil entry.",
+    "githubUrl": "https://github.com/chasebryan/aesop",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-09-28T00:04:00Z",
+    "description": "An all-in-one cryptanalysis workbench for CTF, security research and teaching."
+  },
+  {
+    "name": "airwav",
+    "decision": "selected",
+    "rationale": "Substantive DSP/recording architecture, source confirms actual FFT implementation and detailed validation records. Highly relevant to signals portfolio, with prominent hardware caveat.",
+    "githubUrl": "https://github.com/chasebryan/airwav",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-09-19T04:17:48Z",
+    "description": null
+  },
+  {
+    "name": "algebra-os",
+    "decision": "exclude",
+    "rationale": "Omit selected front page until runtime evidence and a meaningful kernel slice exist. Can live in an experimental repository index.",
+    "githubUrl": "https://github.com/chasebryan/algebra-os",
+    "language": "Shell",
+    "fork": false,
+    "lastPushed": "2026-07-28T19:49:19Z",
+    "description": "Algebra is an x86_64 operating system."
+  },
+  {
+    "name": "amrtds-research-system",
+    "decision": "exclude",
+    "rationale": "Exclude from the primary portfolio selection. Its visual work could later be presented separately as fiction/interface concept after claims are rewritten, but tracksim already represents this domain more credibly.",
+    "githubUrl": "https://github.com/chasebryan/amrtds-research-system",
+    "language": "JavaScript",
+    "fork": false,
+    "lastPushed": "2026-09-25T03:34:19Z",
+    "description": "Automated Military Radar Targeting & Dissimulation System"
+  },
+  {
+    "name": "Black-Calculus",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Substantive original writing directly fits the site's intelligence theme. Reserve for a separate writing section rather than presenting as software.",
+    "githubUrl": "https://github.com/chasebryan/Black-Calculus",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-07-28T08:18:33Z",
+    "description": "A living philosophical work on cryptology, intelligence, espionage, warfare, and secret power—examining how states preserve truthful, legitimate action under uncertainty, deception, and adversarial pressure. "
+  },
+  {
+    "name": "camelot",
+    "decision": "exclude",
+    "rationale": "Empty repository; no implementation or documentation to explain.",
+    "githubUrl": "https://github.com/chasebryan/camelot",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-08-17T22:12:04Z",
+    "description": null
+  },
+  {
+    "name": "case-grid",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. A coherent interface and real hashing/reporting prototype; supporting portfolio material if breadth matters. Avoid production integrity or forensic admissibility claims.",
+    "githubUrl": "https://github.com/chasebryan/case-grid",
+    "language": "JavaScript",
+    "fork": false,
+    "lastPushed": "2026-06-05T22:50:14Z",
+    "description": "CaseGrid is an evidence-centered case intelligence and integrity platform concept for lawful investigative workflows."
+  },
+  {
+    "name": "centl",
+    "decision": "selected",
+    "rationale": "Large exact scientific workbench with an inspectable Rust arithmetic engine and local user interface.",
+    "githubUrl": "https://github.com/chasebryan/centl",
+    "language": "HTML",
+    "fork": false,
+    "lastPushed": "2026-09-14T14:17:26Z",
+    "description": "Exact-first mathematics, physics, chemistry, and offline STEM computing environment."
+  },
+  {
+    "name": "centl-cbx",
+    "decision": "selected",
+    "rationale": "Substantive exact arithmetic kernels, research state and verifier modules directly support the mathematics theme.",
+    "githubUrl": "https://github.com/chasebryan/centl-cbx",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-08-17T08:38:10Z",
+    "description": null
+  },
+  {
+    "name": "cryptography_assessment1",
+    "decision": "exclude",
+    "rationale": "Early classical-cryptography coursework notes; not a standalone maintained workbench or research project.",
+    "githubUrl": "https://github.com/chasebryan/cryptography_assessment1",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2023-09-03T17:00:43Z",
+    "description": null
+  },
+  {
+    "name": "devprep",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Substantive cross-platform development setup planner and runner; useful utility alternate outside the first selection.",
+    "githubUrl": "https://github.com/chasebryan/devprep",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-09-18T08:54:02Z",
+    "description": null
+  },
+  {
+    "name": "DOG1",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Coherent fictional tabletop simulation, but simpler and less technically distinctive than the selected acquisition/tracking models.",
+    "githubUrl": "https://github.com/chasebryan/DOG1",
+    "language": "JavaScript",
+    "fork": false,
+    "lastPushed": "2026-09-25T01:02:56Z",
+    "description": null
+  },
+  {
+    "name": "dr-proto",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Transparent model-state research prototype with evaluation tooling and offline reports. Tiny synthetic demonstration supplies no predictive evidence; keep as a research alternate.",
+    "githubUrl": "https://github.com/chasebryan/dr-proto",
+    "language": "HTML",
+    "fork": false,
+    "lastPushed": "2026-10-01T06:55:35Z",
+    "description": null
+  },
+  {
+    "name": "eaglesos",
+    "decision": "exclude",
+    "rationale": "LionsOS downstream fork bootstrap; README identifies inherited baseline and no new assurance claims.",
+    "githubUrl": "https://github.com/chasebryan/eaglesos",
+    "language": "C",
+    "fork": true,
+    "lastPushed": "2026-07-28T23:56:17Z",
+    "description": "A secure, fast, and adaptable OS based on the seL4 microkernel"
+  },
+  {
+    "name": "emacs-configure-trisquel",
+    "decision": "exclude",
+    "rationale": "Personal editor configuration and manual installation script.",
+    "githubUrl": "https://github.com/chasebryan/emacs-configure-trisquel",
+    "language": "Emacs Lisp",
+    "fork": false,
+    "lastPushed": "2026-06-25T05:13:39Z",
+    "description": null
+  },
+  {
+    "name": "enkel",
+    "decision": "selected",
+    "rationale": "Implemented strict grammar, scoped semantic tree and deterministic rendering with explicit boundaries.",
+    "githubUrl": "https://github.com/chasebryan/enkel",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-09-28T03:42:22Z",
+    "description": null
+  },
+  {
+    "name": "ES-ASM-SNIPER",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Substantive finite search/certificate kernel with C and assembly. Worthwhile mathematics alternate; CENTL-CBX presents the broader research program in the first selection.",
+    "githubUrl": "https://github.com/chasebryan/ES-ASM-SNIPER",
+    "language": "C",
+    "fork": false,
+    "lastPushed": "2026-08-24T01:59:33Z",
+    "description": null
+  },
+  {
+    "name": "FCF-Laboratory",
+    "decision": "exclude",
+    "rationale": "Public tree contains only a license despite a broad project description.",
+    "githubUrl": "https://github.com/chasebryan/FCF-Laboratory",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-08-17T19:22:02Z",
+    "description": "FCF-Laboratory is the Free Computation Foundation’s graphical research environment for mathematical experimentation, computation, AI-assisted discovery, verification, and reproducible science, bringing CENTL, CBX, datasets, proofs, and research tools into one unified workspace."
+  },
+  {
+    "name": "fyr",
+    "decision": "selected",
+    "rationale": "A meaningful language implementation with a runnable center and useful tooling, distinct from the cryptographic work.",
+    "githubUrl": "https://github.com/chasebryan/fyr",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-06-07T06:25:20Z",
+    "description": "Fyr is a new systems programming language aiming for native performance, strong safety, and a small, readable surface."
+  },
+  {
+    "name": "GITS-Linux-Mint-Theme-Configs",
+    "decision": "exclude",
+    "rationale": "Desktop theme/configuration and third-party visual assets; not selected as an original technical portfolio project.",
+    "githubUrl": "https://github.com/chasebryan/GITS-Linux-Mint-Theme-Configs",
+    "language": "CSS",
+    "fork": false,
+    "lastPushed": "2026-07-25T18:23:27Z",
+    "description": null
+  },
+  {
+    "name": "JLR",
+    "decision": "selected",
+    "rationale": "Substantial original system work with a disciplined distinction between implemented and proposed features. Worth featuring with prototype and boundary labels.",
+    "githubUrl": "https://github.com/chasebryan/JLR",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-09-25T22:32:50Z",
+    "description": "JLR is a security-governance layer for Linux."
+  },
+  {
+    "name": "JLR-net",
+    "decision": "exclude",
+    "rationale": "Exclude until there is original work to explain.",
+    "githubUrl": "https://github.com/chasebryan/JLR-net",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-09-25T23:31:19Z",
+    "description": null
+  },
+  {
+    "name": "kaiju",
+    "decision": "selected",
+    "rationale": "Substantive multi-crate implementation with clear foundations and honest scope; closely supports an analysis/signal aesthetic.",
+    "githubUrl": "https://github.com/chasebryan/kaiju",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-06-20T00:58:00Z",
+    "description": "monster-class binary analysis. rust first. headless first."
+  },
+  {
+    "name": "l3",
+    "decision": "exclude",
+    "rationale": "Current implementation is too small for a selected portfolio card; its meaningful security execution work is still planned.",
+    "githubUrl": "https://github.com/chasebryan/l3",
+    "language": "Ada",
+    "fork": false,
+    "lastPushed": "2026-06-12T04:56:44Z",
+    "description": "Ada-first high-assurance minimalist system substrate"
+  },
+  {
+    "name": "Latticra",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Substantive implementation, but reserve behind more focused projects. Include as systems research if there is room; avoid implying finished security capabilities or physics breakthroughs.",
+    "githubUrl": "https://github.com/chasebryan/Latticra",
+    "language": "Shell",
+    "fork": false,
+    "lastPushed": "2026-06-20T05:06:59Z",
+    "description": "Evidence-bound systems architecture for local authority, receipts, reports, and future runtime boundaries."
+  },
+  {
+    "name": "louisville_coding_assignment1",
+    "decision": "exclude",
+    "rationale": "Small introductory homework exercises; later work better demonstrates current depth.",
+    "githubUrl": "https://github.com/chasebryan/louisville_coding_assignment1",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2023-08-27T19:55:14Z",
+    "description": "Louisville coding assignment homework 1"
+  },
+  {
+    "name": "machine-school",
+    "decision": "supporting",
+    "rationale": "Pass-1 courseware site, mastery schemas and course skeletons. Orange School offers more fully released educational content for the initial selection.",
+    "githubUrl": "https://github.com/chasebryan/machine-school",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-07-08T05:41:35Z",
+    "description": null
+  },
+  {
+    "name": "mint-terminal-predictor",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Working local Bash predictor with tests. A focused utility rather than a central technical portfolio project.",
+    "githubUrl": "https://github.com/chasebryan/mint-terminal-predictor",
+    "language": "Shell",
+    "fork": false,
+    "lastPushed": "2026-07-27T03:52:30Z",
+    "description": null
+  },
+  {
+    "name": "Muddog-fleer",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Original procedural fictional film and renderer. A creative-work alternate, less relevant than the mathematical simulations in the initial technical portfolio.",
+    "githubUrl": "https://github.com/chasebryan/Muddog-fleer",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-09-25T02:12:32Z",
+    "description": null
+  },
+  {
+    "name": "nevins-port",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Real first-pass native RF dashboard/capture implementation. Mock-first prototype and generated-core integration remain unfinished; AIRWAV is the stronger initial RF entry.",
+    "githubUrl": "https://github.com/chasebryan/nevins-port",
+    "language": "C++",
+    "fork": false,
+    "lastPushed": "2026-07-08T20:45:43Z",
+    "description": "Nevins Port is a lawful radio operations dashboard for RTL-SDR that helps users scan, map, identify, record, replay, and understand radio signals with minimal prior RF knowledge."
+  },
+  {
+    "name": "nosuchmachine.net",
+    "decision": "site-source",
+    "rationale": "The source of the portfolio itself; linked as site source rather than presented as an additional project.",
+    "githubUrl": "https://github.com/chasebryan/nosuchmachine.net",
+    "language": "CSS",
+    "fork": false,
+    "lastPushed": "2026-10-01T03:06:34Z",
+    "description": null
+  },
+  {
+    "name": "orange",
+    "decision": "selected",
+    "rationale": "Substantive pre-alpha cryptographic language with a real typed frontend and reference evaluator.",
+    "githubUrl": "https://github.com/chasebryan/orange",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-09-30T22:31:51Z",
+    "description": "Orange is a language for specifying, implementing, and verifying cryptography."
+  },
+  {
+    "name": "orange-school",
+    "decision": "selected",
+    "rationale": "Thirty-six released modules, prerequisite graph, labs and validation scripts form substantive educational work.",
+    "githubUrl": "https://github.com/chasebryan/orange-school",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-07-13T02:45:38Z",
+    "description": "Orange School is a competency-based path from no assumed technical background to professional work with the Orange programming language and toolchain."
+  },
+  {
+    "name": "peel",
+    "decision": "selected",
+    "rationale": "Narrow but coherent F* experiment with explicit semantics, expected failures and verification/extraction evidence.",
+    "githubUrl": "https://github.com/chasebryan/peel",
+    "language": "Shell",
+    "fork": false,
+    "lastPushed": "2026-07-26T23:33:44Z",
+    "description": "PEEL is an extremely small, proof-oriented cryptographic expression language embedded in F*."
+  },
+  {
+    "name": "phase1",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Clearly authored by Chase Bryan and substantial, but less aligned than the strongest six and overlaps broader substrate projects. Worth a later systems/education card.",
+    "githubUrl": "https://github.com/chasebryan/phase1",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-06-12T05:37:41Z",
+    "description": null
+  },
+  {
+    "name": "PITHOS",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Worth including as clearly labeled research because it supports the cryptography identity. Never present it as deployed or validated encryption software.",
+    "githubUrl": "https://github.com/chasebryan/PITHOS",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-07-05T16:21:26Z",
+    "description": null
+  },
+  {
+    "name": "pmgs",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Compact but tangible original receive-only workflow software. Worth a supporting page, below AIRWAV in prominence.",
+    "githubUrl": "https://github.com/chasebryan/pmgs",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-06-12T04:29:17Z",
+    "description": "PMGS is an all-in-one receive-only satellite ground-station suite for people using cheap RTL-SDR hardware and the antenna that came in the box. It predicts passes, guides antenna setup, captures signals, launches decoders, and logs what actually worked."
+  },
+  {
+    "name": "point3",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Small C/Orange/Cryptol reconstruction experiment with clear model limits. Interesting research alternate, but a terse seed compared with selected cryptographic workbenches/toolchains.",
+    "githubUrl": "https://github.com/chasebryan/point3",
+    "language": "C",
+    "fork": false,
+    "lastPushed": "2026-09-30T11:53:10Z",
+    "description": null
+  },
+  {
+    "name": "rainbow",
+    "decision": "exclude",
+    "rationale": "Omit from curated front page to avoid duplicating Fyr. Git history contains Fyr's checked 299b317d332f603a50f26b3788154ec562ed294b revision, followed by Rainbow shaping/renaming commits; list as related work on Fyr's page if useful.",
+    "githubUrl": "https://github.com/chasebryan/rainbow",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-06-19T03:14:23Z",
+    "description": null
+  },
+  {
+    "name": "rf-commons",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Reasonable supporting interface project with real local audio helper, but less developed than AIRWAV. Include only with prototype label and precise distinction between synthetic visuals and receiver audio.",
+    "githubUrl": "https://github.com/chasebryan/rf-commons",
+    "language": "JavaScript",
+    "fork": false,
+    "lastPushed": "2026-06-06T03:12:30Z",
+    "description": "RF Commons is a free, open-source radio workbench for exploring the RF spectrum."
+  },
+  {
+    "name": "rust_guessing_game",
+    "decision": "exclude",
+    "rationale": "Introductory Rust Book guessing-game exercise.",
+    "githubUrl": "https://github.com/chasebryan/rust_guessing_game",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2023-08-20T04:47:40Z",
+    "description": null
+  },
+  {
+    "name": "rust_os",
+    "decision": "exclude",
+    "rationale": "README title and license only.",
+    "githubUrl": "https://github.com/chasebryan/rust_os",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2023-08-25T09:56:23Z",
+    "description": null
+  },
+  {
+    "name": "SCRM",
+    "decision": "exclude",
+    "rationale": "README title and license only.",
+    "githubUrl": "https://github.com/chasebryan/SCRM",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-09-25T11:43:31Z",
+    "description": null
+  },
+  {
+    "name": "SEAL",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. A coherent but narrow F* authority model. Worthwhile alternate; the first selection includes the similarly bounded PEEL experiment and the fuller Wuci-Ji systems research.",
+    "githubUrl": "https://github.com/chasebryan/SEAL",
+    "language": "F*",
+    "fork": false,
+    "lastPushed": "2026-07-08T00:34:35Z",
+    "description": "Substrate Evidence Authority Layer: minimal operator substrate for sealed evidence, capability-bound authority, and fail-closed system design on seL4-class foundations."
+  },
+  {
+    "name": "sigil",
+    "decision": "selected",
+    "rationale": "Strong fit to the desired cryptology theme, with a complete user surface and substantive independently inspectable implementation.",
+    "githubUrl": "https://github.com/chasebryan/sigil",
+    "language": "Go",
+    "fork": false,
+    "lastPushed": "2026-06-05T08:27:22Z",
+    "description": "Sigil is a local-first cryptography and cryptology workbench written in Go."
+  },
+  {
+    "name": "snoot",
+    "decision": "selected",
+    "rationale": "Clear problem, real implementation, automated regression checks, public release and directly aligned cryptography work. Strong flagship.",
+    "githubUrl": "https://github.com/chasebryan/snoot",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-10-01T03:50:21Z",
+    "description": "Classical cryptography inventory for post-quantum migration. GitHub Action, SARIF, CycloneDX CBOM, baselines, and severity gates."
+  },
+  {
+    "name": "tcs",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Concrete bootable artifacts and deep explicit runtime architecture make this significant portfolio work. Explain the seed carefully to avoid overstating completeness.",
+    "githubUrl": "https://github.com/chasebryan/tcs",
+    "language": "C",
+    "fork": false,
+    "lastPushed": "2026-09-23T21:41:15Z",
+    "description": null
+  },
+  {
+    "name": "TELL",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Small but well-defined and implemented, fitting validation-oriented engineering. Include as a project page; avoid turning the portfolio explanation into exploitation instructions.",
+    "githubUrl": "https://github.com/chasebryan/TELL",
+    "language": "Go",
+    "fork": false,
+    "lastPushed": "2026-07-26T23:43:47Z",
+    "description": "Malformed inputs should not tell."
+  },
+  {
+    "name": "tobacco",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Implemented defensive source auditor with reports and tests. Worthwhile alternate; snoot offers a more specific cryptography portfolio story.",
+    "githubUrl": "https://github.com/chasebryan/tobacco",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-09-24T08:55:52Z",
+    "description": null
+  },
+  {
+    "name": "tracksim",
+    "decision": "selected",
+    "rationale": "The mathematics is implemented rather than decorative. Strong code/docs/test separation and visual suitability make it a flagship.",
+    "githubUrl": "https://github.com/chasebryan/tracksim",
+    "language": "TypeScript",
+    "fork": false,
+    "lastPushed": "2026-09-25T06:20:34Z",
+    "description": "A deterministic **sensor-fusion and multi-target tracking simulation sandbox** with a real-time HUD."
+  },
+  {
+    "name": "tractor",
+    "decision": "selected",
+    "rationale": "Released native research application with resumable evidence, provenance and source coverage.",
+    "githubUrl": "https://github.com/chasebryan/tractor",
+    "language": "Python",
+    "fork": false,
+    "lastPushed": "2026-09-18T01:18:17Z",
+    "description": "Global Intelligence Search"
+  },
+  {
+    "name": "transcentrevg-1",
+    "decision": "selected",
+    "rationale": "Substantive Bayesian acquisition, planning and audible protocol simulation with documented synthetic limits.",
+    "githubUrl": "https://github.com/chasebryan/transcentrevg-1",
+    "language": "JavaScript",
+    "fork": false,
+    "lastPushed": "2026-09-24T22:25:17Z",
+    "description": null
+  },
+  {
+    "name": "transhopper",
+    "decision": "related",
+    "rationale": "Original audible relay/grid simulation is retained as a linked predecessor on the TranscentreVG-1 page; avoid duplicate portfolio entries for the same line of work.",
+    "githubUrl": "https://github.com/chasebryan/transhopper",
+    "language": "HTML",
+    "fork": false,
+    "lastPushed": "2026-09-24T21:19:14Z",
+    "description": null
+  },
+  {
+    "name": "vitamins",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Substantive small Rust document-language compiler. A worthwhile utility alternate, outside the initial signals/mathematics/cryptography selection.",
+    "githubUrl": "https://github.com/chasebryan/vitamins",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-06-22T19:42:09Z",
+    "description": null
+  },
+  {
+    "name": "warlock-index",
+    "decision": "selected",
+    "rationale": "Substantial corpus plus a maintained publishing implementation and real public URL. Include as the research dimension of the portfolio.",
+    "githubUrl": "https://github.com/chasebryan/warlock-index",
+    "language": "HTML",
+    "fork": false,
+    "lastPushed": "2026-06-28T21:46:27Z",
+    "description": "WARLOCK-INDEX is a structured archive of generated military intelligence assessments, order-of-battle summaries, threat profiles, and strategic conflict briefs for defense research, simulation, and analytic study."
+  },
+  {
+    "name": "weatherline",
+    "decision": "further-work",
+    "rationale": "Included in Further experiments with its prototype, research, utility or creative maturity made explicit. Coherent weather utility with Go backend and browser UI, but outside the first selection's central themes.",
+    "githubUrl": "https://github.com/chasebryan/weatherline",
+    "language": "JavaScript",
+    "fork": false,
+    "lastPushed": "2026-06-05T20:00:57Z",
+    "description": "Weatherline is a simple open-source weather app that runs as one Go binary and uses open, no-key weather data sources."
+  },
+  {
+    "name": "x200-sdr-configs",
+    "decision": "exclude",
+    "rationale": "Machine-specific receiver presets and launch configuration; not a separate project implementation.",
+    "githubUrl": "https://github.com/chasebryan/x200-sdr-configs",
+    "language": "Shell",
+    "fork": false,
+    "lastPushed": "2026-06-26T01:40:21Z",
+    "description": null
+  },
+  {
+    "name": "ZERO-SYSTEM",
+    "decision": "exclude",
+    "rationale": "README title and license only.",
+    "githubUrl": "https://github.com/chasebryan/ZERO-SYSTEM",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-07-27T06:41:14Z",
+    "description": null
+  },
+  {
+    "name": "Zeuz",
+    "decision": "exclude",
+    "rationale": "Protocol design reports and mathematical proposals without an implemented system; ZP-1 offers the concrete and bounded protocol prototype.",
+    "githubUrl": "https://github.com/chasebryan/Zeuz",
+    "language": null,
+    "fork": false,
+    "lastPushed": "2026-07-05T19:46:08Z",
+    "description": null
+  },
+  {
+    "name": "ZP-1",
+    "decision": "selected",
+    "rationale": "A focused original protocol project whose wire discipline and validation assets are portfolio worthy when described as research.",
+    "githubUrl": "https://github.com/chasebryan/ZP-1",
+    "language": "Rust",
+    "fork": false,
+    "lastPushed": "2026-07-05T21:29:57Z",
+    "description": "ZP-1 is a compact cryptographic protocol project focused on deterministic wire formats, provider boundaries, frozen reference vectors, and repeatable verification. It is research/prototype work, not a production-ready or externally audited cryptographic system."
+  }
+]

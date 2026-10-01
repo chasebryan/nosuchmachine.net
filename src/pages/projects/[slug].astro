@@ -1,115 +1,165 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getProject, projects } from "../../data/projects";
-
+import ProjectDiagram from "../../components/ProjectDiagram.astro";
+import { projects, type Project } from "../../data/projects";
 export function getStaticPaths() {
   return projects.map((project) => ({
     params: { slug: project.slug },
+    props: { project },
   }));
 }
-
-const { slug } = Astro.params;
-const project = getProject(slug!);
-
-if (!project) {
-  return Astro.redirect("/");
+interface Props {
+  project: Project;
 }
+const { project } = Astro.props;
+const related = projects
+  .filter((other) => other.slug !== project.slug)
+  .sort(
+    (a, b) =>
+      Number(
+        b.categories.some((category) => project.categories.includes(category)),
+      ) -
+      Number(
+        a.categories.some((category) => project.categories.includes(category)),
+      ),
+  )
+  .slice(0, 2);
 ---
 
-<BaseLayout
-  title={project.name}
-  description={project.summary}
-  ogImage="/brand/mark.svg"
-  theme="orange"
->
-  <main id="main" class="man">
-    <nav class="man-crumb" aria-label="Breadcrumb">
+<BaseLayout title={project.name} description={project.summary}>
+  <main
+    id="main"
+    class="project-page shell"
+    style={`--project-accent:${project.accent}`}
+  >
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="/">No Such Machine</a>
       <span aria-hidden="true">/</span>
-      <span>Projects</span>
+      <a href="/#work">Projects</a>
       <span aria-hidden="true">/</span>
-      <span>Orange</span>
+      <span aria-current="page">{project.name}</span>
     </nav>
-
-    <header class="man-head">
-      <p class="man-status">{project.status} · cryptography</p>
-      <h1 id="project-title">{project.name}</h1>
-      <p class="man-tagline">{project.tagline}</p>
+    <header class="project-header">
+      <div>
+        <p class="eyebrow">{project.categories.join(" / ").toUpperCase()}</p>
+        <h1>{project.name}</h1>
+        <p class="project-tagline">{project.summary}</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href={project.githubUrl}>
+            View repository
+          </a>
+          <a class="text-link" href="#overview">
+            Read the project
+          </a>
+        </div>
+      </div>
+      <ProjectDiagram kind={project.diagram} />
     </header>
-
-    <section class="man-abstract" aria-labelledby="abstract-title">
-      <h2 id="abstract-title">Abstract</h2>
-      <p>{project.summary}</p>
-      <p>
-        Inside No Such Machine’s cryptography and signals work, Orange is the
-        language track: keep mathematical intent, executable realization, and
-        assurance evidence connected instead of scattered across unrelated
-        tools. Claims stay narrow; evidence is meant to be replayed.
-      </p>
-      <p>
-        <strong>Limits.</strong> Pre-alpha and solo-built. The compiler checks
-        and evaluates a typed fragment. It does not yet generate native code or
-        check proofs. Nothing in the repository has been independently reviewed
-        or formally verified.
-      </p>
-    </section>
-
-    <section class="man-example" aria-labelledby="example-title">
-      <h2 id="example-title">Example</h2>
-      <p class="man-note">
-        Fragment the current compiler accepts — SHA-256 helpers from FIPS 180-4,
-        written the way the standard writes them.
-      </p>
-      <pre><code>{`edition 2026;
-module sha256 {
-  spec choose(x: Word[32], y: Word[32], z: Word[32]) -> Word[32] {
-    (x & y) ^ (~x & z)
-  }
-  spec majority(x: Word[32], y: Word[32], z: Word[32]) -> Word[32] {
-    (x & y) ^ (x & z) ^ (y & z)
-  }
-}`}</code></pre>
-    </section>
-
-    <section class="man-seealso" aria-labelledby="seealso-title">
-      <h2 id="seealso-title">References</h2>
-      <dl>
-        {
-          project.links.map((link) => (
-            <div>
-              <dt>
-                <a href={link.href} rel="noopener noreferrer">
-                  {link.label}
+    <dl class="project-facts">
+      <div>
+        <dt>Current state</dt>
+        <dd>{project.status}</dd>
+      </div>
+      <div>
+        <dt>Discipline</dt>
+        <dd>{project.categories.join(" · ")}</dd>
+      </div>
+      <div>
+        <dt>Built with</dt>
+        <dd>{project.technologies.join(" / ")}</dd>
+      </div>
+    </dl>
+    <div class="project-body">
+      <nav class="project-toc" aria-label="On this page">
+        <span>IN THIS PROJECT</span>
+        <a href="#overview">Overview</a>
+        <a href="#approach">How it works</a>
+        <a href="#capabilities">What’s implemented</a>
+        <a href="#status">Current state</a>
+        <a href="#resources">Source & resources</a>
+      </nav>
+      <div class="project-prose">
+        <section id="overview" aria-labelledby="overview-title">
+          <h2 id="overview-title">The idea</h2>
+          <p>{project.purpose}</p>
+        </section>
+        <section id="approach" aria-labelledby="approach-title">
+          <h2 id="approach-title">How it works</h2>
+          <p>{project.approach}</p>
+        </section>
+        <section id="capabilities" aria-labelledby="capabilities-title">
+          <h2 id="capabilities-title">What’s implemented</h2>
+          <ul>
+            {project.capabilities.map((capability) => (
+              <li>{capability}</li>
+            ))}
+          </ul>
+        </section>
+        <section
+          id="status"
+          class="project-status-box"
+          aria-labelledby="status-title"
+        >
+          <p class="eyebrow">PROJECT STATUS / {project.status.toUpperCase()}</p>
+          <h2 id="status-title">Where it stands</h2>
+          <p>{project.maturity}</p>
+          {project.limitations.length > 0 && (
+            <ul>
+              {project.limitations.map((limit) => (
+                <li>{limit}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+        <section id="resources" aria-labelledby="resources-title">
+          <h2 id="resources-title">Source & resources</h2>
+          <div class="resource-list">
+            <a href={project.githubUrl}>
+              <strong>GitHub repository</strong>
+              <span>Source code and project documentation ↗</span>
+            </a>
+            {project.links
+              .filter((link) => link.href !== project.githubUrl)
+              .map((link) => (
+                <a href={link.href}>
+                  <strong>{link.label}</strong>
+                  <span>Open resource ↗</span>
                 </a>
-              </dt>
-              <dd>
-                {link.label === "Repository" &&
-                  "Source tree, fixtures, and toolchain."}
-                {link.label === "The Orange Book" &&
-                  "Living reader guide for intent, status, and open questions."}
-                {link.label === "Orange School" &&
-                  "Competency path from no assumed background into the language."}
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
-      <figure class="man-figure">
-        <img
-          src="/projects/orange/emblem.svg"
-          alt="Orange project emblem"
-          width="96"
-          height="96"
-          decoding="async"
-        />
-        <figcaption>
-          Orange project emblem (identity mark — not a verification claim).
-        </figcaption>
-      </figure>
-    </section>
-
-    <footer class="man-foot">
-      <a href="/">↑ Index — No Such Machine</a>
-    </footer>
+              ))}
+          </div>
+          {project.sources.length > 0 && (
+            <details class="source-details">
+              <summary>Documentation behind this project page</summary>
+              <ul>
+                {project.sources.map((source) => (
+                  <li>
+                    <a href={source.href}>{source.label}</a>
+                  </li>
+                ))}
+              </ul>
+              <p>
+                Reviewed October 1, 2026. Project descriptions reflect a source
+                review; repository validation claims were not independently
+                reproduced.
+              </p>
+            </details>
+          )}
+        </section>
+      </div>
+    </div>
+    <div class="related-heading">
+      <h2>Keep exploring</h2>
+      <a class="text-link" href="/#work">
+        All projects
+      </a>
+    </div>
+    <div class="related-links">
+      {related.map((other) => (
+        <a href={`/projects/${other.slug}/`}>
+          <strong>{other.name}</strong>
+          <span>{other.summary}</span>
+        </a>
+      ))}
+    </div>
   </main>
 </BaseLayout>

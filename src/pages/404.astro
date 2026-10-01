@@ -2,13 +2,16 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Not found" description="That page is not part of the No Such Machine index.">
-  <main id="main" class="doc">
-    <p class="doc-site">nosuchmachine.net</p>
-    <section class="doc-hero">
-      <h1>Not found</h1>
-      <p class="doc-lede">That path is not in the index.</p>
-      <p><a href="/">Return to No Such Machine</a></p>
-    </section>
+<BaseLayout
+  title="Signal not found"
+  description="This path is outside the No Such Machine project index."
+>
+  <main id="main" class="error-page shell">
+    <p class="eyebrow">404 / OUT OF BAND</p>
+    <h1>Signal not found.</h1>
+    <p>That page isn’t in the project index.</p>
+    <a class="button button-primary" href="/">
+      Return to the index
+    </a>
   </main>
 </BaseLayout>

@@ -1,23 +1,20 @@
 ---
 import "../styles/global.css";
-
+import SignalField from "../components/SignalField.astro";
 interface Props {
   title?: string;
   description?: string;
-  ogImage?: string;
-  theme?: "home" | "orange";
 }
-
 const {
   title = "No Such Machine",
-  description = "No Such Machine — cryptography, radio, and signals work by Chase Bryan. Featured: Orange.",
-  ogImage = "/brand/mark.svg",
-  theme = "home",
+  description = "Independent work in signals intelligence, mathematics, and cryptography by Chase Bryan. Explore the projects, research, and source code.",
 } = Astro.props;
-
 const pageTitle =
-  title === "No Such Machine" ? "No Such Machine" : `${title} · No Such Machine`;
+  title === "No Such Machine"
+    ? "No Such Machine — Chase Bryan"
+    : `${title} · No Such Machine`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
 ---
 
 <!doctype html>
@@ -25,8 +22,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#ecebe4" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#080c0e" />
     <meta name="description" content={description} />
     <meta name="author" content="Chase Bryan" />
     <meta property="og:site_name" content="No Such Machine" />
@@ -34,18 +31,67 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta
+      property="og:image"
+      content={new URL("/brand/insignia.png", Astro.site).toString()}
+    />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/brand/mark.svg" />
+    {isNotFound ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <link rel="canonical" href={canonical} />
+    )}
+    <link rel="icon" href="/brand/icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/brand/icon.png" />
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{pageTitle}</title>
   </head>
-  <body data-theme={theme}>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <SignalField />
+    <header class="site-header shell">
+      <a class="wordmark" href="/" aria-label="No Such Machine, home">
+        <span class="brand-symbol" aria-hidden="true">
+          ⊕
+        </span>
+        <span>
+          NO SUCH MACHINE<span class="wordmark-domain">.NET</span>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a
+          class="nav-github"
+          href="https://github.com/chasebryan"
+          rel="noopener noreferrer"
+        >
+          GitHub{" "}
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 15 15 9M9 9h6v6M19 13v6H5V5h6" />
+          </svg>
+        </a>
+      </nav>
+    </header>
     <slot />
+    <footer class="site-footer shell">
+      <div>
+        <a class="footer-name" href="/">
+          NO SUCH MACHINE
+        </a>
+        <p>Chase Bryan · Independent research & engineering</p>
+      </div>
+      <div class="footer-links">
+        <button type="button" data-motion-toggle>
+          Pause motion
+        </button>
+        <a href="https://github.com/chasebryan/nosuchmachine.net">
+          Site source
+        </a>
+        <span>© {new Date().getUTCFullYear()} · AGPL-3.0</span>
+      </div>
+    </footer>
   </body>
 </html>

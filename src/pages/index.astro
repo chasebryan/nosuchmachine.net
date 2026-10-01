@@ -1,74 +1,210 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectDiagram from "../components/ProjectDiagram.astro";
+import ProjectRow from "../components/ProjectRow.astro";
+import {
+  coreProjects,
+  furtherProjects,
+  featuredProjects,
+} from "../data/projects";
 ---
 
 <BaseLayout>
-  <main id="main" class="doc">
-    <header class="doc-mast">
-      <div class="doc-mast-left">
-        <p class="doc-site">nosuchmachine.net</p>
-        <p class="doc-beat">cryptography · radio · signals</p>
-      </div>
-      <a class="doc-author" href="https://github.com/chasebryan" rel="noopener noreferrer">
-        <img src="/brand/chase.jpg" alt="" width="48" height="48" decoding="async" />
-        <span>
-          <strong>Chase Bryan</strong>
-          <small>github.com/chasebryan</small>
-        </span>
-      </a>
-    </header>
-
-    <div class="doc-ruler" aria-hidden="true"></div>
-
-    <section class="doc-hero" aria-labelledby="brand-title">
-      <h1 id="brand-title">No Such Machine</h1>
-      <p class="doc-lede">
-        Work on cryptography you can check, radio systems you can inspect, and
-        signal paths that leave evidence. A short public index — not a dump of
-        every repository.
-      </p>
-    </section>
-
-    <section class="doc-index" aria-labelledby="index-title">
-      <div class="doc-index-head">
-        <h2 id="index-title">Projects</h2>
-        <p>Featured entry</p>
-      </div>
-      <ol class="doc-index-list">
-        <li>
-          <a href="/projects/orange/">
-            <span class="doc-index-name">Orange</span>
-            <span class="doc-index-desc">
-              Language and toolchain for specifying, implementing, and verifying
-              cryptography — cryptography you can check.
-            </span>
-            <span class="doc-index-meta">
-              <span class="doc-index-tag">crypto</span>
-              <span class="doc-index-go">Open</span>
-            </span>
+  <main id="main">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">
+          <span class="eyebrow-line"></span> CHASE BRYAN / INDEPENDENT WORK
+        </p>
+        <h1 id="hero-title">
+          No such
+          <br />
+          <span>machine.</span>
+        </h1>
+        <p class="hero-intro">There’s a signal in everything.</p>
+        <p class="hero-description">
+          Exploring cryptography, mathematics, and signals intelligence.
+          Building tools to make complex systems understandable.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#work">
+            Explore the work <span aria-hidden="true">↘</span>
           </a>
-        </li>
-      </ol>
+          <a class="text-link" href="https://github.com/chasebryan">
+            View GitHub{" "}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 15 15 9M9 9h6v6M19 13v6H5V5h6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-instrument">
+        <div class="instrument-caption">
+          <span>FIG. 01 / THE SIGNAL FIELD</span>
+          <span>φ(t)</span>
+        </div>
+        <canvas id="phase-canvas" aria-hidden="true"></canvas>
+        <img
+          class="hero-insignia"
+          src="/brand/insignia.webp"
+          alt="No Such Machine dragon insignia, encircling a globe"
+          width="640"
+          height="640"
+          fetchpriority="high"
+        />
+        <div class="instrument-axis" aria-hidden="true">
+          <span>−π</span>
+          <span>0</span>
+          <span>+π</span>
+        </div>
+        <div class="instrument-controls">
+          <span>SYNTHETIC / PHASE + SPECTRUM</span>
+          <button type="button" data-motion-toggle>
+            Pause motion
+          </button>
+        </div>
+      </div>
     </section>
-
-    <section class="doc-scope" aria-labelledby="scope-title">
-      <h2 id="scope-title">Scope</h2>
-      <ul>
-        <li>Cryptographic specification, implementation, and assurance evidence</li>
-        <li>Radio / RF systems with inspectable signal paths</li>
-        <li>Field communications tooling where claims stay bound to artifacts</li>
-      </ul>
-    </section>
-
-    <footer class="doc-foot">
-      <p>
-        No Such Machine is Chase Bryan’s public selection surface for
-        cryptography, radio, and signals work. Source:
-        <a href="https://github.com/chasebryan/nosuchmachine.net"
-          >chasebryan/nosuchmachine.net</a
-        >
-        · AGPL-3.0
+    <div class="discipline-strip shell" aria-label="Research disciplines">
+      <span>
+        <small>01</small> SIGNALS INTELLIGENCE
+      </span>
+      <span>
+        <small>02</small> MATHEMATICS
+      </span>
+      <span>
+        <small>03</small> CRYPTOGRAPHY
+      </span>
+      <span class="strip-coordinate" aria-hidden="true">
+        ∞ &nbsp; ∑ &nbsp; ⊕
+      </span>
+    </div>
+    <section id="work" class="work-section shell" aria-labelledby="work-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 / PROJECT INDEX</p>
+          <h2 id="work-title">
+            Selected work<span class="heading-dot">.</span>
+          </h2>
+        </div>
+        <p class="section-aside">
+          Ideas made inspectable.
+          <br />
+          Source code included.
+        </p>
+      </div>
+      <div class="featured-grid">
+        {featuredProjects.map((project, index) => (
+          <a
+            class="project-card"
+            href={`/projects/${project.slug}/`}
+            style={`--project-accent:${project.accent}`}
+          >
+            <div class="card-topline">
+              <span>PROJECT / {String(index + 1).padStart(2, "0")}</span>
+              <span class="card-category">{project.categories[0]}</span>
+            </div>
+            <ProjectDiagram kind={project.diagram} />
+            <div class="card-copy">
+              <div class="card-title-line">
+                <h3>{project.name}</h3>
+                <span class="card-open" aria-hidden="true">
+                  ↗
+                </span>
+              </div>
+              <p>{project.summary}</p>
+              <div class="card-meta">
+                <span>{project.technologies.slice(0, 2).join(" / ")}</span>
+                <span>{project.status}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="project-index-heading">
+        <h3>Across the workbench</h3>
+        <span>
+          {String(coreProjects.length).padStart(2, "0")} CORE PROJECTS
+        </span>
+      </div>
+      <div class="project-index">
+        {coreProjects
+          .filter((project) => !project.featured)
+          .map((project, index) => (
+            <ProjectRow
+              project={project}
+              index={index + featuredProjects.length + 1}
+            />
+          ))}
+      </div>
+      {furtherProjects.length > 0 && (
+        <details class="further-work">
+          <summary>
+            <span>
+              <strong>Further explorations</strong>
+              <small>Utilities, writing, and smaller experiments.</small>
+            </span>
+            <span class="further-count">
+              {furtherProjects.length} MORE PROJECTS <b aria-hidden="true">+</b>
+            </span>
+          </summary>
+          <div class="project-index">
+            {furtherProjects.map((project, index) => (
+              <ProjectRow
+                project={project}
+                index={index + coreProjects.length + 1}
+              />
+            ))}
+          </div>
+        </details>
+      )}
+      <p class="index-note">
+        A curated selection of original tools and research.{" "}
+        <a href="https://github.com/chasebryan?tab=repositories">
+          Browse all repositories on GitHub
+        </a>
       </p>
-    </footer>
+    </section>
+    <section
+      id="about"
+      class="about-section shell"
+      aria-labelledby="about-title"
+    >
+      <div class="about-identity">
+        <img
+          src="/brand/insignia.webp"
+          alt="No Such Machine dragon insignia"
+          width="640"
+          height="640"
+          loading="lazy"
+        />
+        <span class="eyebrow">NOVUS ORDO SECLORUM</span>
+      </div>
+      <div class="about-copy">
+        <p class="eyebrow">02 / BEHIND THE WORK</p>
+        <h2 id="about-title">
+          Curiosity, down
+          <br />
+          to the bit.
+        </h2>
+        <p>
+          I’m Chase Bryan. My work follows the connections between signals,
+          mathematical structure, and cryptographic systems—from the languages
+          we use to describe an idea to the tools we build to examine it.
+        </p>
+        <p>
+          Some projects are working tools. Others are experiments, research
+          programs, or foundations still taking shape. Each project page
+          explains its purpose, its current state, and where to inspect the
+          work.
+        </p>
+        <a class="text-link" href="https://github.com/chasebryan">
+          Follow the source{" "}
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 15 15 9M9 9h6v6M19 13v6H5V5h6" />
+          </svg>
+        </a>
+      </div>
+    </section>
   </main>
 </BaseLayout>
