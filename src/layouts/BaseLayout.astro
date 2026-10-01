@@ -1,0 +1,51 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  theme?: "home" | "orange";
+}
+
+const {
+  title = "No Such Machine",
+  description = "No Such Machine — cryptography, radio, and signals work by Chase Bryan. Featured: Orange.",
+  ogImage = "/brand/mark.svg",
+  theme = "home",
+} = Astro.props;
+
+const pageTitle =
+  title === "No Such Machine" ? "No Such Machine" : `${title} · No Such Machine`;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#ecebe4" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Chase Bryan" />
+    <meta property="og:site_name" content="No Such Machine" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/mark.svg" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <title>{pageTitle}</title>
+  </head>
+  <body data-theme={theme}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getProject, projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const project = getProject(slug!);
+
+if (!project) {
+  return Astro.redirect("/");
+}
+---
+
+<BaseLayout
+  title={project.name}
+  description={project.summary}
+  ogImage="/brand/mark.svg"
+  theme="orange"
+>
+  <main id="main" class="man">
+    <nav class="man-crumb" aria-label="Breadcrumb">
+      <a href="/">No Such Machine</a>
+      <span aria-hidden="true">/</span>
+      <span>Projects</span>
+      <span aria-hidden="true">/</span>
+      <span>Orange</span>
+    </nav>
+
+    <header class="man-head">
+      <p class="man-status">{project.status} · cryptography</p>
+      <h1 id="project-title">{project.name}</h1>
+      <p class="man-tagline">{project.tagline}</p>
+    </header>
+
+    <section class="man-abstract" aria-labelledby="abstract-title">
+      <h2 id="abstract-title">Abstract</h2>
+      <p>{project.summary}</p>
+      <p>
+        Inside No Such Machine’s cryptography and signals work, Orange is the
+        language track: keep mathematical intent, executable realization, and
+        assurance evidence connected instead of scattered across unrelated
+        tools. Claims stay narrow; evidence is meant to be replayed.
+      </p>
+      <p>
+        <strong>Limits.</strong> Pre-alpha and solo-built. The compiler checks
+        and evaluates a typed fragment. It does not yet generate native code or
+        check proofs. Nothing in the repository has been independently reviewed
+        or formally verified.
+      </p>
+    </section>
+
+    <section class="man-example" aria-labelledby="example-title">
+      <h2 id="example-title">Example</h2>
+      <p class="man-note">
+        Fragment the current compiler accepts — SHA-256 helpers from FIPS 180-4,
+        written the way the standard writes them.
+      </p>
+      <pre><code>{`edition 2026;
+module sha256 {
+  spec choose(x: Word[32], y: Word[32], z: Word[32]) -> Word[32] {
+    (x & y) ^ (~x & z)
+  }
+  spec majority(x: Word[32], y: Word[32], z: Word[32]) -> Word[32] {
+    (x & y) ^ (x & z) ^ (y & z)
+  }
+}`}</code></pre>
+    </section>
+
+    <section class="man-seealso" aria-labelledby="seealso-title">
+      <h2 id="seealso-title">References</h2>
+      <dl>
+        {
+          project.links.map((link) => (
+            <div>
+              <dt>
+                <a href={link.href} rel="noopener noreferrer">
+                  {link.label}
+                </a>
+              </dt>
+              <dd>
+                {link.label === "Repository" &&
+                  "Source tree, fixtures, and toolchain."}
+                {link.label === "The Orange Book" &&
+                  "Living reader guide for intent, status, and open questions."}
+                {link.label === "Orange School" &&
+                  "Competency path from no assumed background into the language."}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+      <figure class="man-figure">
+        <img
+          src="/projects/orange/emblem.svg"
+          alt="Orange project emblem"
+          width="96"
+          height="96"
+          decoding="async"
+        />
+        <figcaption>
+          Orange project emblem (identity mark — not a verification claim).
+        </figcaption>
+      </figure>
+    </section>
+
+    <footer class="man-foot">
+      <a href="/">↑ Index — No Such Machine</a>
+    </footer>
+  </main>
+</BaseLayout>

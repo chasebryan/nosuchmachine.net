@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <main id="main" class="doc">
+    <header class="doc-mast">
+      <div class="doc-mast-left">
+        <p class="doc-site">nosuchmachine.net</p>
+        <p class="doc-beat">cryptography · radio · signals</p>
+      </div>
+      <a class="doc-author" href="https://github.com/chasebryan" rel="noopener noreferrer">
+        <img src="/brand/chase.jpg" alt="" width="48" height="48" decoding="async" />
+        <span>
+          <strong>Chase Bryan</strong>
+          <small>github.com/chasebryan</small>
+        </span>
+      </a>
+    </header>
+
+    <div class="doc-ruler" aria-hidden="true"></div>
+
+    <section class="doc-hero" aria-labelledby="brand-title">
+      <h1 id="brand-title">No Such Machine</h1>
+      <p class="doc-lede">
+        Work on cryptography you can check, radio systems you can inspect, and
+        signal paths that leave evidence. A short public index — not a dump of
+        every repository.
+      </p>
+    </section>
+
+    <section class="doc-index" aria-labelledby="index-title">
+      <div class="doc-index-head">
+        <h2 id="index-title">Projects</h2>
+        <p>Featured entry</p>
+      </div>
+      <ol class="doc-index-list">
+        <li>
+          <a href="/projects/orange/">
+            <span class="doc-index-name">Orange</span>
+            <span class="doc-index-desc">
+              Language and toolchain for specifying, implementing, and verifying
+              cryptography — cryptography you can check.
+            </span>
+            <span class="doc-index-meta">
+              <span class="doc-index-tag">crypto</span>
+              <span class="doc-index-go">Open</span>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="doc-scope" aria-labelledby="scope-title">
+      <h2 id="scope-title">Scope</h2>
+      <ul>
+        <li>Cryptographic specification, implementation, and assurance evidence</li>
+        <li>Radio / RF systems with inspectable signal paths</li>
+        <li>Field communications tooling where claims stay bound to artifacts</li>
+      </ul>
+    </section>
+
+    <footer class="doc-foot">
+      <p>
+        No Such Machine is Chase Bryan’s public selection surface for
+        cryptography, radio, and signals work. Source:
+        <a href="https://github.com/chasebryan/nosuchmachine.net"
+          >chasebryan/nosuchmachine.net</a
+        >
+        · AGPL-3.0
+      </p>
+    </footer>
+  </main>
+</BaseLayout>
