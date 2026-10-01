@@ -1,0 +1,5 @@
+# Cloudflare Pages — production publisher for nosuchmachine.net
+# Project name is distinct from the retired Wuci-Ji Pages project `wuci-ji`.
+name = "nosuchmachine-net"
+compatibility_date = "2026-10-01"
+pages_build_output_dir = "./dist"
