@@ -1,0 +1,21 @@
+---
+import type { Project } from "../data/projects";
+interface Props {
+  project: Project;
+  index: number;
+}
+const { project, index } = Astro.props;
+---
+
+<a class="project-row" href={`/projects/${project.slug}/`}>
+  <span class="row-number">{String(index).padStart(2, "0")}</span>
+  <span class="row-name">
+    {project.name}
+    <small>{project.status}</small>
+  </span>
+  <span class="row-summary">{project.summary}</span>
+  <span class="row-category">{project.categories[0]}</span>
+  <span class="row-open" aria-hidden="true">
+    ↗
+  </span>
+</a>

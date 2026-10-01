@@ -1,0 +1,2161 @@
+[
+  {
+    "slug": "orange",
+    "name": "Orange",
+    "summary": "A mathematical language for cryptography, with a Rust frontend and exact reference evaluator.",
+    "purpose": "Cryptographic software crosses mathematics, implementation and security claims. Orange aims to keep those meanings explicit in one language and make each claim traceable to the evidence that supports it.",
+    "approach": "The implemented compiler separates lexing, bounded parsing, typed semantic analysis, a reference core and deterministic evaluation. Mathematical integers, fixed-width words and modular values have explicit semantics; standards-based fixtures make the current language fragment inspectable.",
+    "categories": ["Cryptography", "Languages"],
+    "technologies": ["Rust", "Orange", "Cargo", "Python"],
+    "capabilities": [
+      "Typed specification functions and deterministic reference evaluation",
+      "Exact integer, word and modular arithmetic with checked array and index rules",
+      "Bindings, bounded loops, modules and executable cryptographic test-vector fixtures"
+    ],
+    "limitations": [
+      "Pre-alpha; native code generation and proof checking remain future work",
+      "No independent review or whole-project formal verification",
+      "Evaluation of a specification does not establish constant-time behavior or cryptographic security"
+    ],
+    "maturity": "Pre-alpha language",
+    "status": "Pre-alpha",
+    "githubUrl": "https://github.com/chasebryan/orange",
+    "links": [
+      {
+        "label": "Orange Book",
+        "href": "https://github.com/chasebryan/orange/blob/main/docs/THE_ORANGE_BOOK.md"
+      },
+      {
+        "label": "Compiler",
+        "href": "https://github.com/chasebryan/orange/tree/main/compiler"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/orange/blob/1808210de853f3df7c10dcc3eff361cb5f17d557/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/orange/tree/1808210de853f3df7c10dcc3eff361cb5f17d557"
+      }
+    ],
+    "featured": true,
+    "accent": "#f1a17b",
+    "diagram": "language",
+    "collection": "core"
+  },
+  {
+    "slug": "airwav",
+    "name": "AIRWAV",
+    "summary": "A passive RF workstation for spectrum analysis, IQ capture, replay, and evidence-based signal decoding.",
+    "purpose": "Keep measured radio energy, recorded IQ and verified protocol frames distinct so that an observation does not silently turn into an unsupported identity claim.",
+    "approach": "Receiver and DSP workers feed measured FFT spectra and signal islands into a Ratatui interface. Separate recording and decoder crates maintain a clear boundary between observed energy, captured evidence and verified protocol frames.",
+    "categories": ["Signals"],
+    "technologies": [
+      "Rust",
+      "Ratatui",
+      "rustfft",
+      "RTL-SDR / librtlsdr",
+      "SQLite",
+      "BLAKE3",
+      "React / TypeScript"
+    ],
+    "capabilities": [
+      "Hann-window FFT, spectral averaging and local-noise signal-island detection",
+      "Bounded pre/post-trigger IQ capture, AWR journals, SQLite indexing and BLAKE3 artifact integrity",
+      "Offline replay, AM/FM/NFM listening and WAV export",
+      "Mode S, ACARS, APRS, POCSAG and SAME decoding with CRC, parity or header gates",
+      "Separate browser observer for synthetic and file IQ"
+    ],
+    "limitations": [
+      "Physical RTL-SDR V4 and speaker acceptance remains outstanding",
+      "Synthetic/browser observations are not live USB capture",
+      "Not a production ATC/P25 system; no transmitter support"
+    ],
+    "maturity": "RF observation prototype",
+    "status": "RF prototype",
+    "githubUrl": "https://github.com/chasebryan/airwav",
+    "links": [
+      {
+        "label": "Architecture",
+        "href": "https://github.com/chasebryan/airwav/blob/main/docs/architecture.md"
+      },
+      {
+        "label": "Validation record",
+        "href": "https://github.com/chasebryan/airwav/blob/main/docs/validation.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/airwav/blob/main/README.md"
+      },
+      {
+        "label": "Cargo.toml",
+        "href": "https://github.com/chasebryan/airwav/blob/main/Cargo.toml"
+      },
+      {
+        "label": "lib.rs",
+        "href": "https://github.com/chasebryan/airwav/blob/main/crates/airwav-dsp/src/lib.rs"
+      },
+      {
+        "label": "validation.md",
+        "href": "https://github.com/chasebryan/airwav/blob/main/docs/validation.md"
+      }
+    ],
+    "featured": true,
+    "accent": "#b4e9c7",
+    "diagram": "signals",
+    "collection": "core"
+  },
+  {
+    "slug": "centl",
+    "name": "CENTL",
+    "summary": "An offline scientific workbench built around exact rational arithmetic and inspectable computation.",
+    "purpose": "Scientific computation should preserve the distinction between an exact result, a numerical approximation and a conjecture. CENTL brings arithmetic, algebra, STEM tools and research records into a local computing environment.",
+    "approach": "A Rust engine implements big integers, rational values, symbolic operations and domain kernels. A local web interface and desktop hosts expose the same computation surface; notebooks, plotting and export support a reproducible working record.",
+    "categories": ["Mathematics", "Scientific computing"],
+    "technologies": [
+      "Rust",
+      "JavaScript",
+      "HTML/CSS",
+      "Python",
+      "Native desktop hosts"
+    ],
+    "capabilities": [
+      "Exact rational arithmetic and canonical polynomial operations",
+      "Scientific notebooks, workspace history and Jupyter notebook export",
+      "Function plotting and physics/chemistry computation modules",
+      "Desktop wrappers and a local browser interface"
+    ],
+    "limitations": [
+      "Operation coverage and numerical guarantees vary by module",
+      "A computation or research search is not a proof of an arbitrary conjecture",
+      "Optional academic search and AI integrations require network access"
+    ],
+    "maturity": "Scientific workbench",
+    "status": "Workbench",
+    "githubUrl": "https://github.com/chasebryan/centl",
+    "links": [
+      {
+        "label": "Numerics",
+        "href": "https://github.com/chasebryan/centl/blob/main/docs/NUMERICS.md"
+      },
+      {
+        "label": "Scientific engine",
+        "href": "https://github.com/chasebryan/centl/tree/main/src-web/engine"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/centl/blob/42508684c4386b575d7b52e763565345a76bcb9e/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/centl/tree/42508684c4386b575d7b52e763565345a76bcb9e"
+      }
+    ],
+    "featured": true,
+    "accent": "#baa7e8",
+    "diagram": "arithmetic",
+    "collection": "core"
+  },
+  {
+    "slug": "sigil",
+    "name": "Sigil",
+    "summary": "A local-first cryptography and cryptology workbench with a Go command line and embedded browser interface.",
+    "purpose": "Provide a local workspace for inspecting bytes, learning cryptology and performing standard cryptographic operations without a cloud dependency.",
+    "approach": "A shared Go crypto layer serves CLI and GUI operations. Cryptographic primitives use Go's standard library. The profile pipeline combines statistical measures into bounded research triage. Envelope records carry authenticated chunk metadata; the local HTTP GUI has per-process tokens, same-origin checks and a strict CSP.",
+    "categories": ["Cryptography"],
+    "technologies": [
+      "Go",
+      "Go standard-library cryptography",
+      "JavaScript",
+      "HTML/CSS"
+    ],
+    "capabilities": [
+      "Hashing and HMAC with SHA-2 and SHA-3",
+      "CSPRNG bytes and passphrases",
+      "Byte entropy, bit balance, coincidence, block repetition and autocorrelation reports",
+      "Ed25519 key generation, signing and verification",
+      "Chunked AES-256-GCM envelopes derived from passphrases",
+      "Embedded local browser workspace with JSON result export"
+    ],
+    "limitations": [
+      "Not externally audited or FIPS validated.",
+      "Statistical profiling is triage and does not prove a cipher, key or source.",
+      "Legacy MD5/SHA-1 are exposed only as deprecated digest-inspection options."
+    ],
+    "maturity": "Usable local workbench; engineering prototype without independent security audit.",
+    "status": "Local workbench",
+    "githubUrl": "https://github.com/chasebryan/sigil",
+    "links": [
+      {
+        "label": "Project documentation",
+        "href": "https://github.com/chasebryan/sigil/blob/00e03f388c4b9b2a40f8b0052083cbedf8da3114/README.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/sigil/blob/00e03f388c4b9b2a40f8b0052083cbedf8da3114/README.md"
+      },
+      {
+        "label": "profile.go",
+        "href": "https://github.com/chasebryan/sigil/blob/00e03f388c4b9b2a40f8b0052083cbedf8da3114/internal/crypto/profile.go"
+      },
+      {
+        "label": "seal.go",
+        "href": "https://github.com/chasebryan/sigil/blob/00e03f388c4b9b2a40f8b0052083cbedf8da3114/internal/crypto/seal.go"
+      },
+      {
+        "label": "server_test.go",
+        "href": "https://github.com/chasebryan/sigil/blob/00e03f388c4b9b2a40f8b0052083cbedf8da3114/internal/gui/server_test.go"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "core"
+  },
+  {
+    "slug": "snoot",
+    "name": "snoot",
+    "summary": "An offline cryptography inventory tool that helps teams locate classical public-key cryptography and plan post-quantum migration.",
+    "purpose": "Locate classical public-key cryptography before a post-quantum migration, and preserve the resulting inventory in formats that teams can review and use in CI.",
+    "approach": "Four Rust detection engines examine source syntax, key material, dependency manifests and TLS configuration. Tree-sitter queries cover source languages; structured parsers support other evidence. Findings flow into portable baselines and machine-readable reports.",
+    "categories": ["Cryptography"],
+    "technologies": [
+      "Rust",
+      "Tree-sitter",
+      "SARIF",
+      "CycloneDX CBOM",
+      "GitHub Actions"
+    ],
+    "capabilities": [
+      "Inventories RSA, elliptic-curve, DSA and DH surfaces across source, keys, dependencies and configuration",
+      "Exports SARIF, JSON and CycloneDX 1.6 cryptographic bills of materials",
+      "Provides a GitHub Action, reviewed baselines and severity gates",
+      "Maps findings to NIST post-quantum replacement families"
+    ],
+    "limitations": [
+      "Detection is heuristic and recall is unmeasured",
+      "No data-flow or transitive dependency analysis; source code only",
+      "A clean scan does not establish quantum safety or complete coverage"
+    ],
+    "maturity": "Experimental release · v0.1.0",
+    "status": "Experimental v0.1",
+    "githubUrl": "https://github.com/chasebryan/snoot",
+    "links": [
+      {
+        "label": "Release v0.1.0",
+        "href": "https://github.com/chasebryan/snoot/releases/tag/v0.1.0"
+      },
+      {
+        "label": "Accuracy and limits",
+        "href": "https://github.com/chasebryan/snoot/blob/main/docs/accuracy.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/snoot/blob/main/README.md"
+      },
+      {
+        "label": "Cargo.toml",
+        "href": "https://github.com/chasebryan/snoot/blob/main/Cargo.toml"
+      },
+      {
+        "label": "mod.rs",
+        "href": "https://github.com/chasebryan/snoot/blob/main/src/engines/mod.rs"
+      },
+      {
+        "label": "accuracy.md",
+        "href": "https://github.com/chasebryan/snoot/blob/main/docs/accuracy.md"
+      },
+      {
+        "label": "v0.1.0",
+        "href": "https://github.com/chasebryan/snoot/releases/tag/v0.1.0"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "core"
+  },
+  {
+    "slug": "kaiju",
+    "name": "Kaiju",
+    "summary": "A Rust binary-analysis workbench that turns executable bytes into inspectable maps, strings, symbols and control-flow facts.",
+    "purpose": "Make executable structure inspectable by keeping binary loading, addresses, control flow and analysis facts in a bounded and understandable pipeline.",
+    "approach": "Small Rust crates separate addresses and memory maps, loaders, disassembly, IR, analysis passes, project state and interface. The headless pipeline is bytes → loader → memory map → project facts → analysis. Direct branches and call targets seed bounded recursive CFG discovery.",
+    "categories": ["Binary analysis"],
+    "technologies": ["Rust", "Cargo workspace", "Native Rust GUI", "JSON"],
+    "capabilities": [
+      "ELF, PE and Mach-O format detection and limited metadata parsing",
+      "Memory mapping, imports, exports, relocations and dependencies",
+      "ASCII and UTF-16LE string extraction",
+      "Conservative x86-64 function and control-flow discovery",
+      "Bounded IR summaries and data/string cross-references",
+      "Project JSON and .kaiju snapshots",
+      "Native Rust desktop workbench",
+      "User-supplied PCAP and network-evidence topology inspection"
+    ],
+    "limitations": [
+      "Executable-format parsers and x86-64 decoder cover limited subsets.",
+      "No decompiler, full disassembly, advanced indirect-flow recovery or plugin runtime.",
+      "No privileged live interface-capture backend."
+    ],
+    "maturity": "Early but substantial reverse-engineering workbench.",
+    "status": "Early workbench",
+    "githubUrl": "https://github.com/chasebryan/kaiju",
+    "links": [
+      {
+        "label": "Project documentation",
+        "href": "https://github.com/chasebryan/kaiju/blob/93995843381dc1f3180d1d611d39fe51a7c4fdcb/README.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/kaiju/blob/93995843381dc1f3180d1d611d39fe51a7c4fdcb/README.md"
+      },
+      {
+        "label": "architecture.md",
+        "href": "https://github.com/chasebryan/kaiju/blob/93995843381dc1f3180d1d611d39fe51a7c4fdcb/docs/architecture.md"
+      },
+      {
+        "label": "lib.rs",
+        "href": "https://github.com/chasebryan/kaiju/blob/93995843381dc1f3180d1d611d39fe51a7c4fdcb/crates/kaiju-analysis/src/lib.rs"
+      }
+    ],
+    "featured": false,
+    "accent": "#f2b4a9",
+    "diagram": "analysis",
+    "collection": "core"
+  },
+  {
+    "slug": "tractor",
+    "name": "TRACTOR",
+    "summary": "A native research application that preserves public-source evidence, discovery paths and unfinished work.",
+    "purpose": "A single search result is rarely the whole research record. TRACTOR organizes an investigation across independent public sources while recording what was requested, what responded and what remains unsearched.",
+    "approach": "A resumable asynchronous query queue feeds source adapters into a local database. Deduplication, multilingual query variants, evidence hashes and provenance records support a Qt desktop interface with readable source coverage and export.",
+    "categories": ["Intelligence", "Research tools"],
+    "technologies": ["Python", "PySide6 / Qt", "SQLite", "Asyncio"],
+    "capabilities": [
+      "Iterative public-source research across independent providers",
+      "Evidence views, discovery chains, duplicate grouping and content hashes",
+      "Stop, resume, refresh and searchable local investigation history",
+      "JSON, Markdown and spreadsheet-safe CSV export"
+    ],
+    "limitations": [
+      "Recorded coverage is not exhaustive coverage of the internet",
+      "Provider availability, credentials, rate limits and returned metadata constrain results",
+      "Native bundles are unsigned and not notarized"
+    ],
+    "maturity": "Released application · v0.4.0",
+    "status": "Released v0.4",
+    "githubUrl": "https://github.com/chasebryan/tractor",
+    "links": [
+      {
+        "label": "Release v0.4.0",
+        "href": "https://github.com/chasebryan/tractor/releases/tag/v0.4.0"
+      },
+      {
+        "label": "Architecture and providers",
+        "href": "https://github.com/chasebryan/tractor/blob/main/docs/providers.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/tractor/blob/916a0d5e25068cf7f0713dd49ae9072f8c936a81/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/tractor/tree/916a0d5e25068cf7f0713dd49ae9072f8c936a81"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "intelligence",
+    "collection": "core"
+  },
+  {
+    "slug": "centl-cbx",
+    "name": "CENTL-CBX",
+    "summary": "An exact arithmetic laboratory for Erdős–Straus decomposition geometry and reproducible certificates.",
+    "purpose": "The Erdős–Straus conjecture asks whether 4/n can always be written as the sum of three positive unit fractions for every integer n greater than one. CENTL-CBX studies exact candidate decompositions, obstruction structure and certificate construction.",
+    "approach": "C kernels and Python analyzers preserve exact Type-I and signed-box Type-II state. Independent research lanes expose geometry and survivor structure; executable theorem modules and verifier scripts distinguish proved state transitions from scheduling annotations.",
+    "categories": ["Mathematics", "Number theory"],
+    "technologies": [
+      "C",
+      "Python",
+      "Exact integer arithmetic",
+      "GitHub Actions"
+    ],
+    "capabilities": [
+      "Exact decomposition search and signed-box geometry analysis",
+      "Independent research lanes and survivor-state classification",
+      "Certificate discovery with executable verifier modules"
+    ],
+    "limitations": [
+      "The Erdős–Straus conjecture remains open",
+      "The current framework is a developing decomposition mechanism, not a proof of the conjecture",
+      "Heuristics and directional annotations confer no proof authority"
+    ],
+    "maturity": "Exact research framework",
+    "status": "Research framework",
+    "githubUrl": "https://github.com/chasebryan/centl-cbx",
+    "links": [
+      {
+        "label": "Research modules",
+        "href": "https://github.com/chasebryan/centl-cbx/tree/main/research"
+      },
+      {
+        "label": "Kernel",
+        "href": "https://github.com/chasebryan/centl-cbx/tree/main/kernel"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/centl-cbx/blob/8da8d7a13991adfbd7fa1b76dd4d85e56c3c8ca2/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/centl-cbx/tree/8da8d7a13991adfbd7fa1b76dd4d85e56c3c8ca2"
+      }
+    ],
+    "featured": false,
+    "accent": "#baa7e8",
+    "diagram": "math",
+    "collection": "core"
+  },
+  {
+    "slug": "zp-1",
+    "name": "ZP-1",
+    "summary": "An experimental Rust signed-envelope protocol focused on canonical wire formats, provider boundaries and reproducible verification.",
+    "purpose": "Study protocol composition through deterministic wire formats, separated cryptographic providers and repeatable verification, while keeping experimental assumptions visible.",
+    "approach": "The reference library separates KEM and signature provider traits from object encoding, KDF, sealing, opening and Merkle logic. The target suite specifies ML-KEM-1024 and ML-DSA-87, HMAC-SHA384 and AES-256-GCM-SIV. Deterministic test providers exercise protocol mechanics while remaining explicitly non-cryptographic.",
+    "categories": ["Cryptography"],
+    "technologies": [
+      "Rust",
+      "SHA-384",
+      "HMAC",
+      "AES-256-GCM-SIV",
+      "Cargo",
+      "Provider traits"
+    ],
+    "capabilities": [
+      "Canonical binary object encoding",
+      "Recipient stanzas and key commitment",
+      "Signed public manifests",
+      "Authenticated chunks bound by a domain-separated SHA-384 Merkle tree",
+      "Protocol limit checks and tamper rejection",
+      "Frozen reference vectors, negative corpus and mutation-test scaffolding"
+    ],
+    "limitations": [
+      "The default crate has no production PQC provider.",
+      "Tests-only deterministic provider is not cryptographically secure.",
+      "Archival SLH-DSA structures are defined but operation requires a real provider.",
+      "No independent cryptographic review or formal security proof."
+    ],
+    "maturity": "Experimental unaudited protocol reference implementation.",
+    "status": "Protocol prototype",
+    "githubUrl": "https://github.com/chasebryan/ZP-1",
+    "links": [
+      {
+        "label": "Project documentation",
+        "href": "https://github.com/chasebryan/ZP-1/blob/b35a004eb45e6bb60072d8e753b80db1d05888cb/README.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/ZP-1/blob/b35a004eb45e6bb60072d8e753b80db1d05888cb/README.md"
+      },
+      {
+        "label": "provider.rs",
+        "href": "https://github.com/chasebryan/ZP-1/blob/b35a004eb45e6bb60072d8e753b80db1d05888cb/src/provider.rs"
+      },
+      {
+        "label": "object.rs",
+        "href": "https://github.com/chasebryan/ZP-1/blob/b35a004eb45e6bb60072d8e753b80db1d05888cb/src/object.rs"
+      },
+      {
+        "label": "exhaustive_mutation.rs",
+        "href": "https://github.com/chasebryan/ZP-1/blob/b35a004eb45e6bb60072d8e753b80db1d05888cb/tests/exhaustive_mutation.rs"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "core"
+  },
+  {
+    "slug": "wuci-ji",
+    "name": "Wuci-Ji",
+    "summary": "An x86_64 assembly research system for sealed artifacts, receipt-bound release and deterministic public evidence.",
+    "purpose": "Explore disciplined systems construction in which proposed operations, authority boundaries and the evidence behind a change remain explicit.",
+    "approach": "Assembly owns narrow envelope, Gate and authenticated final-output boundaries. Python and Zig provide fixture, policy, orchestration and public-verifier layers, with additional Rust research components. The system connects artifact digests, authorization receipts, public witness bundles and append-only local history; its documentation separates each implemented boundary from wider security claims.",
+    "categories": ["Systems"],
+    "technologies": ["x86_64 assembly", "Python", "Zig", "Rust", "Make"],
+    "capabilities": [
+      "WJSEAL artifact envelopes and public manifests",
+      "Capability and rooted-contract checks for supported open/release decisions",
+      "Public witness bundles and domain-separated Merkle history proofs",
+      "Read-only public artifact inspection through Wuci-Prism",
+      "Deterministic Daylight evidence and claim gates",
+      "Defensive evidence perimeter and quantum-migration inventory",
+      "Bounded Linux no-network proof lane on supporting kernels"
+    ],
+    "limitations": [
+      "Custom research cryptography is unaudited and not suitable for production claims.",
+      "Production publish/trust authority is not established; fixture FROST authority is test-only.",
+      "Local Merkle history is not an operated transparency-log service.",
+      "General runtime containment and whole-system post-quantum security are not claimed."
+    ],
+    "maturity": "Active research/public-review artifact; substantive implementation with extensive evidence tooling.",
+    "status": "Systems research",
+    "githubUrl": "https://github.com/chasebryan/-wuci-ji",
+    "links": [
+      {
+        "label": "Project documentation",
+        "href": "https://github.com/chasebryan/-wuci-ji/blob/fec91dc6618d477908790520118bae7e25909c43/README.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/-wuci-ji/blob/fec91dc6618d477908790520118bae7e25909c43/README.md"
+      },
+      {
+        "label": "SECURITY_BOUNDARY.md",
+        "href": "https://github.com/chasebryan/-wuci-ji/blob/fec91dc6618d477908790520118bae7e25909c43/docs/SECURITY_BOUNDARY.md"
+      },
+      {
+        "label": "PRODUCTION_READINESS.md",
+        "href": "https://github.com/chasebryan/-wuci-ji/blob/fec91dc6618d477908790520118bae7e25909c43/docs/PRODUCTION_READINESS.md"
+      },
+      {
+        "label": "ledger.s",
+        "href": "https://github.com/chasebryan/-wuci-ji/blob/fec91dc6618d477908790520118bae7e25909c43/src/ledger.s"
+      },
+      {
+        "label": "wuci_prism.py",
+        "href": "https://github.com/chasebryan/-wuci-ji/blob/fec91dc6618d477908790520118bae7e25909c43/tools/wuci_prism.py"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "core"
+  },
+  {
+    "slug": "fyr",
+    "name": "Fyr",
+    "summary": "A Rust-built programming-language bootstrap with static checks, an interpreter, formatter and persistent REPL.",
+    "purpose": "Explore a readable systems-language surface with explicit structure, executable examples and a small implementation that can evolve toward stronger guarantees.",
+    "approach": "A conventional compiler front end transforms source into tokens and an AST, performs typechecking, then evaluates the program. The bootstrap command integrates manifests, diagnostics, imports, formatting and tests. Build currently emits checked import-flattened Fyr source rather than native machine code.",
+    "categories": ["Languages"],
+    "technologies": [
+      "Rust",
+      "Cargo",
+      "Custom language syntax",
+      "AST",
+      "Interpreter"
+    ],
+    "capabilities": [
+      "Lexer, parser, static type checker and interpreter",
+      "Typed functions, structs, enums and exhaustive match",
+      "Bounds-checked arrays and string operations",
+      "Nullable types and scoped unwrapping",
+      "Project scaffolding and root-confined relative imports",
+      "Formatter, assertion-file tests and checked source bundles",
+      "Persistent interactive REPL"
+    ],
+    "limitations": [
+      "Native performance and Rust-class ownership/concurrency safety are goals, not present capabilities.",
+      "Native code generation and ownership checking remain future layers.",
+      "Bootstrap build output is source, not a native executable."
+    ],
+    "maturity": "Working language bootstrap; native compiler layers remain planned.",
+    "status": "Language bootstrap",
+    "githubUrl": "https://github.com/chasebryan/fyr",
+    "links": [
+      {
+        "label": "Project documentation",
+        "href": "https://github.com/chasebryan/fyr/blob/299b317d332f603a50f26b3788154ec562ed294b/README.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/fyr/blob/299b317d332f603a50f26b3788154ec562ed294b/README.md"
+      },
+      {
+        "label": "lib.rs",
+        "href": "https://github.com/chasebryan/fyr/blob/299b317d332f603a50f26b3788154ec562ed294b/crates/fyr/src/lib.rs"
+      },
+      {
+        "label": "DESIGN.md",
+        "href": "https://github.com/chasebryan/fyr/blob/299b317d332f603a50f26b3788154ec562ed294b/docs/DESIGN.md"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "core"
+  },
+  {
+    "slug": "jlr",
+    "name": "JLR",
+    "summary": "A Linux security-governance prototype that combines content-addressed software identity, signed policy, evidence ledgers and confinement.",
+    "purpose": "Explore a Linux governance boundary that makes permitted operations, operator authority and decision evidence explicit.",
+    "approach": "Measured artifact records feed a deterministic policy engine. Signed evidence records track decisions; execution cells reduce authority through namespaces, seccomp, Landlock and capability controls. Separate boot work explores signed releases, A/B slots and rollback policy.",
+    "categories": ["Systems"],
+    "technologies": [
+      "Rust",
+      "Linux namespaces",
+      "Landlock",
+      "seccomp",
+      "fanotify",
+      "Ed25519",
+      "Merkle trees",
+      "QEMU"
+    ],
+    "capabilities": [
+      "Deterministic trust decisions with explicit evidence and revocation",
+      "Canonical CBOR records, Ed25519 envelopes and content-addressed artifact identity",
+      "Merkle evidence ledger with signed checkpoints",
+      "Sealed execution cells and an audit/enforcement exec gate",
+      "Reproducible base-image and initramfs tooling with QEMU test coverage"
+    ],
+    "limitations": [
+      "Not externally audited or production-ready",
+      "Companion mode depends on host trust and has documented execution-gate boundaries",
+      "Firmware/TPM authentication, installer/recovery integration and post-quantum signatures remain design work"
+    ],
+    "maturity": "Pre-release Linux prototype",
+    "status": "Linux prototype",
+    "githubUrl": "https://github.com/chasebryan/JLR",
+    "links": [
+      {
+        "label": "Overview",
+        "href": "https://github.com/chasebryan/JLR/blob/main/docs/OVERVIEW.md"
+      },
+      {
+        "label": "Security boundaries",
+        "href": "https://github.com/chasebryan/JLR/blob/main/docs/SECURITY_BOUNDARIES.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/JLR/blob/main/README.md"
+      },
+      {
+        "label": "Cargo.toml",
+        "href": "https://github.com/chasebryan/JLR/blob/main/Cargo.toml"
+      },
+      {
+        "label": "engine.rs",
+        "href": "https://github.com/chasebryan/JLR/blob/main/crates/jlr-policy/src/engine.rs"
+      },
+      {
+        "label": "SECURITY_BOUNDARIES.md",
+        "href": "https://github.com/chasebryan/JLR/blob/main/docs/SECURITY_BOUNDARIES.md"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "core"
+  },
+  {
+    "slug": "warlock-index",
+    "name": "WARLOCK-INDEX",
+    "summary": "A source-traceable strategic research corpus, organized into dated assessments, explainers, source packets, timelines and registers.",
+    "purpose": "Organize unclassified, public-source strategic research into a searchable corpus with clear source routes and published claim boundaries.",
+    "approach": "Canonical Markdown records follow standards for information cutoff, confidence and source traceability. A custom Node build turns the corpus into a searchable static library, update feeds and an installable browsing workspace.",
+    "categories": ["Intelligence"],
+    "technologies": [
+      "Markdown",
+      "JavaScript / Node.js",
+      "Static HTML",
+      "Client-side search",
+      "RSS",
+      "PWA"
+    ],
+    "capabilities": [
+      "Dated assessments and explainers with evidence separated from analytic judgment",
+      "Source registers, timelines and thematic research collections",
+      "Generated static library, client-side search, citation support and RSS",
+      "Installable workspace for browsing and selected-record downloads"
+    ],
+    "limitations": [
+      "Open-source strategic research, not operational intelligence or classified analysis",
+      "Dated products must be read with their information cutoff and confidence",
+      "The corpus is a public research and publishing system; it does not establish government authority."
+    ],
+    "maturity": "Published research corpus",
+    "status": "Published research",
+    "githubUrl": "https://github.com/chasebryan/warlock-index",
+    "links": [
+      {
+        "label": "Visit WARLOCK-INDEX",
+        "href": "https://www.warlock-index.org/"
+      },
+      {
+        "label": "Product standard",
+        "href": "https://github.com/chasebryan/warlock-index/blob/main/docs/standards/product-standard.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/warlock-index/blob/main/README.md"
+      },
+      {
+        "label": "product-standard.md",
+        "href": "https://github.com/chasebryan/warlock-index/blob/main/docs/standards/product-standard.md"
+      },
+      {
+        "label": "build-library.mjs",
+        "href": "https://github.com/chasebryan/warlock-index/blob/main/site/build-library.mjs"
+      },
+      {
+        "label": "main?recursive=1",
+        "href": "https://api.github.com/repos/chasebryan/warlock-index/git/trees/main?recursive=1"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "intelligence",
+    "collection": "core"
+  },
+  {
+    "slug": "tracksim",
+    "name": "tracksim",
+    "summary": "A reproducible sensor-fusion and multi-target tracking sandbox that exposes estimator behavior through a real-time HUD.",
+    "purpose": "Make estimator behavior visible under noise, missing measurements, clutter and association uncertainty in a reproducible synthetic environment.",
+    "approach": "Five simulated navigation sensors feed an extended Kalman filter with chi-square innovation gating. Simulated radar adds noisy detections and clutter; nearest-neighbour association and M-of-N confirmation maintain tracks. A fixed-step seeded model runs separately from the canvas presentation.",
+    "categories": ["Mathematics"],
+    "technologies": [
+      "TypeScript",
+      "Vite",
+      "Canvas",
+      "Web Workers",
+      "Vitest",
+      "Playwright"
+    ],
+    "capabilities": [
+      "Extended Kalman fusion with Joseph-form covariance updates",
+      "Innovation gating, covariance-derived influence and comparison against simulated ground truth",
+      "Sensor degradation, fix-spoofing, clutter and decoy scenarios",
+      "Seeded runs, backward scrubbing, headless execution and telemetry encoders",
+      "Canvas HUD with a worker bridge and documented mathematical contracts"
+    ],
+    "limitations": [
+      "All sensors and radar detections are simulated",
+      "Simplified local 2-D kinematics and sensor models, not field-validated navigation or radar hardware",
+      "Reproducibility describes the simulation implementation rather than real-world predictive accuracy"
+    ],
+    "maturity": "Deterministic simulation sandbox",
+    "status": "Simulation",
+    "githubUrl": "https://github.com/chasebryan/tracksim",
+    "links": [
+      {
+        "label": "Navigation mathematics",
+        "href": "https://github.com/chasebryan/tracksim/blob/main/docs/NAVIGATION.md"
+      },
+      {
+        "label": "Architecture",
+        "href": "https://github.com/chasebryan/tracksim/blob/main/docs/ARCHITECTURE.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/tracksim/blob/main/README.md"
+      },
+      {
+        "label": "package.json",
+        "href": "https://github.com/chasebryan/tracksim/blob/main/package.json"
+      },
+      {
+        "label": "kalman.ts",
+        "href": "https://github.com/chasebryan/tracksim/blob/main/packages/sim/src/math/kalman.ts"
+      },
+      {
+        "label": "NAVIGATION.md",
+        "href": "https://github.com/chasebryan/tracksim/blob/main/docs/NAVIGATION.md"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "estimation",
+    "collection": "core"
+  },
+  {
+    "slug": "transcentrevg-1",
+    "name": "TranscentreVG-1",
+    "summary": "A synthetic beacon-acquisition laboratory with Bayesian localization and audible packet records.",
+    "purpose": "Receiving a report is different from confirming a position. TranscentreVG-1 explores how uncertain range/bearing observations, independent witnesses and packet delivery affect the evidence behind a synthetic beacon estimate.",
+    "approach": "Four simulated receivers search a 42 × 32 grid. A Bayesian posterior tracks each static identified beacon; an adaptive planner weighs information gain, travel and viewpoint geometry. CRC-checked relay frames connect observation delivery to the estimator, with reproducible synthetic benchmarks.",
+    "categories": ["Signals", "Simulation", "Mathematics"],
+    "technologies": ["JavaScript", "Node.js", "Web Audio", "Python", "FFmpeg"],
+    "capabilities": [
+      "Bayesian grid localization with uncertainty and outlier gating",
+      "Independent confirmation and adaptive receiver planning",
+      "Packet-loss, corruption, outage and repeated-view scenarios",
+      "Audible FSK packet capture and WAV verification"
+    ],
+    "limitations": [
+      "All receivers, beacons and measurements are simulated",
+      "The model assumes static identified beacons and omits terrain, propagation and physical vehicle dynamics",
+      "Synthetic benchmark results do not establish field accuracy; CRC is not sender authentication"
+    ],
+    "maturity": "Reproducible simulation",
+    "status": "Simulation",
+    "githubUrl": "https://github.com/chasebryan/transcentrevg-1",
+    "links": [
+      {
+        "label": "Technical notes",
+        "href": "https://github.com/chasebryan/transcentrevg-1/blob/main/docs/transcentrevg-1.md"
+      },
+      {
+        "label": "Synthetic benchmark records",
+        "href": "https://github.com/chasebryan/transcentrevg-1/blob/main/docs/benchmark.json"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/transcentrevg-1/blob/5dcb22bb09c3483305ccb85f252974f0f613c01c/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/transcentrevg-1/tree/5dcb22bb09c3483305ccb85f252974f0f613c01c"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "signals",
+    "collection": "core"
+  },
+  {
+    "slug": "peel",
+    "name": "PEEL",
+    "summary": "A small F* experiment in labeled cryptographic expressions and a recorded path to C.",
+    "purpose": "PEEL narrows the language question to one inspectable experiment: how can public and secret values be represented so that forbidden observations are rejected by the type system?",
+    "approach": "Two F* modules define classification labels and label-indexed bytes. Positive and expected-failure examples exercise the boundary. Pinned F*, Z3 and KaRaMeL tools verify and extract the byte-XOR subset, with scripts recording the resulting evidence.",
+    "categories": ["Cryptography", "Formal methods"],
+    "technologies": ["F*", "KaRaMeL", "Z3", "OCaml", "C"],
+    "capabilities": [
+      "Public/Secret labels with explicit join laws",
+      "Label-indexed byte XOR and restricted public observation",
+      "Expected verifier rejections and a scripted verification/extraction path"
+    ],
+    "limitations": [
+      "P0 research prototype; no custom PEEL parser",
+      "The checked experiment is narrow and depends on its recorded toolchain",
+      "No claim of cryptographic security, constant-time behavior or production readiness"
+    ],
+    "maturity": "P0 research prototype",
+    "status": "Research prototype",
+    "githubUrl": "https://github.com/chasebryan/peel",
+    "links": [
+      {
+        "label": "Semantics",
+        "href": "https://github.com/chasebryan/peel/blob/main/docs/SEMANTICS.md"
+      },
+      {
+        "label": "Trust boundary",
+        "href": "https://github.com/chasebryan/peel/blob/main/docs/TRUST.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/peel/blob/d9e1a9c07eeaea2dc93b9b345defecd9e1240a8b/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/peel/tree/d9e1a9c07eeaea2dc93b9b345defecd9e1240a8b"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "core"
+  },
+  {
+    "slug": "enkel",
+    "name": "Enkel",
+    "summary": "A controlled language that turns explicit grammatical structure into scoped meaning trees.",
+    "purpose": "Natural-language word order can conceal a change in scope or reference. Enkel makes tense, argument roles, quantifier order and negation explicit, then renders the accepted structure deterministically.",
+    "approach": "A dependency-free Python compiler parses a closed grammar, lowers surface order into a JSON-safe scoped tree and produces a canonical English rendering. A limited English input layer accepts declared patterns and reports ambiguity instead of guessing.",
+    "categories": ["Languages", "Formal semantics"],
+    "technologies": ["Python", "EBNF", "JSON"],
+    "capabilities": [
+      "Explicit quantifier scope, tense, roles and negation",
+      "Scoped meaning-tree and deterministic English/JSON output",
+      "A limited English input layer and inspectable vocabulary",
+      "Tests for reference identity, finite-world counterexamples and normalization round trips"
+    ],
+    "limitations": [
+      "Does not translate arbitrary English or infer intended reference",
+      "Grammar, vocabulary and context are closed and explicit",
+      "Unique structure does not establish real-world truth"
+    ],
+    "maturity": "Formal language prototype · v0.2.0",
+    "status": "Language prototype",
+    "githubUrl": "https://github.com/chasebryan/enkel",
+    "links": [
+      {
+        "label": "Formal specification",
+        "href": "https://github.com/chasebryan/enkel/blob/main/docs/SPEC.md"
+      },
+      {
+        "label": "Validation notes",
+        "href": "https://github.com/chasebryan/enkel/blob/main/docs/VALIDATION.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/enkel/blob/cbdb1e3c33fbd122655f9a3c5e0c604f415f8625/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/enkel/tree/cbdb1e3c33fbd122655f9a3c5e0c604f415f8625"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "core"
+  },
+  {
+    "slug": "orange-school",
+    "name": "Orange School",
+    "summary": "A competency-based curriculum connecting computing foundations to cryptographic language work.",
+    "purpose": "Working with cryptography requires more than learning syntax. Orange School makes the programming, mathematics, systems, cryptography and assurance prerequisites explicit, with learner work evaluated against stated competencies.",
+    "approach": "A machine-readable prerequisite graph drives thirty-six released foundation modules, lessons, labs, rubrics and check scripts. Current Orange exercises pin an exact source revision; planned and blocked language capabilities stay visible without being taught as implemented features.",
+    "categories": ["Education", "Cryptography", "Mathematics"],
+    "technologies": ["Markdown", "Python", "JSON", "Rust examples", "Bash"],
+    "capabilities": [
+      "Released foundations in computing, mathematics, cryptography, systems and formal methods",
+      "Lessons, labs, assessments and professional role pathways",
+      "A prerequisite graph and machine-readable curriculum catalog",
+      "Revision-pinned examples and curriculum checks"
+    ],
+    "limitations": [
+      "Development curriculum rather than accredited education",
+      "Orange-dependent material is intentionally tied to a narrow older accepted compiler revision",
+      "Planned and blocked modules remain incomplete"
+    ],
+    "maturity": "Developing curriculum · 0.9.0-dev",
+    "status": "Developing curriculum",
+    "githubUrl": "https://github.com/chasebryan/orange-school",
+    "links": [
+      {
+        "label": "Start here",
+        "href": "https://github.com/chasebryan/orange-school/blob/main/curriculum/modules/ori-001/lesson.md"
+      },
+      {
+        "label": "Learner pathways",
+        "href": "https://github.com/chasebryan/orange-school/blob/main/docs/learner-pathways.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/orange-school/blob/0911ae7d7312e6c9ee0ed9b4f33076f0f0e6adb2/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/orange-school/tree/0911ae7d7312e6c9ee0ed9b4f33076f0f0e6adb2"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "core"
+  },
+  {
+    "slug": "aesop",
+    "name": "AESOP",
+    "summary": "A command-line and desktop cryptanalysis workbench for CTF exercises, coursework and teaching.",
+    "purpose": "Cryptology learning often means moving among many small tools and disconnected explanations. AESOP brings classical-cipher analysis, encodings, byte statistics and published educational techniques into a single workspace with an integrated field guide.",
+    "approach": "Python modules register capabilities through a shared command contract. Pure algorithm functions sit beneath CLI handlers, while a Tkinter interface builds forms from the same registry and runs long operations in a separate worker process.",
+    "categories": ["Cryptography", "Education"],
+    "technologies": [
+      "Python",
+      "Tkinter",
+      "Rich",
+      "SymPy / optional cryptographic libraries"
+    ],
+    "capabilities": [
+      "Classical-cipher analysis and common encoding transformations",
+      "Frequency, coincidence, entropy and byte-distribution inspection",
+      "Published number-theory and cryptographic teaching exercises",
+      "CLI, interactive session, graphical forms and built-in field guides"
+    ],
+    "limitations": [
+      "An educational and authorized-research workbench, not a general method for deciphering secure modern cryptography",
+      "Identification and automatic solving use heuristics and may yield ambiguous or unsuccessful results",
+      "Some mathematical and cryptographic capabilities require optional dependencies"
+    ],
+    "maturity": "Cryptanalysis teaching workbench",
+    "status": "Teaching workbench",
+    "githubUrl": "https://github.com/chasebryan/aesop",
+    "links": [
+      {
+        "label": "Command and field-guide reference",
+        "href": "https://github.com/chasebryan/aesop/tree/main/aesop/manual"
+      },
+      {
+        "label": "Architecture",
+        "href": "https://github.com/chasebryan/aesop/blob/main/aesop/registry.py"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/aesop/blob/869cdcf6095e5b5b60e60b6658de1270c7eb6ec8/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/aesop/tree/869cdcf6095e5b5b60e60b6658de1270c7eb6ec8"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "further"
+  },
+  {
+    "slug": "black-calculus",
+    "name": "Black Calculus",
+    "summary": "A public working manuscript on cryptology, intelligence, uncertainty and the governance of secret power.",
+    "purpose": "Intelligence judgments are made from incomplete evidence that an adversary may deliberately shape. Black Calculus examines how knowledge, trust and legitimate action can remain accountable under deception, uncertainty and secret power.",
+    "approach": "An eight-book argument moves from knowledge, trust and belief through identity, strategy, force, legitimacy and institutional design. The working draft labels material claims as fact, inference, doctrine or speculation, and the first chapter traces evidence from collection to decision.",
+    "categories": ["Writing", "Intelligence"],
+    "technologies": ["Markdown", "Mathematical notation", "Manuscript"],
+    "capabilities": [
+      "Public preface and substantial first-chapter working draft",
+      "Eight-book outline spanning forty planned chapters",
+      "Book constitution and editorial standards for evidence and terminology"
+    ],
+    "limitations": [
+      "Public working manuscript; the complete planned book is not yet present",
+      "Draft text, terminology and conclusions remain open to revision"
+    ],
+    "maturity": "Working manuscript",
+    "status": "Working manuscript",
+    "githubUrl": "https://github.com/chasebryan/Black-Calculus",
+    "links": [
+      {
+        "label": "Read the first chapter",
+        "href": "https://github.com/chasebryan/Black-Calculus/blob/main/manuscript/01-the-veil/01-the-adversarial-world.md"
+      },
+      {
+        "label": "Book outline",
+        "href": "https://github.com/chasebryan/Black-Calculus/blob/main/manuscript/00-master-outline.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/Black-Calculus/blob/0f21083b17809f8390b859c7a99d6dd1606a142d/README.md"
+      },
+      {
+        "label": "01-the-adversarial-world.md",
+        "href": "https://github.com/chasebryan/Black-Calculus/blob/0f21083b17809f8390b859c7a99d6dd1606a142d/manuscript/01-the-veil/01-the-adversarial-world.md"
+      },
+      {
+        "label": "00-master-outline.md",
+        "href": "https://github.com/chasebryan/Black-Calculus/blob/0f21083b17809f8390b859c7a99d6dd1606a142d/manuscript/00-master-outline.md"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "intelligence",
+    "collection": "further"
+  },
+  {
+    "slug": "casegrid",
+    "name": "CaseGrid",
+    "summary": "A browser-based evidence-management concept exploring file integrity, evidence-to-lead links and chain-of-custody presentation.",
+    "purpose": "Evidence work depends on understanding where a file came from, how it changed hands and which records support it. CaseGrid explores a clear browser workflow for linking evidence, leads, authority records and custody history.",
+    "approach": "Browser-native Web Crypto hashes uploaded file bytes with SHA-256. The application links evidence and legal-authority records, appends hash-linked audit events and renders custody records for PDF export, keeping demo state in local storage.",
+    "categories": ["Evidence", "Interfaces"],
+    "technologies": [
+      "JavaScript",
+      "Web Crypto",
+      "Local storage",
+      "HTML / CSS",
+      "Python static server"
+    ],
+    "capabilities": [
+      "Real SHA-256 file hashing for new uploads",
+      "Case creation, evidence linking and legal-authority records",
+      "Hash-linked audit events and custody-report previews",
+      "Selected-record PDF export"
+    ],
+    "limitations": [
+      "Authentication and roles are simulated in the browser",
+      "Local-storage demo state is editable, with no server-backed access control or protected evidence vault",
+      "Seeded records are demo data; hashes do not establish legal admissibility"
+    ],
+    "maturity": "Browser MVP",
+    "status": "Browser MVP",
+    "githubUrl": "https://github.com/chasebryan/case-grid",
+    "links": [
+      {
+        "label": "Repository",
+        "href": "https://github.com/chasebryan/case-grid"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/case-grid/blob/main/README.md"
+      },
+      {
+        "label": "app.js",
+        "href": "https://github.com/chasebryan/case-grid/blob/main/src/app.js"
+      },
+      {
+        "label": "main?recursive=1",
+        "href": "https://api.github.com/repos/chasebryan/case-grid/git/trees/main?recursive=1"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "devprep",
+    "name": "devprep",
+    "summary": "A cross-platform planner and installer for a curated development workstation toolkit.",
+    "purpose": "Preparing a development machine repeatedly involves the same dependency ordering and platform-specific package choices. devprep exposes that work as a readable plan, with explicit unavailable packages, execution records and tool-specific next steps.",
+    "approach": "A dependency-aware Python planner maps catalog entries to eleven package-manager adapters and bounded installation recipes. Separate platform detection, planning and execution layers support dry runs, JSON plans, custom selections and result reports.",
+    "categories": ["Developer tools", "Systems"],
+    "technologies": [
+      "Python",
+      "JSON catalog",
+      "Bash",
+      "PowerShell",
+      "Native package managers"
+    ],
+    "capabilities": [
+      "Full or custom selections of languages, compilers, editors, containers and scientific tools",
+      "Package-manager mappings across major Linux families, macOS and Windows",
+      "Dependency ordering, dry runs and machine-readable plans",
+      "Per-tool execution status and failure reports"
+    ],
+    "limitations": [
+      "Initial implementation; adapter coverage does not mean installation testing on every distribution",
+      "Available versions depend on the platform, architecture and enabled package repositories",
+      "Installation can change system packages and services; there is no automatic uninstall or rollback"
+    ],
+    "maturity": "Initial workstation setup utility",
+    "status": "Setup utility",
+    "githubUrl": "https://github.com/chasebryan/devprep",
+    "links": [
+      {
+        "label": "Platform coverage",
+        "href": "https://github.com/chasebryan/devprep/blob/main/docs/platforms.md"
+      },
+      {
+        "label": "Catalog",
+        "href": "https://github.com/chasebryan/devprep/blob/main/docs/catalog.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/devprep/blob/a034c000ce8935bc37c7a7c760f980a2057bd794/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/devprep/tree/a034c000ce8935bc37c7a7c760f980a2057bd794"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "dog1",
+    "name": "DOG1",
+    "summary": "A fictional tabletop world with continuous routes, fuel stops and inspectable game rules.",
+    "purpose": "DOG1 turns movement, resource constraints and abstract token interactions into a small visual world. The project is a game-model study: its map, distances, allegiances and power points are invented and can be inspected independently of the presentation.",
+    "approach": "A JavaScript model runs continuous movement on a periodic 42 × 32 grid, separating routes and game state from browser rendering. Node tests cover rules, while a Python/FFmpeg renderer creates a reproducible demonstration and records its authored scenario in a manifest.",
+    "categories": ["Simulation", "Creative work"],
+    "technologies": ["JavaScript", "Node.js", "HTML/CSS", "Python", "FFmpeg"],
+    "capabilities": [
+      "Continuous routes across a periodic map seam",
+      "Relative speed allocation, distance-based fuel and arrival-based refuelling",
+      "Editable abstract power points and synthetic token rules",
+      "Inspectable exported state and a reproducible video demonstration"
+    ],
+    "limitations": [
+      "A fictional uncalibrated game model rather than an Earth coordinate system",
+      "Token visibility, power and interaction scores have no real sensor or weapon interpretation",
+      "Debugging exports expose synthetic hidden state and are not competitive-game boundaries"
+    ],
+    "maturity": "Fictional tabletop simulation",
+    "status": "Fictional simulation",
+    "githubUrl": "https://github.com/chasebryan/DOG1",
+    "links": [
+      {
+        "label": "Model notes",
+        "href": "https://github.com/chasebryan/DOG1/blob/main/docs/dog1.md"
+      },
+      {
+        "label": "Video demonstration",
+        "href": "https://github.com/chasebryan/DOG1/blob/main/media/DOG1.mp4"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/DOG1/blob/5d0403978aafb8c69fd76397f4222317014a8af9/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/DOG1/tree/5d0403978aafb8c69fd76397f4222317014a8af9"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "dream-001",
+    "name": "DREAM-001",
+    "summary": "An exploratory model-state experiment with pre-token features, grouped evaluation and offline reports.",
+    "purpose": "DREAM-001 investigates whether changes in a language model's internal state can precede the first annotated false claim. Its contribution is an explicit extraction and evaluation pipeline that makes timing, labels, folds and uncertainty inspectable.",
+    "approach": "Python extracts seven pre-token distribution and hidden-state features from annotated continuations. Grouped out-of-fold logistic evaluation keeps related answers together and excludes post-onset fitting rows. An offline HTML report displays risk traces, onset alignment, token records and audit metadata.",
+    "categories": ["Research", "Machine learning"],
+    "technologies": [
+      "Python",
+      "PyTorch",
+      "Hugging Face Transformers",
+      "scikit-learn",
+      "HTML/JavaScript"
+    ],
+    "capabilities": [
+      "Annotation-aware pre-token feature extraction",
+      "Grouped out-of-fold evaluation and censored-tail handling",
+      "CSV features/predictions, metric records and a saved logistic model",
+      "Offline interactive reports with state traces and timing audits"
+    ],
+    "limitations": [
+      "The shipped demo uses a tiny randomly initialized model and eight handcrafted annotations; it demonstrates plumbing, not predictive evidence",
+      "Results depend on annotation quality, model, prompt format and numerical precision",
+      "The advertised 8 GB CUDA setup was not measured in the repository's documented demonstration"
+    ],
+    "maturity": "Exploratory model-state prototype",
+    "status": "Exploratory prototype",
+    "githubUrl": "https://github.com/chasebryan/dr-proto",
+    "links": [
+      {
+        "label": "Methodology",
+        "href": "https://github.com/chasebryan/dr-proto/blob/main/METHODOLOGY.md"
+      },
+      {
+        "label": "Offline report source",
+        "href": "https://github.com/chasebryan/dr-proto/blob/main/demo_report.html"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/dr-proto/blob/9d74275f14dd9815e9fe9dc7edcede983cdd00f9/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/dr-proto/tree/9d74275f14dd9815e9fe9dc7edcede983cdd00f9"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "intelligence",
+    "collection": "further"
+  },
+  {
+    "slug": "es-asm-sniper",
+    "name": "ES-ASM-SNIPER",
+    "summary": "A C and assembly search kernel that separates finite Erdős–Straus residuals from checkable certificates.",
+    "purpose": "The Erdős–Straus search problem demands exact evidence rather than impressive search counts. ES-ASM-SNIPER focuses on a defined modular search region and separates an optimized hunt from independent certificate construction and verification.",
+    "approach": "A segmented modular sieve and exact integer routines drive the search. Handwritten AArch64 and x86-64 modular multiplication support the hot path, with C fallbacks. Independent certification and verification programs preserve a distinction between incomplete menu residuals and complete bounded regions.",
+    "categories": ["Mathematics", "Number theory", "Systems"],
+    "technologies": [
+      "C",
+      "AArch64 assembly",
+      "x86-64 assembly",
+      "Make",
+      "SHA-256 records"
+    ],
+    "capabilities": [
+      "Modular residue-class search with configurable bounds and threads",
+      "C and assembly modular arithmetic with exact identity checks",
+      "Append-only range ownership and resumable search manifests",
+      "Separate certificate creation and third-party reconstruction programs"
+    ],
+    "limitations": [
+      "A bounded computational research kernel, not a proof of the Erdős–Straus conjecture",
+      "A miss in the search menu is not an unsolved integer or a universal disproof",
+      "Complete-region certification has explicit implementation bounds; wrapping arithmetic cannot certify"
+    ],
+    "maturity": "Finite search and certificate experiment",
+    "status": "Certificate experiment",
+    "githubUrl": "https://github.com/chasebryan/ES-ASM-SNIPER",
+    "links": [
+      {
+        "label": "Frozen search specification",
+        "href": "https://github.com/chasebryan/ES-ASM-SNIPER/blob/main/SPEC.md"
+      },
+      {
+        "label": "Independent certifier",
+        "href": "https://github.com/chasebryan/ES-ASM-SNIPER/blob/main/src/certify.c"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/ES-ASM-SNIPER/blob/95365017412f3fff86e092d770b0504b01e8bcd1/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/ES-ASM-SNIPER/tree/95365017412f3fff86e092d770b0504b01e8bcd1"
+      }
+    ],
+    "featured": false,
+    "accent": "#baa7e8",
+    "diagram": "math",
+    "collection": "further"
+  },
+  {
+    "slug": "latticra",
+    "name": "Latticra",
+    "summary": "An early evidence-bound system substrate for local authority metadata, reports, receipts and future runtime boundaries.",
+    "purpose": "System actions often hide the authority, assumptions and evidence behind them. Latticra explores a substrate where local state, requests, capability boundaries and reports become explicit, inspectable records before wider runtime authority is granted.",
+    "approach": "C/C++ models and supporting scripts represent state, requests, transitions and evidence as structured records. A Lat-to-LIR pipeline records parsing, semantic checks and lowering, while capability and effect classifiers preserve explicit no-effect boundaries. Receipts, reports and validation contracts track what a local observation can support.",
+    "categories": ["Evidence systems", "Systems / security governance"],
+    "technologies": ["C", "C++", "Shell", "Python", "Lat/LIR"],
+    "capabilities": [
+      "State-lattice and preview-only transition models",
+      "Lat parsing, semantic checks and lowering to LIR",
+      "Capability, effect and verification metadata classification",
+      "Nucleus task and report architecture",
+      "Local receipts, reproducible reports and evidence contracts"
+    ],
+    "limitations": [
+      "Early architecture and validation work, with many surfaces limited to metadata and preview",
+      "Production protection, hardened sandboxing and OS replacement are not established",
+      "Privileged, network and general runtime authority remain closed unless a narrower record explicitly supports them"
+    ],
+    "maturity": "Systems research substrate",
+    "status": "Research substrate",
+    "githubUrl": "https://github.com/chasebryan/Latticra",
+    "links": [
+      {
+        "label": "System substrate handbook",
+        "href": "https://github.com/chasebryan/Latticra/tree/main/docs/latticra-system-substrate"
+      },
+      {
+        "label": "Architecture seed",
+        "href": "https://github.com/chasebryan/Latticra/blob/main/docs/ARCHITECTURE_SEED.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/Latticra/blob/758947a27fa5aee5f8711bd431ac337af86c3db3/README.md"
+      },
+      {
+        "label": "ARCHITECTURE_SEED.md",
+        "href": "https://github.com/chasebryan/Latticra/blob/758947a27fa5aee5f8711bd431ac337af86c3db3/docs/ARCHITECTURE_SEED.md"
+      },
+      {
+        "label": "lat_pipeline.c",
+        "href": "https://github.com/chasebryan/Latticra/blob/758947a27fa5aee5f8711bd431ac337af86c3db3/src/lat_pipeline.c"
+      },
+      {
+        "label": "seal_effect_decision.c",
+        "href": "https://github.com/chasebryan/Latticra/blob/758947a27fa5aee5f8711bd431ac337af86c3db3/src/seal_effect_decision.c"
+      },
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/Latticra/blob/758947a27fa5aee5f8711bd431ac337af86c3db3/docs/latticra-system-substrate/README.md"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "mint-terminal-predictor",
+    "name": "Mint Terminal Predictor",
+    "summary": "A local Bash predictor that displays history-based command suggestions as you type.",
+    "purpose": "Repeated shell work often begins with a familiar prefix. Mint Terminal Predictor uses the commands already in Bash history to suggest likely completions while keeping the suggestion separate from the command that will execute.",
+    "approach": "A small Bash layer synchronizes recent command history, ranks prefix matches by frequency and recency, and draws a dim suggestion beside the current input. Key bindings accept or cycle suggestions while leaving ordinary Tab completion available.",
+    "categories": ["Developer tools", "Shell"],
+    "technologies": ["Bash", "Readline key bindings", "Shell tests"],
+    "capabilities": [
+      "Local predictions from existing Bash history",
+      "Frequency and recency ranking with configurable history limits",
+      "Accept/cycle bindings and manual history reload",
+      "Installer backups and a focused shell test script"
+    ],
+    "limitations": [
+      "Initially targets Bash on Linux Mint",
+      "Suggestions are completions, not natural-language reasoning or automatically executed commands",
+      "History-based ranking is limited to previously recorded commands"
+    ],
+    "maturity": "Small local shell utility",
+    "status": "Shell utility",
+    "githubUrl": "https://github.com/chasebryan/mint-terminal-predictor",
+    "links": [
+      {
+        "label": "Predictor implementation",
+        "href": "https://github.com/chasebryan/mint-terminal-predictor/blob/main/shell/mint-predict.bash"
+      },
+      {
+        "label": "Tests",
+        "href": "https://github.com/chasebryan/mint-terminal-predictor/blob/main/tests/test_predictor.sh"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/mint-terminal-predictor/blob/b83e21d6ea302f2fee6611450e658ac03390267a/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/mint-terminal-predictor/tree/b83e21d6ea302f2fee6611450e658ac03390267a"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "muddog-fleer",
+    "name": "Muddog-fleer",
+    "summary": "A wordless procedural film through an invented forest with authored visual and sound cues.",
+    "purpose": "Muddog-fleer explores a restrained field-simulator aesthetic through a continuous fictional first-person walk. Fixed world geometry, a small hyperbolic reticle and synchronized stereo cues carry the sequence without captions or interface text.",
+    "approach": "Python, NumPy and Pillow generate terrain, layered foliage, synthetic figures and frame rendering from an authored scene. FFmpeg encodes the resulting 42-second 1080p film with stereo audio; a manifest records timing, cues and output checksums.",
+    "categories": ["Creative work", "Procedural graphics"],
+    "technologies": ["Python", "NumPy", "Pillow", "FFmpeg", "JSON scene"],
+    "capabilities": [
+      "Procedural forest geometry and continuous camera motion",
+      "A fully wordless second version with a minimal reticle",
+      "Authored visual pulses, beacon timing and synthesized stereo sound",
+      "Reproducible frame rendering, preview contact sheets and a media manifest"
+    ],
+    "limitations": [
+      "A scripted fictional game film with no real people, locations or sensor input",
+      "Thermal-style contrast and classification colors are authored animation",
+      "Rendering cost depends on CPU and frame-worker memory use"
+    ],
+    "maturity": "Procedural creative film",
+    "status": "Creative film",
+    "githubUrl": "https://github.com/chasebryan/Muddog-fleer",
+    "links": [
+      {
+        "label": "Scene and sound design",
+        "href": "https://github.com/chasebryan/Muddog-fleer/blob/main/docs/film.md"
+      },
+      {
+        "label": "Wordless v2 film",
+        "href": "https://github.com/chasebryan/Muddog-fleer/blob/main/media/Muddog-fleer-v2-8c3b958.mp4"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/Muddog-fleer/blob/60ce9779be32b6f52b01043972f53f5b21027759/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/Muddog-fleer/tree/60ce9779be32b6f52b01043972f53f5b21027759"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "nevins-port",
+    "name": "Nevins Port",
+    "summary": "A native receive-only radio console with capture packs, conservative signal cards and policy specifications.",
+    "purpose": "Radio observations are easier to understand when the capture, interpretation and permitted next step stay connected. Nevins Port explores a native listening station that makes spectra, evidence records and conservative signal summaries readable.",
+    "approach": "C++23 owns the CLI, GLFW/OpenGL dashboard, receiver adapters and capture handling. Deterministic mock data and an explicit RTL-SDR path feed the same analysis pipeline. F* modules specify bounded device values, capture manifests and routing rules; the current runtime still uses a C++ mirror bridge.",
+    "categories": ["Signals", "RF", "Formal methods"],
+    "technologies": ["C++23", "F*", "GLFW / OpenGL", "librtlsdr", "CMake"],
+    "capabilities": [
+      "Native spectrum/waterfall, receiver metrics and signal-card panes",
+      "Deterministic mock surveys and an explicit receive-only RTL-SDR capture path",
+      "Capture pack writing, explanation and replay",
+      "F* policy/validation specifications and native regression tests"
+    ],
+    "limitations": [
+      "First implementation pass; hardware-mode support is optional and not required by CI",
+      "The runtime bridge currently mirrors the F* rules in C++; generated KaRaMeL integration remains planned",
+      "Richer controls and DSP summaries remain unfinished"
+    ],
+    "maturity": "First-pass native RF prototype",
+    "status": "RF prototype",
+    "githubUrl": "https://github.com/chasebryan/nevins-port",
+    "links": [
+      {
+        "label": "Architecture",
+        "href": "https://github.com/chasebryan/nevins-port/blob/main/docs/architecture.md"
+      },
+      {
+        "label": "Build blockers",
+        "href": "https://github.com/chasebryan/nevins-port/blob/main/docs/build-blockers.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/nevins-port/blob/612a42f720f168a32e063a341fd451e855939629/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/nevins-port/tree/612a42f720f168a32e063a341fd451e855939629"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "phase1",
+    "name": "Phase1",
+    "summary": "A terminal-first educational virtual OS console implemented in Rust.",
+    "purpose": "Operating-system ideas are easier to study when their state is visible and their controls are approachable. Phase1 provides a terminal environment for exploring filesystems, processes, command policy and local workflows through a simulated system model.",
+    "approach": "Rust modules implement a simulated scheduler, virtual filesystem and process table beneath a terminal operator interface. Command metadata and explicit policy gates control host-backed operations. Sanitized history, audit records and a local notes-and-rules companion make experiments inspectable.",
+    "categories": ["Education", "Systems"],
+    "technologies": ["Rust", "Terminal UI", "Shell", "HTML/JavaScript"],
+    "capabilities": [
+      "Boot interface, dashboard, help and command completion",
+      "Simulated kernel, virtual filesystem and process table",
+      "Explicit policy gates for host-backed commands",
+      "Sanitized local history, audit log and learning notes",
+      "Documentation, browser demo and repository quality tooling"
+    ],
+    "limitations": [
+      "Educational virtual OS simulation, not an independent kernel or hardened security boundary",
+      "Base1 real-hardware foundation remains planned",
+      "The checked package is a development line; release labels in documentation describe separate tracks"
+    ],
+    "maturity": "Educational virtual OS console",
+    "status": "Educational console",
+    "githubUrl": "https://github.com/chasebryan/phase1",
+    "links": [
+      {
+        "label": "Learning companion",
+        "href": "https://github.com/chasebryan/phase1/blob/main/LEARNING.md"
+      },
+      {
+        "label": "Virtual kernel source",
+        "href": "https://github.com/chasebryan/phase1/blob/main/src/kernel.rs"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/phase1/blob/af69a78c86628a73e578893ccde95eaffefcfaae/README.md"
+      },
+      {
+        "label": "Cargo.toml",
+        "href": "https://github.com/chasebryan/phase1/blob/af69a78c86628a73e578893ccde95eaffefcfaae/Cargo.toml"
+      },
+      {
+        "label": "kernel.rs",
+        "href": "https://github.com/chasebryan/phase1/blob/af69a78c86628a73e578893ccde95eaffefcfaae/src/kernel.rs"
+      },
+      {
+        "label": "policy.rs",
+        "href": "https://github.com/chasebryan/phase1/blob/af69a78c86628a73e578893ccde95eaffefcfaae/src/policy.rs"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "pithos",
+    "name": "PITHOS",
+    "summary": "A draft post-quantum object-sealing construction that specifies how standardized cryptographic components fit into a strict binary object format.",
+    "purpose": "Object encryption needs more than a choice of cipher: keys, recipients, metadata, chunk boundaries and signatures must agree on one format. PITHOS explores that composition through an explicit post-quantum sealing specification.",
+    "approach": "The proposed PITHOS-1 profile combines ML-KEM-1024, a SHA-384-based derivation, AES-256-GCM chunk protection and optional ML-DSA-87 signatures. The repository defines wire encodings, parser requirements, security goals, review questions and a future validation path.",
+    "categories": ["Cryptography", "Research"],
+    "technologies": [
+      "Cryptographic protocol design",
+      "ML-KEM",
+      "AES-GCM",
+      "ML-DSA",
+      "SHA-384",
+      "Binary format specification",
+      "Python documentation checks"
+    ],
+    "capabilities": [
+      "Normative draft, equation transcript and canonical wire-format definitions",
+      "Recipient and associated-data binding requirements",
+      "Explicit chunking, parser bounds and algorithm-profile rules",
+      "Published review agenda and validation roadmap"
+    ],
+    "limitations": [
+      "Specification only; no reference implementation or generated test-vector corpus",
+      "Composition and misuse-resistance questions remain open for review",
+      "No algorithm/module validation or government approval"
+    ],
+    "maturity": "Experimental specification draft",
+    "status": "Specification draft",
+    "githubUrl": "https://github.com/chasebryan/PITHOS",
+    "links": [
+      {
+        "label": "Repository",
+        "href": "https://github.com/chasebryan/PITHOS"
+      },
+      {
+        "label": "PITHOS-1 draft",
+        "href": "https://github.com/chasebryan/PITHOS/blob/main/docs/PITHOS-1.md"
+      },
+      {
+        "label": "Review agenda",
+        "href": "https://github.com/chasebryan/PITHOS/blob/main/docs/REVIEW-AGENDA.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/PITHOS/blob/main/README.md"
+      },
+      {
+        "label": "WIRE-FORMAT.md",
+        "href": "https://github.com/chasebryan/PITHOS/blob/main/docs/WIRE-FORMAT.md"
+      },
+      {
+        "label": "REVIEW-AGENDA.md",
+        "href": "https://github.com/chasebryan/PITHOS/blob/main/docs/REVIEW-AGENDA.md"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "further"
+  },
+  {
+    "slug": "pmgs",
+    "name": "PMGS",
+    "summary": "A receive-only satellite workflow helper for inexpensive RTL-SDR hardware and stock antennas.",
+    "purpose": "A low-cost receiver and stock antenna can make a first satellite pass difficult to plan and diagnose. PMGS brings pass planning, antenna guidance, capture preparation and local observation reports into one receive-only workflow.",
+    "approach": "Python modules combine optional Skyfield pass prediction and TLE data with a realistic satellite/antenna catalog. The CLI prepares captures, checks unsigned IQ recordings, coordinates established decoders and turns observations into local reports.",
+    "categories": ["Signals", "Space"],
+    "technologies": [
+      "Python",
+      "Skyfield",
+      "RTL-SDR",
+      "SatDump / gr-satellites orchestration",
+      "HTML reporting"
+    ],
+    "capabilities": [
+      "Pass planning with optional Skyfield and public TLE data",
+      "Stock-antenna guidance and target difficulty scoring",
+      "Dry-run capture plans with duration, storage estimates and metadata sidecars",
+      "IQ-file verification, decoder handoff and HTML observation reports"
+    ],
+    "limitations": [
+      "Initial v0.1 scaffold / pre-alpha",
+      "Decoder templates require version-specific verification before release",
+      "Orchestrates existing decoding tools rather than replacing them"
+    ],
+    "maturity": "Pre-alpha toolkit",
+    "status": "Pre-alpha toolkit",
+    "githubUrl": "https://github.com/chasebryan/pmgs",
+    "links": [
+      {
+        "label": "Repository",
+        "href": "https://github.com/chasebryan/pmgs"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/pmgs/blob/main/README.md"
+      },
+      {
+        "label": "pyproject.toml",
+        "href": "https://github.com/chasebryan/pmgs/blob/main/pyproject.toml"
+      },
+      {
+        "label": "orbits.py",
+        "href": "https://github.com/chasebryan/pmgs/blob/main/src/pmgs/orbits.py"
+      },
+      {
+        "label": "capture.py",
+        "href": "https://github.com/chasebryan/pmgs/blob/main/src/pmgs/capture.py"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "point3",
+    "name": "POINT/3",
+    "summary": "A sequence of small reconstruction experiments, from repetition codes to authenticated recursive fragments.",
+    "purpose": "POINT/3 separates recovery from integrity. Its early repetition-code experiments show the limits of majority decoding; POINT/3-W explores a recursive two-of-three reconstruction topology in which a recovered value must also satisfy a path-bound authenticator.",
+    "approach": "Small C and Orange examples implement repetition and affine scattering. The later C/OpenSSL prototype combines an object, an HMAC tag and their XOR at each node. A Cryptol executable specification describes a depth-four, 81-leaf tree and its round-trip and branch-loss properties.",
+    "categories": ["Cryptography", "Mathematics"],
+    "technologies": ["C", "OpenSSL / HMAC-SHA256", "Orange", "Cryptol"],
+    "capabilities": [
+      "Three-way repetition and affine-scatter demonstrations",
+      "Recursive authenticated two-of-three reconstruction for a 128-bit object",
+      "Presence masks for modeling erased terminal fragments",
+      "A depth-four Cryptol specification with round-trip and branch-loss checks"
+    ],
+    "limitations": [
+      "Experimental reference code with a narrow object/key interface",
+      "Affine scattering changes locality rather than coding distance",
+      "The repository's executable checks are not an independent security review or a production storage-system claim"
+    ],
+    "maturity": "Small reconstruction research prototype",
+    "status": "Research prototype",
+    "githubUrl": "https://github.com/chasebryan/point3",
+    "links": [
+      {
+        "label": "Authenticated C experiment",
+        "href": "https://github.com/chasebryan/point3/blob/main/point3-w.c"
+      },
+      {
+        "label": "Cryptol specification",
+        "href": "https://github.com/chasebryan/point3/blob/main/Point3W.cry"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/point3/blob/1456a30057e66195e68b739253eca257d15eaa33/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/point3/tree/1456a30057e66195e68b739253eca257d15eaa33"
+      }
+    ],
+    "featured": false,
+    "accent": "#b8a5e6",
+    "diagram": "crypto",
+    "collection": "further"
+  },
+  {
+    "slug": "rf-commons",
+    "name": "RF Commons",
+    "summary": "A browser radio-workbench prototype designed to make spectrum exploration and radio learning approachable.",
+    "purpose": "Radio tools can make the spectrum difficult for newcomers to explore. RF Commons develops an approachable workbench for tuning, signal learning, bookmarks and logs, with a local receive-only audio bridge.",
+    "approach": "A dependency-free browser interface provides a synthetic waterfall, tuner controls, bookmarks, logs and learning surfaces. A local Node helper offers receiver health checks and receive-only audio through rtl_fm and FFmpeg.",
+    "categories": ["Signals", "Interfaces"],
+    "technologies": [
+      "JavaScript",
+      "HTML / CSS",
+      "Node.js",
+      "RTL-SDR tools",
+      "FFmpeg"
+    ],
+    "capabilities": [
+      "Synthetic spectrum/waterfall and signal-learning UI",
+      "Frequency bookmarks and a local logbook",
+      "Local RTL-SDR audio bridge with explicit missing-tool/device states",
+      "Public receiver directory/map interface"
+    ],
+    "limitations": [
+      "The waterfall is synthetic, not live receiver IQ",
+      "No completed real FFT/waterfall pipeline or gain calibration",
+      "A front-end prototype; listed product modes partly describe its roadmap"
+    ],
+    "maturity": "Radio-workbench prototype",
+    "status": "Radio prototype",
+    "githubUrl": "https://github.com/chasebryan/rf-commons",
+    "links": [
+      {
+        "label": "Repository",
+        "href": "https://github.com/chasebryan/rf-commons"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/rf-commons/blob/main/README.md"
+      },
+      {
+        "label": "dev.mjs",
+        "href": "https://github.com/chasebryan/rf-commons/blob/main/scripts/dev.mjs"
+      },
+      {
+        "label": "main?recursive=1",
+        "href": "https://api.github.com/repos/chasebryan/rf-commons/git/trees/main?recursive=1"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "seal",
+    "name": "SEAL",
+    "summary": "A small F* authority model that makes capability, evidence and receipt requirements explicit.",
+    "purpose": "An authority decision should reveal which capability, evidence and receipt it requires. SEAL models that decision as a small fail-closed gate whose allowed outcomes can be checked against explicit invariants.",
+    "approach": "Typed subjects, operations, policies, evidence and receipt states feed a total F* decision function. Lemmas express that an allowed decision implies the required capability and supporting state; an explicit decision matrix records check precedence and denied combinations.",
+    "categories": ["Formal methods", "Systems / security governance"],
+    "technologies": ["F*", "Low* direction", "Make", "GitHub Actions"],
+    "capabilities": [
+      "Capability-first total authorization gate",
+      "Evidence requirements for open, seal and transition operations",
+      "Receipt requirement for transitions",
+      "F* lemmas and explicit operation decision matrix",
+      "Repository F* verification workflow"
+    ],
+    "limitations": [
+      "SEAL-Core v0 is a narrow authority model with no parser; example files are documentation fixtures",
+      "C extraction is deferred until a compatible KaRaMeL toolchain is pinned",
+      "Kernel isolation, seL4 equivalence, production authorization and whole-system formal verification are not established"
+    ],
+    "maturity": "Formal-model prototype",
+    "status": "Formal-model prototype",
+    "githubUrl": "https://github.com/chasebryan/SEAL",
+    "links": [
+      {
+        "label": "Review packet",
+        "href": "https://github.com/chasebryan/SEAL/blob/main/docs/SEAL_CORE_V0_REVIEW_PACKET.md"
+      },
+      {
+        "label": "F* authority gate",
+        "href": "https://github.com/chasebryan/SEAL/blob/main/src/Seal.Gate.fst"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/SEAL/blob/a78240822505003e5bccce6915f39f78f38ff669/README.md"
+      },
+      {
+        "label": "Seal.Gate.fst",
+        "href": "https://github.com/chasebryan/SEAL/blob/a78240822505003e5bccce6915f39f78f38ff669/src/Seal.Gate.fst"
+      },
+      {
+        "label": "Seal.Proofs.fst",
+        "href": "https://github.com/chasebryan/SEAL/blob/a78240822505003e5bccce6915f39f78f38ff669/src/Seal.Proofs.fst"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "tcs",
+    "name": "TCS",
+    "summary": "A capability-oriented operating-system seed built from isolated communicating servers on seL4/Microkit.",
+    "purpose": "Software authority should be explicit, isolated and checked when an operation occurs. TCS explores that model in a small operating-system seed whose communicating servers enforce policy over a fixed microkernel capability graph.",
+    "approach": "A fixed kernel capability graph connects small native servers. An allocation-free policy state machine checks subject, object, rights and session generation on each read; separate profiles explore read-only UART interaction, signed administration and bounded worker lifecycle experiments.",
+    "categories": ["Systems", "Security"],
+    "technologies": [
+      "C",
+      "seL4",
+      "Microkit",
+      "AArch64",
+      "QEMU",
+      "Monocypher",
+      "Python build/test tooling"
+    ],
+    "capabilities": [
+      "Five-domain bootable seed in AArch64 QEMU",
+      "Per-request policy checks, session revocation, quarantine and audit exhaustion",
+      "Isolated read-only UART terminal and separate signed interactive profiles",
+      "Saved boot images, transcripts, build reports and invariant tests"
+    ],
+    "limitations": [
+      "A seed, not a general-purpose operating system",
+      "Compile-time typed capability handles, persistent storage and dynamic process creation are not implemented",
+      "Application authorization changes inside a fixed capability graph; seed revocation is not dynamic kernel-capability deletion",
+      "No formal-verification or production-readiness claim"
+    ],
+    "maturity": "Bootable OS seed",
+    "status": "Bootable OS seed",
+    "githubUrl": "https://github.com/chasebryan/tcs",
+    "links": [
+      {
+        "label": "Repository",
+        "href": "https://github.com/chasebryan/tcs"
+      },
+      {
+        "label": "Architecture",
+        "href": "https://github.com/chasebryan/tcs/blob/main/docs/ARCHITECTURE.md"
+      },
+      {
+        "label": "Verification record",
+        "href": "https://github.com/chasebryan/tcs/blob/main/docs/VERIFICATION.md"
+      },
+      {
+        "label": "Saved boot artifacts",
+        "href": "https://github.com/chasebryan/tcs/blob/main/artifacts/README.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/tcs/blob/main/README.md"
+      },
+      {
+        "label": "policy.c",
+        "href": "https://github.com/chasebryan/tcs/blob/main/lib/policy.c"
+      },
+      {
+        "label": "VERIFICATION.md",
+        "href": "https://github.com/chasebryan/tcs/blob/main/docs/VERIFICATION.md"
+      },
+      {
+        "label": "main?recursive=1",
+        "href": "https://api.github.com/repos/chasebryan/tcs/git/trees/main?recursive=1"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "tell",
+    "name": "TELL",
+    "summary": "A deterministic black-box auditor for checking whether a local command rejects presumed-invalid binary inputs uniformly.",
+    "purpose": "A program may reject different binary inputs through different exit codes or output. TELL makes those discrete rejection differences visible through a bounded, deterministic audit of a local command.",
+    "approach": "Starting from one accepted binary input, TELL creates a fixed set of mutations and runs a command directly with each input. It groups rejection observations by exact exit code, stdout bytes and stderr bytes, with bounded execution and deterministic reports.",
+    "categories": ["Security", "Developer tools"],
+    "technologies": [
+      "Go",
+      "Linux process groups",
+      "SHA-256",
+      "JSON",
+      "Go standard library"
+    ],
+    "capabilities": [
+      "Checks discrete rejection differences against a fixed deterministic profile",
+      "Uses exact observation equivalence and content hashes for traceable reports",
+      "Separates completed audit failures from incomplete infrastructure runs",
+      "Includes runner, mutation, reporting and CLI regression tests"
+    ],
+    "limitations": [
+      "No timing or side-channel analysis",
+      "Generated candidates are presumed invalid; no grammar or coverage-guided fuzzing",
+      "Does not prove exploitability, cryptographic correctness or security; target execution is not sandboxed"
+    ],
+    "maturity": "Focused v1 audit tool",
+    "status": "Audit tool",
+    "githubUrl": "https://github.com/chasebryan/TELL",
+    "links": [
+      {
+        "label": "Repository",
+        "href": "https://github.com/chasebryan/TELL"
+      },
+      {
+        "label": "Specification",
+        "href": "https://github.com/chasebryan/TELL/blob/main/SPEC.md"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/TELL/blob/main/README.md"
+      },
+      {
+        "label": "observe.go",
+        "href": "https://github.com/chasebryan/TELL/blob/main/internal/observe/observe.go"
+      },
+      {
+        "label": "main?recursive=1",
+        "href": "https://api.github.com/repos/chasebryan/TELL/git/trees/main?recursive=1"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "tobacco",
+    "name": "Tobacco",
+    "summary": "A defensive source auditor that reports review candidates with location, confidence and coverage notes.",
+    "purpose": "Suspicious code patterns are useful starting points when their meaning and limits are explicit. Tobacco makes those candidates readable through stable rule IDs, suggested review context and structured reports, while keeping scanned source execution out of the default workflow.",
+    "approach": "Python AST analysis resolves selected aliases and local assignments; JavaScript, PHP and configuration checks use bounded text patterns. Optional dependency advisory lookup and single-response HTTP checks extend the report surface. JSON/SARIF serialization records locations and fingerprints while omitting matched secret values.",
+    "categories": ["Security", "Developer tools"],
+    "technologies": [
+      "Python",
+      "AST analysis",
+      "SARIF",
+      "OSV advisory integration",
+      "GitHub Actions"
+    ],
+    "capabilities": [
+      "Offline source/configuration review with severity and confidence",
+      "Selected dependency-advisory matching and HTTP metadata checks",
+      "Text, JSON and SARIF reports with configurable failure thresholds",
+      "Scope exclusions, skipped-file coverage notes and redacted findings"
+    ],
+    "limitations": [
+      "Pattern matches do not establish reachability, attacker control or exploitability",
+      "No whole-program dataflow, business-logic assessment or full parsing outside Python",
+      "False positives and missed vulnerabilities are expected; clean output is not a security clearance"
+    ],
+    "maturity": "Defensive review utility",
+    "status": "Review utility",
+    "githubUrl": "https://github.com/chasebryan/tobacco",
+    "links": [
+      {
+        "label": "Rule coverage and limits",
+        "href": "https://github.com/chasebryan/tobacco/blob/main/docs/RULES.md"
+      },
+      {
+        "label": "Report model",
+        "href": "https://github.com/chasebryan/tobacco/blob/main/tobacco/models.py"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/tobacco/blob/3810a84754fd55648d062243a3f2039ab6ce1bb6/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/tobacco/tree/3810a84754fd55648d062243a3f2039ab6ce1bb6"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "vitamins",
+    "name": "Vitamins",
+    "summary": "A small Ruby-like document language that emits ordinary LaTeX source.",
+    "purpose": "Technical writing often needs both readable authoring syntax and precise mathematical typesetting. Vitamins explores a calmer document front end while retaining LaTeX as the renderer and output format.",
+    "approach": "A Rust parser and emitter translate structured document blocks into TeX. The CLI checks a document in memory, prints generated source or writes a .tex file. Math helpers, document environments and user-defined math macros provide the implemented first slice.",
+    "categories": ["Languages", "Mathematics", "Writing tools"],
+    "technologies": ["Rust", "LaTeX", "Cargo"],
+    "capabilities": [
+      "Paper metadata, sections, abstracts and quotations",
+      "Paragraph formatting, citations, references, figures and tables",
+      "Theorem/proof blocks, equations and mathematical helpers",
+      "Check, emit and compile-to-LaTeX commands"
+    ],
+    "limitations": [
+      "First language slice; user-defined environments remain deferred",
+      "Emits LaTeX source rather than rendering PDF itself",
+      "Document correctness and mathematical truth are separate from syntactic acceptance"
+    ],
+    "maturity": "Small document-language prototype",
+    "status": "Language prototype",
+    "githubUrl": "https://github.com/chasebryan/vitamins",
+    "links": [
+      {
+        "label": "Example document",
+        "href": "https://github.com/chasebryan/vitamins/blob/main/examples/tiny_note.vit"
+      },
+      {
+        "label": "Generated LaTeX example",
+        "href": "https://github.com/chasebryan/vitamins/blob/main/examples/tiny_note.tex"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/vitamins/blob/b4a765816d0e83ab898071d8461e9a108fba96cc/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/vitamins/tree/b4a765816d0e83ab898071d8461e9a108fba96cc"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  },
+  {
+    "slug": "weatherline",
+    "name": "Weatherline",
+    "summary": "A small weather application served by one Go binary and open weather data sources.",
+    "purpose": "Weatherline aims to make everyday forecasts accessible without proprietary API credentials or a commercial SDK. A compact local application combines forecast, air-quality and alert data in a readable browser interface.",
+    "approach": "A Go server handles source requests and serves a JavaScript interface. Open-Meteo supplies forecasts, city search and air quality; the National Weather Service supplies available US alerts. A small service worker caches the application shell.",
+    "categories": ["Applications", "Open data"],
+    "technologies": [
+      "Go",
+      "JavaScript",
+      "HTML/CSS",
+      "Service worker",
+      "Open-Meteo / NWS"
+    ],
+    "capabilities": [
+      "Current conditions, hourly timeline and ten-day forecasts",
+      "Air quality and available active US weather alerts",
+      "City search, optional browser location and unit switching",
+      "Offline application-shell caching"
+    ],
+    "limitations": [
+      "Fresh weather data still depends on upstream network services",
+      "NWS alert coverage is specific to US locations",
+      "Cached interface assets do not establish a complete offline forecast service"
+    ],
+    "maturity": "Small open-data application",
+    "status": "Open-data application",
+    "githubUrl": "https://github.com/chasebryan/weatherline",
+    "links": [
+      {
+        "label": "Go service",
+        "href": "https://github.com/chasebryan/weatherline/blob/main/main.go"
+      },
+      {
+        "label": "Browser interface",
+        "href": "https://github.com/chasebryan/weatherline/tree/main/web"
+      }
+    ],
+    "sources": [
+      {
+        "label": "Project README",
+        "href": "https://github.com/chasebryan/weatherline/blob/c44402eea4a88a28e102e35e0941508bbd671e2a/README.md"
+      },
+      {
+        "label": "Reviewed source revision",
+        "href": "https://github.com/chasebryan/weatherline/tree/c44402eea4a88a28e102e35e0941508bbd671e2a"
+      }
+    ],
+    "featured": false,
+    "accent": "#b4e9c7",
+    "diagram": "systems",
+    "collection": "further"
+  }
+]

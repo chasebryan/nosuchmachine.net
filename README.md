@@ -1,28 +1,36 @@
 # No Such Machine
 
-Institutional index for [Chase Bryan](https://github.com/chasebryan)’s selected work.
+Chase Bryan’s portfolio of signals intelligence, mathematics, cryptography, systems, and independent research.
 
-**Live:** [https://nosuchmachine.net](https://nosuchmachine.net)
+**Production domain:** [nosuchmachine.net](https://nosuchmachine.net)
+
+![Homepage preview](docs/preview-desktop.jpg)
 
 ## Structure
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Document masthead + project index (GitHub/pfp in the mast) |
-| `/projects/orange/` | Orange handbook-style page |
-
-Tone: spare systems documentation (CIA.gov / OpenBSD / FreeBSD lane) — credibility over decoration. No old wuci-ji / nosuchmachine artwork.
+- The homepage presents three featured projects, 18 core projects, and an expandable collection of 22 further explorations.
+- Every listed project has a statically generated page at `/projects/<slug>/`, with its purpose, implementation, maturity, limitations, repository, and documentation links.
+- `src/data/catalog.json` owns the portfolio content. The [repository inventory](docs/repository-inventory.json) and [review report](docs/portfolio-review.md) record the public-repository review and curation decisions.
+- `src/scripts/signal-field.ts` renders synthetic phase-space curves, a spherical lattice, spectrum peaks, and a subtle background signal field. These visuals are mathematical simulations. They use no microphone, receiver, network data, or visitor telemetry.
+- Motion respects reduced-motion preferences, can be paused on every page, and stores an optional local preference. The user-supplied dragon insignia anchors the identity.
+- The sitemap is generated from the catalog, and the built animation script stays external to comply with the existing Cloudflare content-security policy.
 
 ## Develop
 
 ```sh
-npm install
+npm ci
 npm run dev
+npm run check
 npm run build
+npm run verify
 npm run preview
 ```
 
+`verify` checks generated project routes, homepage links, sitemap entries, internal links and anchors, image/script assets, unique IDs, motion controls, and CSP-compatible script output. CI runs the type check, build, and this integration check.
+
 ## Deploy
+
+The deployment run inspected on October 1, 2026 failed because both `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository secrets were absent. The build succeeded. Configure the existing Pages integration or the secrets below before publishing; do not change DNS solely to preview the redesign.
 
 Production apex `https://nosuchmachine.net` is a **Cloudflare** zone. Historically it was published by Cloudflare Pages project `wuci-ji` from [`chasebryan/-wuci-ji`](https://github.com/chasebryan/-wuci-ji). This repository is now the source of truth for the public portfolio.
 

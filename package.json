@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "No Such Machine — portfolio of Chase Bryan's ambitious projects.",
+  "description": "No Such Machine — signals, mathematics, cryptography, and independent work by Chase Bryan.",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "verify": "node scripts/verify-build.mjs"
   },
   "engines": {
     "node": ">=20"

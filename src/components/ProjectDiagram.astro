@@ -1,0 +1,117 @@
+---
+interface Props {
+  kind?: string;
+}
+const { kind = "systems" } = Astro.props;
+const exactArithmetic = kind === "arithmetic";
+const spectrum = Array.from({ length: 66 }, (_, i) => ({
+  x: 24 + i * 5.4,
+  h:
+    8 +
+    Math.abs(Math.sin(i * 1.8)) * 12 +
+    Math.exp(-((i - 21) ** 2) / 10) * 84 +
+    Math.exp(-((i - 44) ** 2) / 32) * 55,
+}));
+---
+
+<div class:list={["project-diagram", `diagram-${kind}`]} aria-hidden="true">
+  {kind === "language" ? (
+    <>
+      <span class="diagram-topline">SPECIFICATION → REALIZATION</span>
+      <div class="crypto-equation">
+        ƒ(x) <span>≡</span> λx.e
+      </div>
+      <div class="diagram-flow">
+        <span>SPEC</span>
+        <i></i>
+        <span>TYPE</span>
+        <i></i>
+        <span>EVAL</span>
+      </div>
+      <span class="diagram-bottomline">
+        MATHEMATICAL INTENT / EXECUTABLE FORM
+      </span>
+    </>
+  ) : kind === "crypto" ? (
+    <>
+      <span class="diagram-topline">CRYPTOGRAPHIC STRUCTURE</span>
+      <div class="crypto-equation">
+        H(m) <span>→</span> d
+      </div>
+      <div class="digest-fragment">8e4a f29c 7b01 d6e3</div>
+      <span class="diagram-bottomline">PRIMITIVES / FORMATS / EVIDENCE</span>
+    </>
+  ) : kind === "signals" ? (
+    <>
+      <span class="diagram-topline">FREQUENCY DOMAIN</span>
+      <svg viewBox="0 0 400 146">
+        <path
+          class="plot-grid"
+          d="M20 20H380M20 55H380M20 90H380M20 125H380M80 10V135M160 10V135M240 10V135M320 10V135"
+        />
+        {spectrum.map((bar) => (
+          <path class="spectrum-bar" d={`M${bar.x} 125V${125 - bar.h}`} />
+        ))}
+      </svg>
+      <span class="diagram-bottomline">SPECTRUM / SIGNAL STRUCTURE</span>
+    </>
+  ) : kind === "math" || exactArithmetic ? (
+    <>
+      <span class="diagram-topline">EXACT ARITHMETIC</span>
+      <div class="math-equation">
+        {exactArithmetic ? (
+          <>
+            <span>
+              1<small>3</small>
+            </span>
+            <b>+</b>
+            <span>
+              1<small>6</small>
+            </span>
+            <b>=</b>
+            <span>
+              1<small>2</small>
+            </span>
+          </>
+        ) : (
+          <>
+            <span>
+              4<small>n</small>
+            </span>
+            <b>=</b>
+            <span>
+              1<small>x</small>
+            </span>
+            <b>+</b>
+            <span>
+              1<small>y</small>
+            </span>
+            <b>+</b>
+            <span>
+              1<small>z</small>
+            </span>
+          </>
+        )}
+      </div>
+      <span class="diagram-bottomline">
+        {exactArithmetic
+          ? "RATIONAL VALUES / EXACT RESULTS"
+          : "ERDŐS–STRAUS / CERTIFICATE RESEARCH"}
+      </span>
+    </>
+  ) : (
+    <>
+      <span class="diagram-topline">SYSTEMS / RESEARCH</span>
+      <div class="system-equation">
+        {kind === "estimation"
+          ? "x̂(t) + ε(t)"
+          : kind === "analysis"
+            ? "0x7F → AST"
+            : kind === "intelligence"
+              ? "SOURCE → EVIDENCE"
+              : "INPUT → OUTPUT"}
+      </div>
+      <span class="diagram-bottomline">INSPECTABLE PATHS / OPEN SOURCE</span>
+    </>
+  )}
+</div>
