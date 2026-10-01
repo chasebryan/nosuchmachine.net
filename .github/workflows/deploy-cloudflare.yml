@@ -1,8 +1,8 @@
 name: Deploy Cloudflare Pages
 
 on:
-  push:
-    branches: [main]
+  # Cloudflare Pages Git integration publishes main and branch previews.
+  # Keep Actions as a manually invoked fallback publisher.
   workflow_dispatch:
 
 permissions:

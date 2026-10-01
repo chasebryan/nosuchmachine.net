@@ -30,7 +30,7 @@ npm run preview
 
 ## Deploy
 
-The deployment run inspected on October 1, 2026 failed because both `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository secrets were absent. The build succeeded. Configure the existing Pages integration or the secrets below before publishing; do not change DNS solely to preview the redesign.
+Cloudflare Pages Git integration is connected to this repository and successfully built the redesign preview on October 1, 2026. It publishes the production branch and branch previews without GitHub repository secrets. The Actions deployment workflow is a manual fallback; it requires `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, which were absent at review time.
 
 Production apex `https://nosuchmachine.net` is a **Cloudflare** zone. Historically it was published by Cloudflare Pages project `wuci-ji` from [`chasebryan/-wuci-ji`](https://github.com/chasebryan/-wuci-ji). This repository is now the source of truth for the public portfolio.
 
