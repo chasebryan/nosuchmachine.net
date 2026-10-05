@@ -1,7 +1,10 @@
 ---
 import BookLayout from "../../layouts/BookLayout.astro";
 import book from "../../data/book.json";
+import study from "../../data/study.json";
 const parts = [...new Set(book.chapters.map((chapter) => chapter.part))];
+const lessons = study.lessons.filter((lesson) => lesson.linear);
+const answers = study.lessons.filter((lesson) => !lesson.linear);
 ---
 
 <BookLayout>
@@ -9,13 +12,52 @@ const parts = [...new Set(book.chapters.map((chapter) => chapter.part))];
     <img src="/projects/orange/book-cover.svg" alt="The Orange Book cover: the Orange emblem in cream on an orange field." width="400" height="560" />
     <div>
       <p>The Orange Book explains why Orange exists, what it is intended to become, what has actually been built, and which questions remain open.</p>
-      <p class="book-introduction-note">It is not a normative language specification, proof, assurance report, license grant, or release claim.</p>
-      <span class="book-edition">Living pre-alpha reader guide</span>
-      <a class="button button-primary" href="/book/preface/">Start reading <span aria-hidden="true">→</span></a>
+      <p class="book-introduction-note">Part 1, The Novice, is the new way in: no programming or cryptography is assumed. The original manuscript is still here, in its own order. Two later novice lessons are not written yet.</p>
+      <span class="book-edition">Novice draft {study.snapshot} · Manuscript {book.version}</span>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/book/before-we-begin/">Start with the novice <span aria-hidden="true">→</span></a>
+        <a class="text-link" href="/book/preface/">Original preface</a>
+      </div>
     </div>
   </div>
+  <div class="study-path" aria-label="How the book is organized">
+    <article>
+      <p class="eyebrow">Part 1</p>
+      <h2>The Novice</h2>
+      <p>Draft lessons you can read now, from messages and binary through a first Orange program.</p>
+    </article>
+    <article>
+      <p class="eyebrow">Part 2</p>
+      <h2>The Journeyman</h2>
+      <p>Mapped to original chapters. The connecting lessons are not written yet.</p>
+    </article>
+    <article>
+      <p class="eyebrow">Part 3</p>
+      <h2>The Master</h2>
+      <p>The manuscript’s account of claims, proofs, and evidence. Integration is still a draft.</p>
+    </article>
+  </div>
+  <section class="book-contents-list" aria-labelledby="novice-contents-title">
+    <h2 id="novice-contents-title">Start here</h2>
+    <div class="book-contents-group">
+      <h3>Part 1, The Novice</h3>
+      <ol>
+        {lessons.map((lesson) => (
+          <li><a href={`/book/${lesson.slug}/`}><span>{lesson.title}</span><span aria-hidden="true">→</span></a></li>
+        ))}
+      </ol>
+    </div>
+    <div class="book-contents-group">
+      <h3>Worked answers</h3>
+      <ol>
+        {answers.map((lesson) => (
+          <li><a href={`/book/${lesson.slug}/`}><span>{lesson.title}</span><span aria-hidden="true">→</span></a></li>
+        ))}
+      </ol>
+    </div>
+  </section>
   <section class="book-contents-list" aria-labelledby="book-contents-title">
-    <h2 id="book-contents-title">Inside the book</h2>
+    <h2 id="book-contents-title">Original manuscript</h2>
     {parts.map((part) => (
       <div class="book-contents-group">
         <h3>{part}</h3>

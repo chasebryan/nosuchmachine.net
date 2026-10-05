@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { markdownToMdast, type MdastNode } from "satteri";
 import book from "../../data/book.json";
+import study from "../../data/study.json";
 
 function searchableText(node: MdastNode): string {
   // Read Markdown as a tree so link destinations are omitted while literal
@@ -13,8 +14,9 @@ function searchableText(node: MdastNode): string {
 }
 
 export const GET: APIRoute = async () => {
-  const entries = await getCollection("book");
-  const index = book.chapters.map((chapter) => {
+  const entries = [...await getCollection("book"), ...await getCollection("study")];
+  const chapters = [...book.chapters, ...study.lessons];
+  const index = chapters.map((chapter) => {
     const entry = entries.find((entry) => entry.id === chapter.slug)!;
     const text = searchableText(markdownToMdast(entry.body ?? ""))
       .replace(/\s+/g, " ")

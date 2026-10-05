@@ -2,20 +2,56 @@
 import BaseLayout from "./BaseLayout.astro";
 import "../styles/book.css";
 import book from "../data/book.json";
+import study from "../data/study.json";
 
-type Chapter = (typeof book.chapters)[number];
+type ReadingChapter = {
+  slug: string;
+  title: string;
+  part: string;
+  order: number;
+  description: string;
+  draft?: boolean;
+  linear?: boolean;
+};
 interface Props {
-  chapter?: Chapter;
+  chapter?: ReadingChapter;
   headings?: { depth: number; slug: string; text: string }[];
 }
 const { chapter, headings = [] } = Astro.props;
 const parts = [...new Set(book.chapters.map((entry) => entry.part))];
-const index = chapter ? book.chapters.findIndex((entry) => entry.slug === chapter.slug) : -1;
-const previous = index > 0 ? book.chapters[index - 1] : undefined;
-const next = book.chapters[index + 1];
-const sourceUrl = chapter
-  ? `${book.sourceUrl}#${chapter.title.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s/g, "-")}`
-  : book.sourceUrl;
+const studyLessons = study.lessons.filter((lesson) => lesson.linear);
+const studyAnswers = study.lessons.filter((lesson) => !lesson.linear);
+const studyChapter = study.lessons.find((lesson) => lesson.slug === chapter?.slug);
+const sequence = studyChapter?.linear ? studyLessons : book.chapters;
+const index = chapter ? sequence.findIndex((entry) => entry.slug === chapter.slug) : -1;
+const inSequence = index >= 0 && (!studyChapter || studyChapter.linear);
+const previous = inSequence && index > 0 ? sequence[index - 1] : undefined;
+const next = !chapter ? studyLessons[0] : inSequence ? sequence[index + 1] : undefined;
+const answerReturn: Record<string, string> = {
+  "novice-answers-1": "novice-3",
+  "novice-answers-4": "novice-6",
+  "novice-answers-n7": "novice-n7",
+  "novice-answers-n8": "novice-n8",
+  "novice-answers-n9": "novice-n9",
+  "novice-answers-n10": "novice-n10",
+};
+const returnSlug = chapter ? answerReturn[chapter.slug] : undefined;
+const returnLesson = returnSlug ? study.lessons.find((lesson) => lesson.slug === returnSlug) : undefined;
+const sourceUrl = studyChapter
+  ? study.sourceUrl
+  : chapter
+    ? `${book.sourceUrl}#${chapter.title.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s/g, "-")}`
+    : book.sourceUrl;
+const corrections = (studyChapter ? study.corrections : book.corrections) ?? [];
+const label = (title: string) => title.replace(/^(?:Chapter \d+: |N\d+: |Worked answers: )/, "");
+const marker = (slug: string) => {
+  if (slug.startsWith("novice-n")) return slug.slice("novice-".length).toUpperCase();
+  if (slug.startsWith("novice-answers")) return "";
+  if (slug.startsWith("novice-")) return slug.slice("novice-".length);
+  if (slug.startsWith("chapter-")) return slug.slice("chapter-".length);
+  if (slug.startsWith("appendix-")) return slug.slice("appendix-".length).toUpperCase();
+  return "";
+};
 ---
 
 <BaseLayout title={chapter ? `${chapter.title} · The Orange Book` : book.title} description={chapter?.description ?? "Read The Orange Book by Chase Bryan: a guide to the ideas, language, compiler, and current state of Orange."}>
@@ -24,7 +60,7 @@ const sourceUrl = chapter
       <details id="book-navigation" open>
         <summary><span>Contents</span><span class="contents-toggle" aria-hidden="true">⌄</span></summary>
         <div class="book-sidebar-content">
-          <a class="book-sidebar-title" href="/book/" aria-current={!chapter ? "page" : undefined}>The Orange Book<span>Version {book.version}</span></a>
+          <a class="book-sidebar-title" href="/book/" aria-current={!chapter ? "page" : undefined}>The Orange Book<span>Novice draft · Manuscript {book.version}</span></a>
           <div class="book-search" role="search" aria-label="Search the Orange Book">
             <label class="visually-hidden" for="book-search-input">Search the book</label>
             <input id="book-search-input" type="search" placeholder="Search the book…" autocomplete="off" aria-controls="book-search-results" />
@@ -32,14 +68,34 @@ const sourceUrl = chapter
             <ol id="book-search-results" class="book-search-results" hidden></ol>
           </div>
           <nav class="book-chapters" aria-label="Book chapters" id="book-chapters">
+            <div class="book-part">
+              <p>Part 1, The Novice</p>
+              <ol>
+                {studyLessons.map((entry) => (
+                  <li><a href={`/book/${entry.slug}/`} aria-current={chapter?.slug === entry.slug ? "page" : undefined}>
+                    {label(entry.title)}
+                    {marker(entry.slug) && <span class="book-chapter-number">{marker(entry.slug)}</span>}
+                  </a></li>
+                ))}
+              </ol>
+            </div>
+            <div class="book-part">
+              <p>Worked answers</p>
+              <ol>
+                {studyAnswers.map((entry) => (
+                  <li><a href={`/book/${entry.slug}/`} aria-current={chapter?.slug === entry.slug ? "page" : undefined}>{label(entry.title)}</a></li>
+                ))}
+              </ol>
+            </div>
+            <p class="book-sidebar-group">Original manuscript</p>
             {parts.map((part) => (
               <div class="book-part">
                 <p>{part}</p>
                 <ol>
                   {book.chapters.filter((entry) => entry.part === part).map((entry) => (
                     <li><a href={`/book/${entry.slug}/`} aria-current={chapter?.slug === entry.slug ? "page" : undefined}>
-                      {entry.title.replace(/^(Chapter \d+|Appendix [A-D]): /, "")}
-                      {(entry.slug.startsWith("chapter-") || entry.slug.startsWith("appendix-")) && <span class="book-chapter-number">{entry.slug.replace("chapter-", "").replace("appendix-", "").toUpperCase()}</span>}
+                      {label(entry.title)}
+                      {marker(entry.slug) && <span class="book-chapter-number">{marker(entry.slug)}</span>}
                     </a></li>
                   ))}
                 </ol>
@@ -53,13 +109,16 @@ const sourceUrl = chapter
     <main id="main" class="book-main">
       <header class="book-chapter-header">
         <div class="book-reading-tools">
-          <a href="/book/">THE ORANGE BOOK <span>/ {book.version}</span></a>
+          <a href="/book/">THE ORANGE BOOK <span>/ {studyChapter ? "NOVICE DRAFT" : book.version}</span></a>
           <button type="button" data-book-print>Print <span aria-hidden="true">↗</span></button>
         </div>
         <p class="eyebrow">{chapter?.part ?? "A LIVING GUIDE TO ORANGE"}</p>
         <h1>{chapter?.title ?? book.title}</h1>
         {!chapter && <p class="book-byline">By {book.author}</p>}
       </header>
+      {studyChapter && (
+        <p class="book-draft">Draft lesson from the open Orange book work. It is not yet merged, and two later novice lessons are still unwritten. This is teaching text, not a language specification or a security claim.</p>
+      )}
       {headings.length > 0 && (
         <details class="book-page-contents">
           <summary>In this chapter <span aria-hidden="true">+</span></summary>
@@ -70,11 +129,30 @@ const sourceUrl = chapter
       )}
       <article class="book-prose"><slot /></article>
       <nav class="book-pagination" aria-label="Chapter navigation">
-        <div>{previous && <a href={`/book/${previous.slug}/`} rel="prev"><span>← Previous</span><strong>{previous.title.replace(/^Chapter \d+: /, "")}</strong></a>}</div>
-        <div>{next && <a href={`/book/${next.slug}/`} rel="next"><span>{chapter ? "Next →" : "Start reading →"}</span><strong>{next.title.replace(/^Chapter \d+: /, "")}</strong></a>}</div>
+        <div>{previous && <a href={`/book/${previous.slug}/`} rel="prev"><span>← Previous</span><strong>{label(previous.title)}</strong></a>}
+          {returnLesson && <a href={`/book/${returnLesson.slug}/`}><span>← Lesson</span><strong>{label(returnLesson.title)}</strong></a>}
+        </div>
+        <div>{next && <a href={`/book/${next.slug}/`} rel="next"><span>{chapter ? "Next →" : "Start reading →"}</span><strong>{label(next.title)}</strong></a>}</div>
       </nav>
+      {studyChapter?.linear && !next && (
+        <p class="book-draft-continue">Part 1 still has two unwritten lessons before the journeyman work. The <a href="/book/preface/">original manuscript</a> remains beside this draft.</p>
+      )}
       <footer class="book-source-note">
-        <span>Manuscript {book.version} · Snapshot {book.snapshot}</span>
+        {studyChapter ? (
+          <span>Novice draft · {study.snapshot}</span>
+        ) : (
+          <span>Manuscript {book.version} · Snapshot {book.snapshot}</span>
+        )}
+        {corrections.length > 0 && (
+          <span>
+            Open {corrections.map((item, index) => (
+              <>
+                {index > 0 ? (index === corrections.length - 1 ? ", and " : ", ") : ""}
+                <a href={`https://github.com/chasebryan/orange/pull/${item.pullRequest}`}>#{item.pullRequest}</a>
+              </>
+            ))}
+          </span>
+        )}
         <a href={sourceUrl}>View this edition’s source <span aria-hidden="true">↗</span></a>
       </footer>
     </main>

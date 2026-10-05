@@ -10,7 +10,7 @@ Chase Bryan’s independent work in mathematics and cryptography, centered on Or
 
 - The homepage presents Orange as the sole main project, followed by a brief introduction to Chase. Navigation leads to Orange, the Orange Book, About, and GitHub.
 - A restrained layout, readable type, and orange accents replace the project catalog and animated background. The homepage has no canvas visuals or motion controls.
-- The complete Orange Book is hosted at `/book/`, with a table of contents, 24 chapter pages, chapter navigation, section links, and local full-text search. The reader follows the original manuscript's order, including its preface, appendices, manuscript map, and source disclosure.
+- The complete Orange Book is hosted at `/book/`. The reading path opens with the drafted Part 1 novice lessons, then keeps the original manuscript's 24 sections, chapter navigation, section links, and local full-text search.
 - All 40 existing project pages remain available at `/projects/<slug>/`, with their purpose, implementation, maturity, limitations, repository, and documentation links.
 - `src/data/catalog.json` owns the project content. The [repository inventory](docs/repository-inventory.json) and [review report](docs/portfolio-review.md) record the public-repository review and earlier curation decisions.
 - `src/data/book.json` records the book's publication metadata and chapter order; `src/content/book/` contains the generated chapter Markdown. The full upstream manuscript is retained in `vendor/orange/THE_ORANGE_BOOK.md` and available to download at `/book/orange-book.md`.
@@ -31,7 +31,9 @@ npm run preview
 
 ## Update the Orange Book
 
-The hosted edition is pinned to Orange Book v0.26, snapshot October 2, 2026, from Orange revision [`4394a66201ff59d73bdd1dea38637bf9b7f37421`](https://github.com/chasebryan/orange/commit/4394a66201ff59d73bdd1dea38637bf9b7f37421). Builds use the committed manuscript and chapters without fetching upstream content, so the book remains available independently of GitHub.
+The hosted manuscript is Orange Book v0.27, snapshot October 5, 2026, from Orange revision [`7cfd1441ccacb461caeb4675119875235d1c1379`](https://github.com/chasebryan/orange/commit/7cfd1441ccacb461caeb4675119875235d1c1379), plus the open slice corrections in Orange pull requests [247](https://github.com/chasebryan/orange/pull/247), [253](https://github.com/chasebryan/orange/pull/253), and [248](https://github.com/chasebryan/orange/pull/248). Pull request 248 conflicts with the S3u corrections on the version line, so the hosted copy keeps S3u there and adds only its new universal-word section. Repository links inside the manuscript stay pinned to that revision, except the two S3v documents, which exist only on pull request 248.
+
+The novice lessons are a draft of Part 1 from Orange branch `book/novice-journeyman-master-opening` at [`a5620df49f695423f32d1c7bfe0056a28a9773ae`](https://github.com/chasebryan/orange/commit/a5620df49f695423f32d1c7bfe0056a28a9773ae). Their prose also includes the open corrections in pull requests [246](https://github.com/chasebryan/orange/pull/246), [250](https://github.com/chasebryan/orange/pull/250), and [251](https://github.com/chasebryan/orange/pull/251). Those lessons are not merged, and two later novice lessons are still unwritten. Builds use the committed manuscript and lessons without fetching upstream content.
 
 To import a newer edition from a local Orange checkout with a clean `docs/THE_ORANGE_BOOK.md`:
 

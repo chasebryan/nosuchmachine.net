@@ -63,8 +63,11 @@ are written as the RFC prints them, the S3q slice lets a module state its
 known answers as tests beside its functions, so that RFC 8439's examples are
 claims the program checks, and the S3r slice lets a shift or rotation take an
 amount computed from data, so that RC6 and SHA-3 turn their words as their
-designers write them. S3s adds tables of scalar rows, and S3t lets each finite
-size instance compute its own exact modulus. None of them
+designers write them. S3s adds tables of scalar rows, S3t lets each finite
+size instance compute its own exact modulus, and S3u carries arrays to four
+dimensions, so that ML-KEM's matrix of polynomials is one type, with updates
+that name one index per dimension, as AES and Keccak update their states.
+None of them
 adds typed
 implementations, refinement, code generation, a standard library, a proof checker, package or release behavior,
 or a verified cryptographic implementation. A passing test suite is
@@ -99,7 +102,7 @@ The manuscript uses four kinds of statements:
 The distinction is not decorative. A proposed architecture cannot become an
 accepted one merely because a chapter speaks about it fluently. When this book
 and a normative source disagree, the normative source, accepted Orange
-Enhancement Proposal, and [decision register](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md) control. The book
+Enhancement Proposal, and [decision register](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/DECISIONS.md) control. The book
 must then be corrected.
 
 The book has five parts. Part I explains why Orange exists and what kind of

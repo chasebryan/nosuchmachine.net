@@ -246,9 +246,27 @@ function generate(source, revision) {
     const body = rewriteLines(lines.slice(chapter.start + 1, chapter.end), resolveDestination);
     files.set(`${chapterDirectory}/${chapter.slug}.md`, `---\n${frontmatter}\n---\n${body}`);
   }
+  const corrections = [];
+  if (source.includes("The twenty-one current slices") && source.includes("the S3u slice, also in review, carries")) {
+    corrections.push(
+      { pullRequest: 247, revision: "58aceefdaee9ee8c4b0fd06ea09a8f15f173c655", summary: "Count twenty-one current slices through S3u in Chapter 4." },
+      { pullRequest: 253, revision: "d45f533808219001d491e472b59ce9a750067b87", summary: "Name slices S3s through S3u where the manuscript still stopped at S3r." },
+    );
+  }
+  // PR 248 also edits the version line and the slice chain, and those edits
+  // still say S3v follows S3t. Keep the S3u line from 247 and 253, and host
+  // only the new section. Its two new documents are not in the pinned revision.
+  if (source.includes("### One definition for every word width")) {
+    corrections.push({
+      pullRequest: 248,
+      revision: "48d277e49b7a96745162eea34523d641271304db",
+      summary: "Add the S3v section on one word parameter at every width. The version line stays S3u because this pull request still follows S3t.",
+    });
+  }
   const metadata = {
     title, author, version, snapshot, revision,
     sourceUrl: `${repositoryUrl}/blob/${revision}/${sourcePath}`,
+    corrections,
     chapters: chapters.map(({ start, end, ...chapter }) => chapter),
   };
   files.set(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`);

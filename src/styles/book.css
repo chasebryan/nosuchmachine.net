@@ -72,6 +72,15 @@
 .book-introduction p { font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
 .book-introduction .book-introduction-note { font-size: 13px; line-height: 1.75; color: var(--muted); }
 .book-edition { display: block; color: var(--muted); font: 10px/1.6 var(--font-mono); margin-block: 22px 16px; }
+.book-draft, .book-draft-continue { margin: 0 0 28px; padding: 14px 16px; background: #ece9df; border-left: 2px solid var(--accent); color: var(--muted); font-size: 14px; line-height: 1.65; }
+.book-draft-continue { margin-top: 0; }
+.book-draft-continue a, .book-sidebar-group { color: var(--ink); }
+.book-draft-continue a { text-decoration: underline; text-underline-offset: 3px; }
+.book-sidebar-group { margin: 28px 0 0; font: 10px/1.6 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.study-path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 42px; }
+.study-path article { border-top: 1px solid var(--line); padding-top: 16px; }
+.study-path h2 { margin: 10px 0 8px; font: 400 28px/1.2 var(--font-serif); letter-spacing: -0.03em; }
+.study-path p:last-child { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .book-contents-list { margin-top: 48px; }
 .book-contents-list h2 { margin-top: 0; }
 .book-contents-group { margin-block: 32px; }
@@ -88,11 +97,15 @@
 .book-pagination strong { display: block; color: var(--ink); font-size: 14px; font-weight: 400; line-height: 1.5; }
 .book-pagination a:hover strong { color: var(--accent); }
 .book-source-note { border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 24px; padding-block: 19px; color: var(--muted); font-size: 10px; }
+.book-source-note a { text-decoration: underline; text-underline-offset: 3px; }
 .book-source-note a:hover { color: var(--accent); }
 
 @media (max-width: 1100px) {
   .book-shell { grid-template-columns: 225px minmax(0, 1fr); gap: 40px; }
   .book-introduction { grid-template-columns: 145px minmax(0, 1fr); gap: 25px; }
+}
+@media (max-width: 760px) {
+  .study-path { grid-template-columns: 1fr; gap: 18px; }
 }
 @media (max-width: 979px) {
   .book-shell { grid-template-columns: 1fr; gap: 36px; padding-top: 24px; }

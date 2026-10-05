@@ -187,9 +187,12 @@ strings hold up to 65,536 elements and lets `orangec eval` run under a larger
 step budget, evaluate only the functions it names, and report the steps each
 used, the S3q slice, also in review, adds known-answer tests and equality of
 whole arrays and tuples, so that a module states what its functions must give
-and `orangec test` checks it, and the S3r slice, also in review, lets the
+and `orangec test` checks it, the S3r slice, also in review, lets the
 amount of a shift or rotation be computed from data, with the value the
-arithmetic gives at every amount.
+arithmetic gives at every amount, the S3s slice, also in review, adds arrays
+of scalar rows, the S3t slice, also in review, lets each finite size instance
+compute its own exact modulus, and the S3u slice, also in review, carries
+arrays to four dimensions and lets an update name one index per dimension.
 
 PR #9 merged that bounded pre-alpha implementation and its normative records as
 commit `6c0bd3021cf2df603e08808e4660724ca1e2b2a5`. The larger S3 milestone and

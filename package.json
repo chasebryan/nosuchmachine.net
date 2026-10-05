@@ -11,7 +11,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/verify-build.mjs",
-    "sync:book": "node scripts/sync-orange-book.mjs"
+    "sync:book": "node scripts/sync-orange-book.mjs",
+    "sync:study": "node scripts/sync-orange-study.mjs"
   },
   "engines": {
     "node": ">=20"
