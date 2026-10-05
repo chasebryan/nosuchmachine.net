@@ -1,15 +1,181 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 const root = path.resolve("dist");
 const catalog = JSON.parse(fs.readFileSync("src/data/catalog.json", "utf8"));
+const book = JSON.parse(fs.readFileSync("src/data/book.json", "utf8"));
+
+function decodeAttribute(value) {
+  return value
+    .replaceAll("&amp;", "&")
+    .replaceAll("&quot;", '"')
+    .replaceAll("&#39;", "'");
+}
+
+function anchors(html) {
+  return [...html.matchAll(/<a\b([^>]*)>/g)].map((match) =>
+    Object.fromEntries(
+      [...match[1].matchAll(/([\w:-]+)="([^"]*)"/g)].map((attribute) => [
+        attribute[1],
+        decodeAttribute(attribute[2]),
+      ]),
+    ),
+  );
+}
+
+function readRoute(route) {
+  const file = path.join(root, route, "index.html");
+  assert.ok(fs.existsSync(file), `Missing page: ${route}`);
+  return fs.readFileSync(file, "utf8");
+}
 assert.equal(
   new Set(catalog.map((p) => p.slug)).size,
   catalog.length,
   "Project slugs must be unique",
 );
+assert.deepEqual(
+  catalog.filter((project) => project.featured).map((project) => project.slug),
+  ["orange"],
+  "Orange must be the only featured catalog project",
+);
 const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
 const home = fs.readFileSync(path.join(root, "index.html"), "utf8");
+const homeProjects = catalog.filter((project) =>
+  home.includes(`href="/projects/${project.slug}/"`),
+);
+assert.deepEqual(
+  homeProjects.map((project) => project.slug),
+  ["orange"],
+  "Orange must be the only catalog project linked from the homepage",
+);
+assert.ok(!/<canvas\b/i.test(home), "Homepage must not include canvas visuals");
+assert.ok(
+  !/data-motion-toggle|data-animation-toggle/i.test(home),
+  "Homepage must not include animation or motion controls",
+);
+
+assert.equal(book.chapters.length, 24, "The pinned Orange Book has 24 chapters");
+assert.equal(
+  new Set(book.chapters.map((chapter) => chapter.slug)).size,
+  book.chapters.length,
+  "Book chapter slugs must be unique",
+);
+for (const field of ["title", "author", "version", "snapshot", "sourceUrl"])
+  assert.ok(
+    typeof book[field] === "string" && book[field].trim(),
+    `Missing book ${field}`,
+  );
+assert.match(
+  book.revision,
+  /^[a-f\d]{40}$/,
+  "Book source must be pinned to a full commit revision",
+);
+assert.ok(
+  fs.existsSync("vendor/orange/THE_ORANGE_BOOK.md"),
+  "The original Orange Book source must be retained locally",
+);
+// Check against the vendored manuscript, so missing text or stale chapter imports
+// fail without fetching a moving upstream revision during a build.
+execFileSync(process.execPath, ["scripts/sync-orange-book.mjs", "--check"], {
+  stdio: "inherit",
+});
+assert.ok(
+  fs.readFileSync(path.join(root, "book/orange-book.md")).equals(
+    fs.readFileSync("vendor/orange/THE_ORANGE_BOOK.md"),
+  ),
+  "The hosted manuscript download must match the original source",
+);
+assert.ok(
+  anchors(home).some((anchor) => anchor.href === "/book/"),
+  "Homepage must link to the hosted Orange Book",
+);
+const bookHome = readRoute("/book/");
+const bookHomeLinks = new Set(anchors(bookHome).map((anchor) => anchor.href));
+const chapterRoutes = book.chapters.map((chapter) => `/book/${chapter.slug}/`);
+for (const route of ["/book/", ...chapterRoutes])
+  assert.ok(
+    sitemap.includes(`https://nosuchmachine.net${route}</loc>`),
+    `Book route missing from sitemap: ${route}`,
+  );
+
+for (const [index, chapter] of book.chapters.entries()) {
+  if (index > 0)
+    assert.ok(
+      chapter.order > book.chapters[index - 1].order,
+      "Book chapters must follow reading order",
+    );
+  const route = chapterRoutes[index];
+  assert.ok(bookHomeLinks.has(route), `Book contents missing chapter: ${chapter.title}`);
+  const chapterLinks = anchors(readRoute(route));
+  const activeChapterLinks = chapterLinks.filter(
+    (anchor) =>
+      anchor["aria-current"] === "page" && chapterRoutes.includes(anchor.href),
+  );
+  assert.deepEqual(
+    activeChapterLinks.map((anchor) => anchor.href),
+    [route],
+    `Book sidebar must identify the current chapter: ${route}`,
+  );
+  for (const [relation, expected] of [
+    ["prev", chapterRoutes[index - 1]],
+    ["next", chapterRoutes[index + 1]],
+  ]) {
+    const links = chapterLinks.filter((anchor) =>
+      (anchor.rel ?? "").split(/\s+/).includes(relation),
+    );
+    assert.deepEqual(
+      links.map((anchor) => anchor.href),
+      expected ? [expected] : [],
+      `Incorrect ${relation} chapter link: ${route}`,
+    );
+  }
+}
+
+const searchIndexFile = path.join(root, "book/search-index.json");
+assert.ok(fs.existsSync(searchIndexFile), "Missing locally hosted book search index");
+const searchIndex = JSON.parse(fs.readFileSync(searchIndexFile, "utf8"));
+assert.ok(
+  Array.isArray(searchIndex),
+  "Book search index must contain an array of chapter entries",
+);
+assert.deepEqual(
+  searchIndex.map((chapter) => chapter.url),
+  chapterRoutes,
+  "Book search must index every chapter exactly once in reading order",
+);
+for (const [index, chapter] of searchIndex.entries()) {
+  assert.equal(
+    chapter.title,
+    book.chapters[index].title,
+    `Search title differs from chapter: ${chapter.url}`,
+  );
+  assert.ok(
+    typeof chapter.text === "string" && chapter.text.trim().length > 100,
+    `Search index lacks chapter text: ${chapter.url}`,
+  );
+}
+// Orange's sized-call syntax resembles Markdown links. Readers must be able to
+// find these literal examples from both inline code and fenced code blocks.
+for (const [route, expressions] of [
+  [
+    "/book/chapter-8/",
+    [
+      "sha256[2](m)",
+      "sum[1]([10])",
+      "spec total() -> Int { sum([1, 2, 3]) + sum[1]([10]) }",
+    ],
+  ],
+  ["/book/appendix-a/", ["f[s, ...](args)"]],
+]) {
+  const chapter = searchIndex.find((entry) => entry.url === route);
+  for (const expression of expressions)
+    assert.ok(
+      chapter.text.includes(expression),
+      `Book search must preserve Orange syntax ${expression} in ${route}`,
+    );
+}
+
 const files = [];
 function walk(dir) {
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -22,31 +188,46 @@ walk(root);
 let checkedLinks = 0;
 for (const project of catalog) {
   const route = `/projects/${project.slug}/`;
-  assert.ok(
-    home.includes(`href="${route}"`),
-    `${project.name} missing from homepage`,
-  );
+  const projectFile = path.join(root, route, "index.html");
   assert.ok(
     sitemap.includes(`https://nosuchmachine.net${route}`),
     `${project.name} missing from sitemap`,
   );
   assert.ok(
-    fs.existsSync(path.join(root, route, "index.html")),
+    fs.existsSync(projectFile),
     `${project.name} page missing`,
   );
   assert.ok(
     project.sources.length > 0,
     `${project.name} needs a source reference`,
   );
+  const projectHtml = fs.readFileSync(projectFile, "utf8");
+  const projectLinks = new Set(
+    [...projectHtml.matchAll(/\bhref="([^"]+)"/g)].map((match) =>
+      match[1].replaceAll("&amp;", "&"),
+    ),
+  );
+  for (const source of project.sources) {
+    assert.ok(
+      projectLinks.has(source.href),
+      `${project.name} missing source reference: ${source.href}`,
+    );
+  }
 }
 for (const file of files) {
   const html = fs.readFileSync(file, "utf8");
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
   assert.equal(new Set(ids).size, ids.length, `Duplicate IDs: ${file}`);
   assert.ok(ids.includes("main"), `Missing main content target: ${file}`);
-  assert.ok(
-    html.includes("data-motion-toggle"),
-    `Missing motion control: ${file}`,
+  assert.equal(
+    [...html.matchAll(/<main\b/g)].length,
+    1,
+    `Expected one main landmark: ${file}`,
+  );
+  assert.equal(
+    [...html.matchAll(/<h1\b/g)].length,
+    1,
+    `Expected one page heading: ${file}`,
   );
   for (const tag of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
     if (/application\/ld\+json/.test(tag[1])) continue;
@@ -68,7 +249,7 @@ for (const file of files) {
     if (url.hash && target.endsWith(".html")) {
       const targetHtml = fs.readFileSync(target, "utf8");
       assert.ok(
-        targetHtml.includes(`id="${url.hash.slice(1)}"`),
+        targetHtml.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`),
         `Missing anchor ${match[1]} on ${file}`,
       );
     }
@@ -76,5 +257,5 @@ for (const file of files) {
   }
 }
 console.log(
-  `Verified ${catalog.length} project routes, ${files.length} HTML pages, ${checkedLinks} local links/assets, sitemap, and CSP-compatible scripts.`,
+  `Verified Orange-only homepage, ${book.chapters.length} hosted book chapters with reading navigation and search, ${catalog.length} project routes and source references, ${files.length} HTML pages, ${checkedLinks} local links/assets, sitemap, and CSP-compatible scripts.`,
 );

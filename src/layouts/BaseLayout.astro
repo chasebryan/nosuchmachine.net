@@ -1,13 +1,12 @@
 ---
 import "../styles/global.css";
-import SignalField from "../components/SignalField.astro";
 interface Props {
   title?: string;
   description?: string;
 }
 const {
   title = "No Such Machine",
-  description = "Independent work in signals intelligence, mathematics, and cryptography by Chase Bryan. Explore the projects, research, and source code.",
+  description = "Independent work by Chase Bryan. Currently building Orange, a mathematical language for cryptography with an exact reference evaluator.",
 } = Astro.props;
 const pageTitle =
   title === "No Such Machine"
@@ -22,8 +21,8 @@ const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#080c0e" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f5f3ed" />
     <meta name="description" content={description} />
     <meta name="author" content="Chase Bryan" />
     <meta property="og:site_name" content="No Such Machine" />
@@ -33,16 +32,19 @@ const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
     <meta property="og:url" content={canonical} />
     <meta
       property="og:image"
-      content={new URL("/brand/insignia.png", Astro.site).toString()}
+      content={new URL("/brand/social.png", Astro.site).toString()}
     />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Orange, a mathematical language for cryptography. Independent work by Chase Bryan at No Such Machine." />
+    <meta name="twitter:card" content="summary_large_image" />
     {isNotFound ? (
       <meta name="robots" content="noindex" />
     ) : (
       <link rel="canonical" href={canonical} />
     )}
-    <link rel="icon" href="/brand/icon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/brand/icon.png" />
+    <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/site-icon.png" />
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{pageTitle}</title>
   </head>
@@ -50,28 +52,21 @@ const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
     <a class="skip-link" href="#main">
       Skip to content
     </a>
-    <SignalField />
     <header class="site-header shell">
       <a class="wordmark" href="/" aria-label="No Such Machine, home">
-        <span class="brand-symbol" aria-hidden="true">
-          ⊕
-        </span>
-        <span>
-          NO SUCH MACHINE<span class="wordmark-domain">.NET</span>
-        </span>
+        <span class="brand-symbol" aria-hidden="true"></span>
+        <span>No Such Machine</span>
       </a>
       <nav aria-label="Main navigation">
-        <a href="/#work">Work</a>
+        <a href="/#work">Orange</a>
+        <a href="/book/" aria-current={Astro.url.pathname.startsWith("/book/") ? "location" : undefined}>Book</a>
         <a href="/#about">About</a>
         <a
           class="nav-github"
           href="https://github.com/chasebryan"
           rel="noopener noreferrer"
         >
-          GitHub{" "}
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M9 15 15 9M9 9h6v6M19 13v6H5V5h6" />
-          </svg>
+          GitHub <span aria-hidden="true">↗</span>
         </a>
       </nav>
     </header>
@@ -79,18 +74,15 @@ const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
     <footer class="site-footer shell">
       <div>
         <a class="footer-name" href="/">
-          NO SUCH MACHINE
+          No Such Machine
         </a>
-        <p>Chase Bryan · Independent research & engineering</p>
+        <p>Independent research & engineering by Chase Bryan.</p>
       </div>
       <div class="footer-links">
-        <button type="button" data-motion-toggle>
-          Pause motion
-        </button>
         <a href="https://github.com/chasebryan/nosuchmachine.net">
           Site source
         </a>
-        <span>© {new Date().getUTCFullYear()} · AGPL-3.0</span>
+        <span>© {new Date().getUTCFullYear()} Chase Bryan</span>
       </div>
     </footer>
   </body>

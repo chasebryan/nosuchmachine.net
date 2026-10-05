@@ -104,7 +104,7 @@
         "href": "https://github.com/chasebryan/airwav/blob/main/docs/validation.md"
       }
     ],
-    "featured": true,
+    "featured": false,
     "accent": "#b4e9c7",
     "diagram": "signals",
     "collection": "core"
@@ -157,7 +157,7 @@
         "href": "https://github.com/chasebryan/centl/tree/42508684c4386b575d7b52e763565345a76bcb9e"
       }
     ],
-    "featured": true,
+    "featured": false,
     "accent": "#baa7e8",
     "diagram": "arithmetic",
     "collection": "core"

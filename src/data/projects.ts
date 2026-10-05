@@ -21,12 +21,5 @@ export type Project = {
   collection: string;
 };
 export const projects: Project[] = catalog;
-export const featuredProjects = projects.filter((project) => project.featured);
-export const coreProjects = projects.filter(
-  (project) => project.collection === "core",
-);
-export const furtherProjects = projects.filter(
-  (project) => project.collection === "further",
-);
 export const getProject = (slug: string) =>
   projects.find((project) => project.slug === slug);

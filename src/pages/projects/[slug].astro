@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import ProjectDiagram from "../../components/ProjectDiagram.astro";
 import { projects, type Project } from "../../data/projects";
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -12,36 +11,26 @@ interface Props {
   project: Project;
 }
 const { project } = Astro.props;
-const related = projects
-  .filter((other) => other.slug !== project.slug)
-  .sort(
-    (a, b) =>
-      Number(
-        b.categories.some((category) => project.categories.includes(category)),
-      ) -
-      Number(
-        a.categories.some((category) => project.categories.includes(category)),
-      ),
-  )
-  .slice(0, 2);
+const isOrange = project.slug === "orange";
 ---
 
 <BaseLayout title={project.name} description={project.summary}>
   <main
     id="main"
     class="project-page shell"
-    style={`--project-accent:${project.accent}`}
   >
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="/">No Such Machine</a>
-      <span aria-hidden="true">/</span>
-      <a href="/#work">Projects</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">{project.name}</span>
     </nav>
     <header class="project-header">
       <div>
-        <p class="eyebrow">{project.categories.join(" / ").toUpperCase()}</p>
+        <p class="eyebrow">
+          {isOrange
+            ? "CURRENT PROJECT / PRE-ALPHA"
+            : `FROM THE ARCHIVE / ${project.categories.join(" / ").toUpperCase()}`}
+        </p>
         <h1>{project.name}</h1>
         <p class="project-tagline">{project.summary}</p>
         <div class="hero-actions">
@@ -53,7 +42,11 @@ const related = projects
           </a>
         </div>
       </div>
-      <ProjectDiagram kind={project.diagram} />
+      {isOrange && (
+        <div class="project-art">
+          <img src="/projects/orange/emblem.svg" alt="" width="1024" height="1024" />
+        </div>
+      )}
     </header>
     <dl class="project-facts">
       <div>
@@ -121,9 +114,9 @@ const related = projects
             {project.links
               .filter((link) => link.href !== project.githubUrl)
               .map((link) => (
-                <a href={link.href}>
+                <a href={isOrange && link.label === "Orange Book" ? "/book/" : link.href}>
                   <strong>{link.label}</strong>
-                  <span>Open resource ↗</span>
+                  <span>{isOrange && link.label === "Orange Book" ? "Read on this site →" : "Open resource ↗"}</span>
                 </a>
               ))}
           </div>
@@ -147,19 +140,10 @@ const related = projects
         </section>
       </div>
     </div>
-    <div class="related-heading">
-      <h2>Keep exploring</h2>
-      <a class="text-link" href="/#work">
-        All projects
+    <div class="project-end">
+      <a class="text-link" href={isOrange ? "/" : "/projects/orange/"}>
+        {isOrange ? "Return home" : "Explore Orange"}
       </a>
-    </div>
-    <div class="related-links">
-      {related.map((other) => (
-        <a href={`/projects/${other.slug}/`}>
-          <strong>{other.name}</strong>
-          <span>{other.summary}</span>
-        </a>
-      ))}
     </div>
   </main>
 </BaseLayout>

@@ -1,0 +1,178 @@
+{
+  "title": "The Orange Book",
+  "author": "Chase Bryan",
+  "version": "0.26",
+  "snapshot": "2026-10-02",
+  "revision": "4394a66201ff59d73bdd1dea38637bf9b7f37421",
+  "sourceUrl": "https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/THE_ORANGE_BOOK.md",
+  "chapters": [
+    {
+      "slug": "preface",
+      "title": "Preface",
+      "part": "Front matter",
+      "order": 0,
+      "description": "The book's audience, the current state of Orange, and the boundary between aspiration and evidence."
+    },
+    {
+      "slug": "chapter-1",
+      "title": "Chapter 1: The Seams Are the System",
+      "part": "Part I: Why Orange",
+      "order": 1,
+      "description": "Why high-assurance cryptography depends on the connections between specifications, implementations, proofs, and binaries."
+    },
+    {
+      "slug": "chapter-2",
+      "title": "Chapter 2: Claims, Not Labels",
+      "part": "Part I: Why Orange",
+      "order": 2,
+      "description": "How Orange describes assurance through precise claims, evidence, assumptions, and independent outcomes."
+    },
+    {
+      "slug": "chapter-3",
+      "title": "Chapter 3: One Language, Several Semantic Worlds",
+      "part": "Part I: Why Orange",
+      "order": 3,
+      "description": "One language with distinct semantic roles for specifications, implementations, proofs, and foreign interfaces."
+    },
+    {
+      "slug": "chapter-4",
+      "title": "Chapter 4: From Surface Text to Meaning",
+      "part": "Part II: Meaning and Trust",
+      "order": 4,
+      "description": "The path from source bytes through syntax and meaning to the Typed Reference Core."
+    },
+    {
+      "slug": "chapter-5",
+      "title": "Chapter 5: Proof Search Is Not Proof Checking",
+      "part": "Part II: Meaning and Trust",
+      "order": 5,
+      "description": "The distinction between finding a proof and checking one, and the proposed trust boundary around automation."
+    },
+    {
+      "slug": "chapter-6",
+      "title": "Chapter 6: Secrets Are a Semantic Concern",
+      "part": "Part II: Meaning and Trust",
+      "order": 6,
+      "description": "Secrecy, leakage policies, constant-time claims, and the gap between source code and native execution."
+    },
+    {
+      "slug": "chapter-7",
+      "title": "Chapter 7: No Disposable Prototype",
+      "part": "Part III: Building the Language",
+      "order": 7,
+      "description": "Why Orange builds its permanent compiler through small slices instead of a disposable prototype."
+    },
+    {
+      "slug": "chapter-8",
+      "title": "Chapter 8: Orange 2026: The Smallest Honest Slice",
+      "part": "Part III: Building the Language",
+      "order": 8,
+      "description": "The current Orange 2026 grammar, semantic slices, executable examples, and explicit capability limits."
+    },
+    {
+      "slug": "chapter-9",
+      "title": "Chapter 9: From Core to Native Bytes",
+      "part": "Part III: Building the Language",
+      "order": 9,
+      "description": "The evidence and design decisions needed to connect the reference semantics to native code."
+    },
+    {
+      "slug": "chapter-10",
+      "title": "Chapter 10: The Foreign Boundary",
+      "part": "Part III: Building the Language",
+      "order": 10,
+      "description": "Foreign interfaces, contracts, imported assumptions, and secrets crossing language boundaries."
+    },
+    {
+      "slug": "chapter-11",
+      "title": "Chapter 11: Standards as Versioned Inputs",
+      "part": "Part IV: Cryptography in Practice",
+      "order": 11,
+      "description": "How standards, clauses, test vectors, provenance, and rights become versioned inputs."
+    },
+    {
+      "slug": "chapter-12",
+      "title": "Chapter 12: The Corpus as Acceptance Test",
+      "part": "Part IV: Cryptography in Practice",
+      "order": 12,
+      "description": "Why real cryptographic algorithms and their known answers belong in the acceptance process from the beginning."
+    },
+    {
+      "slug": "chapter-13",
+      "title": "Chapter 13: Interoperability and External Validation",
+      "part": "Part IV: Cryptography in Practice",
+      "order": 13,
+      "description": "The boundaries between primitive correctness, protocol interoperability, and independent validation."
+    },
+    {
+      "slug": "chapter-14",
+      "title": "Chapter 14: Evidence That Survives the Build",
+      "part": "Part V: Operating Orange",
+      "order": 14,
+      "description": "The records and identities needed to keep a build's evidence useful after the build ends."
+    },
+    {
+      "slug": "chapter-15",
+      "title": "Chapter 15: Offline Replay and Trust Budgets",
+      "part": "Part V: Operating Orange",
+      "order": 15,
+      "description": "Offline replay, dependency closure, and making a claim's trust budget visible."
+    },
+    {
+      "slug": "chapter-16",
+      "title": "Chapter 16: Solo Work Through Incremental Gates",
+      "part": "Part V: Operating Orange",
+      "order": 16,
+      "description": "Solo development through bounded stages, explicit decisions, acceptance gates, and durable records."
+    },
+    {
+      "slug": "chapter-17",
+      "title": "Chapter 17: Releases, Updates, and Failure",
+      "part": "Part V: Operating Orange",
+      "order": 17,
+      "description": "Release claims, updates, vulnerability response, stop-ship conditions, and support boundaries."
+    },
+    {
+      "slug": "appendix-a",
+      "title": "Appendix A: Current Grammar and CLI",
+      "part": "Appendices",
+      "order": 18,
+      "description": "A reference for the current grammar, types, operators, commands, and diagnostic families."
+    },
+    {
+      "slug": "appendix-b",
+      "title": "Appendix B: Decision Ledger",
+      "part": "Appendices",
+      "order": 19,
+      "description": "A summary of the project's decision register and the status of its controlling decisions."
+    },
+    {
+      "slug": "appendix-c",
+      "title": "Appendix C: Claim Vocabulary",
+      "part": "Appendices",
+      "order": 20,
+      "description": "Definitions of the claim and evidence vocabulary used throughout the book."
+    },
+    {
+      "slug": "appendix-d",
+      "title": "Appendix D: Source Notes",
+      "part": "Appendices",
+      "order": 21,
+      "description": "The principal repository sources behind each chapter and appendix."
+    },
+    {
+      "slug": "manuscript-map",
+      "title": "Manuscript map",
+      "part": "Back matter",
+      "order": 22,
+      "description": "The manuscript's chapter plan and intended reading structure."
+    },
+    {
+      "slug": "sources-and-drafting-disclosure",
+      "title": "Sources and drafting disclosure",
+      "part": "Back matter",
+      "order": 23,
+      "description": "The source documents, manuscript revision history, authorship, and drafting disclosures."
+    }
+  ]
+}

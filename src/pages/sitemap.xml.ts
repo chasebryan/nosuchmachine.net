@@ -1,8 +1,11 @@
 import type { APIRoute } from "astro";
 import { projects } from "../data/projects";
+import book from "../data/book.json";
 export const GET: APIRoute = ({ site }) => {
   const routes = [
     "/",
+    "/book/",
+    ...book.chapters.map((chapter) => `/book/${chapter.slug}/`),
     ...projects.map((project) => `/projects/${project.slug}/`),
   ];
   return new Response(

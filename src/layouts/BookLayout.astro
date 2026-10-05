@@ -1,0 +1,85 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import "../styles/book.css";
+import book from "../data/book.json";
+
+type Chapter = (typeof book.chapters)[number];
+interface Props {
+  chapter?: Chapter;
+  headings?: { depth: number; slug: string; text: string }[];
+}
+const { chapter, headings = [] } = Astro.props;
+const parts = [...new Set(book.chapters.map((entry) => entry.part))];
+const index = chapter ? book.chapters.findIndex((entry) => entry.slug === chapter.slug) : -1;
+const previous = index > 0 ? book.chapters[index - 1] : undefined;
+const next = book.chapters[index + 1];
+const sourceUrl = chapter
+  ? `${book.sourceUrl}#${chapter.title.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s/g, "-")}`
+  : book.sourceUrl;
+---
+
+<BaseLayout title={chapter ? `${chapter.title} · The Orange Book` : book.title} description={chapter?.description ?? "Read The Orange Book by Chase Bryan: a guide to the ideas, language, compiler, and current state of Orange."}>
+  <div class="book-shell shell">
+    <aside class="book-sidebar">
+      <details id="book-navigation" open>
+        <summary><span>Contents</span><span class="contents-toggle" aria-hidden="true">⌄</span></summary>
+        <div class="book-sidebar-content">
+          <a class="book-sidebar-title" href="/book/" aria-current={!chapter ? "page" : undefined}>The Orange Book<span>Version {book.version}</span></a>
+          <div class="book-search" role="search" aria-label="Search the Orange Book">
+            <label class="visually-hidden" for="book-search-input">Search the book</label>
+            <input id="book-search-input" type="search" placeholder="Search the book…" autocomplete="off" aria-controls="book-search-results" />
+            <p id="book-search-status" role="status" aria-live="polite"></p>
+            <ol id="book-search-results" class="book-search-results" hidden></ol>
+          </div>
+          <nav class="book-chapters" aria-label="Book chapters" id="book-chapters">
+            {parts.map((part) => (
+              <div class="book-part">
+                <p>{part}</p>
+                <ol>
+                  {book.chapters.filter((entry) => entry.part === part).map((entry) => (
+                    <li><a href={`/book/${entry.slug}/`} aria-current={chapter?.slug === entry.slug ? "page" : undefined}>
+                      {entry.title.replace(/^(Chapter \d+|Appendix [A-D]): /, "")}
+                      {(entry.slug.startsWith("chapter-") || entry.slug.startsWith("appendix-")) && <span class="book-chapter-number">{entry.slug.replace("chapter-", "").replace("appendix-", "").toUpperCase()}</span>}
+                    </a></li>
+                  ))}
+                </ol>
+              </div>
+            ))}
+          </nav>
+          <a class="book-download" href="/book/orange-book.md" download>Download the manuscript <span aria-hidden="true">↓</span></a>
+        </div>
+      </details>
+    </aside>
+    <main id="main" class="book-main">
+      <header class="book-chapter-header">
+        <div class="book-reading-tools">
+          <a href="/book/">THE ORANGE BOOK <span>/ {book.version}</span></a>
+          <button type="button" data-book-print>Print <span aria-hidden="true">↗</span></button>
+        </div>
+        <p class="eyebrow">{chapter?.part ?? "A LIVING GUIDE TO ORANGE"}</p>
+        <h1>{chapter?.title ?? book.title}</h1>
+        {!chapter && <p class="book-byline">By {book.author}</p>}
+      </header>
+      {headings.length > 0 && (
+        <details class="book-page-contents">
+          <summary>In this chapter <span aria-hidden="true">+</span></summary>
+          <nav aria-label="Chapter sections">
+            {headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}
+          </nav>
+        </details>
+      )}
+      <article class="book-prose"><slot /></article>
+      <nav class="book-pagination" aria-label="Chapter navigation">
+        <div>{previous && <a href={`/book/${previous.slug}/`} rel="prev"><span>← Previous</span><strong>{previous.title.replace(/^Chapter \d+: /, "")}</strong></a>}</div>
+        <div>{next && <a href={`/book/${next.slug}/`} rel="next"><span>{chapter ? "Next →" : "Start reading →"}</span><strong>{next.title.replace(/^Chapter \d+: /, "")}</strong></a>}</div>
+      </nav>
+      <footer class="book-source-note">
+        <span>Manuscript {book.version} · Snapshot {book.snapshot}</span>
+        <a href={sourceUrl}>View this edition’s source <span aria-hidden="true">↗</span></a>
+      </footer>
+    </main>
+  </div>
+  <script>
+    import "../scripts/book-reader";
+  </script>
+</BaseLayout>
