@@ -34,12 +34,12 @@ Lean, or Rocq, inheriting a mature kernel and library. It could accept a subset
 of Rust with proof annotations and meet implementers where they already work.
 
 Orange examined those options as candidates rather than dismissing them. The
-[product-form decision](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md#d-003--product-form) compared four forms
+[product-form decision](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/DECISIONS.md#d-003--product-form) compared four forms
 against eight hard gates and accepted candidate PF-01, a standalone
 domain-specific language with its own editioned semantics and canonical Core
 formats. That decision is **current and accepted**: the project owner accepted
 it on 2026-07-26 and
-[OEP-0004](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/governance/oeps/OEP-0004-standalone-orange-product-form.md) binds it
+[OEP-0004](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/governance/oeps/OEP-0004-standalone-orange-product-form.md) binds it
 to exact revision `a82a5cec2ee4359dc2fe66171f17c93146747333`.
 
 The reasoning is the seam argument from Chapter 1 turned on the language
@@ -57,7 +57,7 @@ describes the leading proposal and the discipline that any answer must obey.
 
 ## Five roles, one module system
 
-The [project charter](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/PROJECT_CHARTER.md#4-product-thesis) proposes one module
+The [project charter](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/PROJECT_CHARTER.md#4-product-thesis) proposes one module
 system with several deliberately separated declaration roles:
 
 - **Specification** for total mathematical functions and relations;
@@ -79,14 +79,14 @@ never influence a running program. A vector intrinsic has meaning only on a
 target that provides it.
 
 A **claim** is conspicuously absent from that list. In the
-[semantic-strata proposal](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/SEMANTIC_STRATA_DECISION_SUITE.md#31-source-declaration-roles),
+[semantic-strata proposal](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/SEMANTIC_STRATA_DECISION_SUITE.md#31-source-declaration-roles),
 a claim is a record that binds a subject, a relation, assumptions, and evidence.
 It is not a sixth semantic world with its own execution rules. Foreign imports
 and deliberate declassification are similar: they are cross-cutting boundaries
 that must be declared, not annotations that switch off a stratum's rules.
 
 All of this is **proposed**. The role map is a hypothesis under
-[D-004](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md#d-004--semantic-strata), which remains open.
+[D-004](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/DECISIONS.md#d-004--semantic-strata), which remains open.
 
 ## The crossings are the design
 
@@ -138,7 +138,7 @@ calculus. A small **Shared Pure** subset would let deterministic definitions be
 reused across roles without importing state or randomness.
 
 That recommendation is not a selection. The
-[D-004 suite](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/SEMANTIC_STRATA_DECISION_SUITE.md#2-candidate-architectures)
+[D-004 suite](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/SEMANTIC_STRATA_DECISION_SUITE.md#2-candidate-architectures)
 compares it symmetrically with four alternatives:
 
 | ID | Candidate | Idea |
@@ -178,27 +178,30 @@ without a conflict while two `spec rounds` declarations are an error. The words
 `game`, `proof`, and `claim` are reserved and introduce nothing. Only typed
 specifications have meaning: pure `spec` functions over `Int`, `Bool`,
 `Word[8]` through `Word[64]`, the integers modulo a constant, fixed-length
-arrays of them, and tuples of those, built from
+arrays of those scalars through four dimensions, and tuples of scalars or
+arrays, built from
 literals, parameters, calls, operators, comparisons, `let` bindings, at the
 start of a body, a loop's step, or a branch, tuple patterns, explicit
 conversions, array literals, byte strings, tuples, indices, including indices
-keyed by data, selections by position, joins, slices, bounded loops, updates,
-and conditionals. A `spec` may declare sizes, each ranging over a finite
+keyed by data and one index per axis, selections by position, joins, slices,
+bounded loops, updates, including a path of one index per dimension, and
+conditionals. A `spec` may declare sizes, each ranging over a finite
 set of integers, and then stands for one function for each of their values,
-with its array lengths and loop bounds written from them. An `impl` body must
+with its array lengths, loop bounds, and own modulus expressions written from
+them. An `impl` body must
 still be empty. A
 program may span several modules, one per file: a module names the modules it
 uses at its head and calls their functions by module name, as in
 `sha256::compress(h, block)`, and nothing is imported into its scope. A
-`type` declaration names a type, such as the field of X25519, for the rest of
-its module.
+`type` declaration names a type, such as the field of X25519 or an array of
+rank two, three, or four, for the rest of its module.
 
 Even that small surface already follows the chapter's rules. `Int` and each
 word width are distinct types, and a value moves between them only through a
 written `as`, never implicitly. A same-named
 `spec` and `impl` have no relation. Nothing in the Typed Reference Core
 pretends to be a Spec Core, and the Core records no claim. The expression,
-binding, array, loop, condition, lookup, module, modular, block, tuple, byte, size, byte-order, type-parameter, length, test, and amount slices were built to fit inside every candidate's
+binding, array, loop, condition, lookup, module, modular, block, tuple, byte, size, byte-order, type-parameter, length, test, amount, nested-array, static-modulus, and dimension slices were built to fit inside every candidate's
 specification stratum: they are pure, total, and deterministic, so the strata decision can
 place them without changing a line of source.
 

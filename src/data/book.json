@@ -1,10 +1,27 @@
 {
   "title": "The Orange Book",
   "author": "Chase Bryan",
-  "version": "0.26",
-  "snapshot": "2026-10-02",
-  "revision": "4394a66201ff59d73bdd1dea38637bf9b7f37421",
-  "sourceUrl": "https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/THE_ORANGE_BOOK.md",
+  "version": "0.27",
+  "snapshot": "2026-10-05",
+  "revision": "7cfd1441ccacb461caeb4675119875235d1c1379",
+  "sourceUrl": "https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/THE_ORANGE_BOOK.md",
+  "corrections": [
+    {
+      "pullRequest": 247,
+      "revision": "58aceefdaee9ee8c4b0fd06ea09a8f15f173c655",
+      "summary": "Count twenty-one current slices through S3u in Chapter 4."
+    },
+    {
+      "pullRequest": 253,
+      "revision": "d45f533808219001d491e472b59ce9a750067b87",
+      "summary": "Name slices S3s through S3u where the manuscript still stopped at S3r."
+    },
+    {
+      "pullRequest": 248,
+      "revision": "48d277e49b7a96745162eea34523d641271304db",
+      "summary": "Add the S3v section on one word parameter at every width. The version line stays S3u because this pull request still follows S3t."
+    }
+  ],
   "chapters": [
     {
       "slug": "preface",

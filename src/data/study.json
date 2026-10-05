@@ -1,0 +1,206 @@
+{
+  "title": "Part 1, The Novice",
+  "status": "Draft",
+  "snapshot": "2026-10-05",
+  "revision": "a5620df49f695423f32d1c7bfe0056a28a9773ae",
+  "sourceUrl": "https://github.com/chasebryan/orange/blob/a5620df49f695423f32d1c7bfe0056a28a9773ae/docs/book/README.md",
+  "note": "Draft lessons from the open Orange book branch. They are one book with the original manuscript, not a second book. Two later novice lessons are still unwritten.",
+  "corrections": [
+    {
+      "pullRequest": 246,
+      "revision": "f968111aa2e403e5aec3691cdccb90a686fc4898",
+      "summary": "Repair novice chapters 4–6 proofs and labels."
+    },
+    {
+      "pullRequest": 250,
+      "revision": "71dda3054c50d57e9858b8468d145773c3b195af",
+      "summary": "Date RFC 8439 as June 2018 in N7."
+    },
+    {
+      "pullRequest": 251,
+      "revision": "21b9eb511f68924ae2217633491cb7259ce41619",
+      "summary": "Correct N7's quarter-round trace and diagnostics."
+    }
+  ],
+  "sources": [
+    {
+      "file": "NOVICE_OPENING.md",
+      "sha256": "7bb3249783b023a9b1c4bd4351f38506f168071093ebf4aad0083a411ee55d3e"
+    },
+    {
+      "file": "NOVICE_PROGRAMMING.md",
+      "sha256": "d80138ab1c82e8056d129aa79942614baa75aa382b6a2dddb95bcccdaa011025"
+    },
+    {
+      "file": "NOVICE_N7_NAME_THE_INTERMEDIATE_STEP.md",
+      "sha256": "3db4062eb386fe65e59a8277f074214bb75155d6086069e9a247a44a4ddede29"
+    },
+    {
+      "file": "NOVICE_N8_READ_AND_REPAIR.md",
+      "sha256": "66031a40945bf7532e96efcb630c3b6af1490c7f03ce77d27d0c03e807e629a5"
+    },
+    {
+      "file": "NOVICE_LOGIC.md",
+      "sha256": "d72e7b7b36d9d0006eb6517b25ca34a2909d5a3cb7ac12749733fbad42319ec2"
+    },
+    {
+      "file": "NOVICE_PROBABILITY.md",
+      "sha256": "b718e72aa21896b6b270c2f27ec0bd349bace5a6683d17573b95d16514893b56"
+    }
+  ],
+  "lessons": [
+    {
+      "title": "A word before we begin",
+      "part": "Part 1, The Novice",
+      "order": 0,
+      "description": "How to study the book without already knowing how to program or how cryptography works.",
+      "slug": "before-we-begin",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Chapter 1: Before You Hide Anything",
+      "part": "Part 1, The Novice",
+      "order": 1,
+      "description": "Messages, confidentiality, keys, and what a single successful example can establish.",
+      "slug": "novice-1",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Chapter 2: Two Marks, Many Possibilities",
+      "part": "Part 1, The Novice",
+      "order": 2,
+      "description": "Place value, binary, bits, bytes, hexadecimal, and the difference between a value and its notation.",
+      "slug": "novice-2",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Chapter 3: A Rule You Can Undo",
+      "part": "Part 1, The Novice",
+      "order": 3,
+      "description": "Boolean operations, masks, XOR, and what an exhaustive check can honestly say.",
+      "slug": "novice-3",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Worked answers: Chapters 1–3",
+      "part": "Worked answers",
+      "order": 4,
+      "description": "Worked answers for the opening exercises on messages, notation, and reversible rules.",
+      "slug": "novice-answers-1",
+      "linear": false,
+      "draft": true
+    },
+    {
+      "title": "Chapter 4: A Place to Work",
+      "part": "Part 1, The Novice",
+      "order": 5,
+      "description": "Files, the terminal, and how to record the source revision and compiler you actually used.",
+      "slug": "novice-4",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Chapter 5: Tell the Machine Exactly",
+      "part": "Part 1, The Novice",
+      "order": 6,
+      "description": "A first Orange program, names and scope, diagnostics, and the gap between accepted source and intention.",
+      "slug": "novice-5",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Chapter 6: Words Have Edges",
+      "part": "Part 1, The Novice",
+      "order": 7,
+      "description": "Fixed-width words, wrapping, shifts, rotations, and why grouping is part of the calculation.",
+      "slug": "novice-6",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Worked answers: Chapters 4–6",
+      "part": "Worked answers",
+      "order": 8,
+      "description": "Worked answers for the exercises on the working environment, a first program, and word arithmetic.",
+      "slug": "novice-answers-4",
+      "linear": false,
+      "draft": true
+    },
+    {
+      "title": "N7: Name the Intermediate Step",
+      "part": "Part 1, The Novice",
+      "order": 9,
+      "description": "Bindings, explicit conversions, arrays, and the ChaCha20 quarter round written one named step at a time.",
+      "slug": "novice-n7",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Worked answers: N7",
+      "part": "Worked answers",
+      "order": 10,
+      "description": "Worked answers for naming intermediate steps, conversions, and the quarter round.",
+      "slug": "novice-answers-n7",
+      "linear": false,
+      "draft": true
+    },
+    {
+      "title": "N8: Read and Repair a Program",
+      "part": "Part 1, The Novice",
+      "order": 11,
+      "description": "How to predict a diagnostic, then repair grouping, conversion, bounds, and one wrong test.",
+      "slug": "novice-n8",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Worked answers: N8",
+      "part": "Worked answers",
+      "order": 12,
+      "description": "Worked answers for reading diagnostics and making one repair at a time.",
+      "slug": "novice-answers-n8",
+      "linear": false,
+      "draft": true
+    },
+    {
+      "title": "N9: Say What You Mean",
+      "part": "Part 1, The Novice",
+      "order": 13,
+      "description": "Sets, functions, quantifiers, and the elementary proof patterns used later in the book.",
+      "slug": "novice-n9",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Worked answers: N9",
+      "part": "Worked answers",
+      "order": 14,
+      "description": "Worked answers for the exercises on sets, functions, quantifiers, and proof patterns.",
+      "slug": "novice-answers-n9",
+      "linear": false,
+      "draft": true
+    },
+    {
+      "title": "N10: Count What You Do Not Know",
+      "part": "Part 1, The Novice",
+      "order": 15,
+      "description": "Ratios, finite probability, and the difference between key length, distribution, and uncertainty.",
+      "slug": "novice-n10",
+      "linear": true,
+      "draft": true
+    },
+    {
+      "title": "Worked answers: N10",
+      "part": "Worked answers",
+      "order": 16,
+      "description": "Worked answers for the exercises on counting, probability, and uncertainty.",
+      "slug": "novice-answers-n10",
+      "linear": false,
+      "draft": true
+    }
+  ]
+}

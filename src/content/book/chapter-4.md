@@ -15,9 +15,9 @@ or two readers, can disagree about what was written.
 This chapter follows one small Orange program from bytes to value. Everything
 in the walk-through is **current**: it describes what the `orangec` compiler in
 this repository does today, under the normative
-[lexical and grammar specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/LANGUAGE_2026.md), the accepted
-[typed-literal semantics](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/SEMANTICS_2026.md), and the
-[pure expression specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/EXPRESSIONS_2026.md) now in the owner's
+[lexical and grammar specification](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/LANGUAGE_2026.md), the accepted
+[typed-literal semantics](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/SEMANTICS_2026.md), and the
+[pure expression specification](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/EXPRESSIONS_2026.md) now in the owner's
 review. The last part of the chapter
 turns to what the complete semantic Core is meant to become, which remains
 open.
@@ -281,13 +281,13 @@ failure, a Game Core for probabilistic experiments, and a Proof IR checked by
 a small authoritative checker. A canonical Core would have a deterministic
 encoding, so that two tools, or two revisions, can agree on exactly which
 definition a theorem is about. The
-[architecture](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ARCHITECTURE.md#4-core-semantic-family) describes those
-proposals in detail; [D-004](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md#d-004--semantic-strata) decides their
+[architecture](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/ARCHITECTURE.md#4-core-semantic-family) describes those
+proposals in detail; [D-004](https://github.com/chasebryan/orange/blob/7cfd1441ccacb461caeb4675119875235d1c1379/docs/DECISIONS.md#d-004--semantic-strata) decides their
 number and relationships.
 
 ## The next steps of meaning
 
-The eighteen current slices complete bounded parts of the roadmap's S3 stage:
+The twenty-one current slices complete bounded parts of the roadmap's S3 stage:
 literals first, then pure expressions with parameters, calls, and operators
 over integers and words, then `let` bindings and explicit conversions, then
 fixed-length arrays, then loops over literal ranges with indices proved in
@@ -305,7 +305,12 @@ once for each, then arrays of up to 65,536 elements, so that a standard's long
 vectors are written whole, then known-answer tests and equality of whole
 arrays and tuples, so that a standard's examples are claims inside the
 program, then shift and rotation amounts computed from data, each with the
-value the arithmetic gives.
+value the arithmetic gives, then arrays of scalar rows, so that a state is a
+table whose axes are checked separately, then modulus expressions over a
+function's own finite sizes, each instance checked with its exact residue
+domain, then arrays of three and four dimensions and update paths, so that a
+matrix of polynomials is one type and a state is updated one index per
+dimension.
 The rest of S3 adds the remaining substance of a language: records with named
 fields, functions generic over any modulus rather than a listed few, and
 explicit failure

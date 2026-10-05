@@ -5,6 +5,7 @@ import path from "node:path";
 const root = path.resolve("dist");
 const catalog = JSON.parse(fs.readFileSync("src/data/catalog.json", "utf8"));
 const book = JSON.parse(fs.readFileSync("src/data/book.json", "utf8"));
+const study = JSON.parse(fs.readFileSync("src/data/study.json", "utf8"));
 
 function decodeAttribute(value) {
   return value
@@ -80,6 +81,9 @@ assert.ok(
 execFileSync(process.execPath, ["scripts/sync-orange-book.mjs", "--check"], {
   stdio: "inherit",
 });
+execFileSync(process.execPath, ["scripts/sync-orange-study.mjs", "--check"], {
+  stdio: "inherit",
+});
 assert.ok(
   fs.readFileSync(path.join(root, "book/orange-book.md")).equals(
     fs.readFileSync("vendor/orange/THE_ORANGE_BOOK.md"),
@@ -139,15 +143,35 @@ assert.ok(
   Array.isArray(searchIndex),
   "Book search index must contain an array of chapter entries",
 );
+const studyRoutes = study.lessons.map((lesson) => `/book/${lesson.slug}/`);
+assert.equal(study.lessons.filter((lesson) => lesson.linear).length, 11, "The novice draft has 11 reading lessons");
+assert.equal(study.revision, "a5620df49f695423f32d1c7bfe0056a28a9773ae", "Novice lessons must stay pinned to the book branch");
+assert.ok(bookHomeLinks.has("/book/before-we-begin/"), "Book contents must open the novice draft");
+for (const route of studyRoutes) {
+  assert.ok(bookHomeLinks.has(route), `Book contents missing novice page: ${route}`);
+  assert.ok(sitemap.includes(`https://nosuchmachine.net${route}</loc>`), `Novice route missing from sitemap: ${route}`);
+}
+const linearRoutes = study.lessons.filter((lesson) => lesson.linear).map((lesson) => `/book/${lesson.slug}/`);
+for (const [index, route] of linearRoutes.entries()) {
+  const links = anchors(readRoute(route));
+  for (const [relation, expected] of [
+    ["prev", linearRoutes[index - 1]],
+    ["next", linearRoutes[index + 1]],
+  ]) {
+    const related = links.filter((anchor) => (anchor.rel ?? "").split(/\s+/).includes(relation));
+    assert.deepEqual(related.map((anchor) => anchor.href), expected ? [expected] : [], `Incorrect novice ${relation} link: ${route}`);
+  }
+}
 assert.deepEqual(
   searchIndex.map((chapter) => chapter.url),
-  chapterRoutes,
-  "Book search must index every chapter exactly once in reading order",
+  [...chapterRoutes, ...studyRoutes],
+  "Book search must index every manuscript chapter and novice lesson in order",
 );
+const indexedChapters = [...book.chapters, ...study.lessons];
 for (const [index, chapter] of searchIndex.entries()) {
   assert.equal(
     chapter.title,
-    book.chapters[index].title,
+    indexedChapters[index].title,
     `Search title differs from chapter: ${chapter.url}`,
   );
   assert.ok(
