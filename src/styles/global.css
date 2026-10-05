@@ -59,8 +59,8 @@ button { font: inherit; }
 .button span { font-size: 18px; line-height: 1; }
 .text-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; }
 .text-link:hover { color: var(--accent); }
-.orange-artwork { position: relative; background: var(--orange); overflow: hidden; padding: 25px 28px; display: flex; flex-direction: column; justify-content: space-between; color: #3d1a0b; }
-.artwork-topline, .artwork-bottomline { display: flex; justify-content: space-between; align-items: center; font: 10px/1.6 var(--font-mono); letter-spacing: 0.08em; position: relative; z-index: 1; }
+.orange-artwork { position: relative; background: var(--orange); overflow: hidden; padding: 25px 28px; display: flex; flex-direction: column; justify-content: space-between; color: #1a100c; }
+.artwork-topline, .artwork-bottomline { display: flex; justify-content: space-between; align-items: center; font: 600 11px/1.55 var(--font-mono); letter-spacing: 0.06em; position: relative; z-index: 1; }
 .orange-emblem { width: min(68%, 360px); align-self: center; filter: brightness(0) invert(94%) sepia(10%) saturate(290%); margin-block: 5px; }
 .artwork-symbol { font: 36px/1 var(--font-sans); }
 .project-caption { display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; padding-block: 18px; }
