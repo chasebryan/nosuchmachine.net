@@ -9,6 +9,6 @@
     "allowed": ["drafted", "planned"]
   },
   "bookProvenance": {
-    "enabled": false
+    "enabled": true
   }
 }
