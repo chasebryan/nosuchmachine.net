@@ -370,8 +370,24 @@ function visibleText(html) {
 function freshnessClaims(text) {
   const claims = [];
   if (/\blive\b/i.test(text)) claims.push("live");
+  if (/\bliving\b/i.test(text)) claims.push("living");
   if (/up[- ]to[- ]date/i.test(text)) claims.push("up to date");
   return claims;
+}
+
+function taggedBlock(html, tag, className) {
+  const pattern = new RegExp(
+    `<${tag}\\b[^>]*class="[^"]*\\b${className}\\b[^"]*"[^>]*>[\\s\\S]*?</${tag}>`,
+    "i",
+  );
+  return html.match(pattern)?.[0] ?? "";
+}
+
+function bookIndexClaimText(html) {
+  return [taggedBlock(html, "header", "book-chapter-header"), taggedBlock(html, "p", "book-sync")]
+    .filter(Boolean)
+    .map(visibleText)
+    .join(" ");
 }
 
 function provenanceAnchors(html) {
@@ -423,13 +439,20 @@ function assertBookProvenance(root) {
   const href = `https://github.com/chasebryan/orange/commit/${commit}`;
   const label = `Synced from orange ${short}`;
   const html = readRoute(root, "/book/");
-  const shown = provenanceAnchors(html).some((anchor) => anchor.href === href && anchor.text === label);
-  assert.ok(shown, `Book page /book/ must show "${label}" linked to ${href}.`);
-  const claims = freshnessClaims(visibleText(html));
+  const sync = taggedBlock(html, "p", "book-sync");
+  const syncText = visibleText(sync);
+  const linked = provenanceAnchors(sync).some(
+    (anchor) => anchor.href === href && anchor.text.toLowerCase().includes(short.toLowerCase()),
+  );
+  assert.ok(
+    syncText.includes("Synced from orange") && syncText.toLowerCase().includes(short.toLowerCase()) && linked,
+    `Book page /book/ must show "${label}" linked to ${href}.`,
+  );
+  const claims = freshnessClaims(bookIndexClaimText(html));
   assert.deepEqual(
     claims,
     [],
-    `Book page /book/ contains ${claims.join(" and ")} wording. The hosted book is a pinned revision.`,
+    `Book page /book/ header or sync line contains ${claims.join(" and ")} wording. The hosted book is a pinned revision.`,
   );
   console.log(`Book provenance display required: ${label} linked to ${href}.`);
 }
@@ -1148,12 +1171,24 @@ function selfTest() {
     console.log("self-test: invalid provenance commit failed as expected");
     const bookIndex = path.join(good, "book", "index.html");
     const builtBook = fs.readFileSync(bookIndex, "utf8");
-    const quietBook = builtBook
-      .replaceAll("A LIVING GUIDE TO ORANGE", "A PINNED GUIDE TO ORANGE")
-      .replaceAll("Living pre-alpha reader guide", "Pinned pre-alpha reader guide");
-    function withProvenanceLink(html, href, label) {
-      return html.replace("</main>", `<p><a href="${href}">${label}</a></p></main>`);
+    function setEyebrow(html, text) {
+      if (/<p class="eyebrow">/.test(html)) {
+        return html.replace(/<p class="eyebrow">[\s\S]*?<\/p>/, `<p class="eyebrow">${text}</p>`);
+      }
+      return html.replace("</header>", `<p class="eyebrow">${text}</p></header>`);
     }
+    function withSyncLine(html, href, short, extra = "") {
+      const line = `<p class="book-sync">Synced from orange <a href="${href}"><code>${short}</code></a>.${extra}</p>`;
+      if (/<p class="book-sync">/.test(html)) return html.replace(/<p class="book-sync">[\s\S]*?<\/p>/, line);
+      return html.replace("</main>", `${line}</main>`);
+    }
+    function withChapterProse(html, sentence) {
+      if (/<article class="book-prose">/.test(html)) {
+        return html.replace("<article class=\"book-prose\">", `<article class="book-prose"><p>${sentence}</p>`);
+      }
+      return html.replace("</main>", `<article class="book-prose"><p>${sentence}</p></article></main>`);
+    }
+    const quietBook = setEyebrow(builtBook, "A GUIDE TO ORANGE");
     const provenanceEnv = {
       SITE_CI_EXPECT_BOOK_PROVENANCE: "1",
       BOOK_PROVENANCE: provenanceFile,
@@ -1162,23 +1197,19 @@ function selfTest() {
     fs.cpSync(good, matched, { recursive: true });
     fs.writeFileSync(
       path.join(matched, "book", "index.html"),
-      withProvenanceLink(quietBook, provenanceHref, provenanceLabel),
+      withChapterProse(withSyncLine(quietBook, provenanceHref, provenanceShort), "This chapter prose is living."),
     );
     const matchedResult = runVerify(matched, provenanceEnv);
     if (matchedResult.status !== 0 || !outputOf(matchedResult).includes(`Book provenance display required: ${provenanceLabel}`)) {
       console.error(outputOf(matchedResult));
-      throw new Error("self-test: FALSE GREEN: a book page showing the provenance SHA was rejected");
+      throw new Error("self-test: FALSE GREEN: chapter prose containing living was rejected");
     }
-    console.log("self-test: matching book provenance SHA passed");
+    console.log("self-test: chapter prose containing living passed");
     const mismatched = path.join(temp, "provenance-mismatch");
     fs.cpSync(good, mismatched, { recursive: true });
     fs.writeFileSync(
       path.join(mismatched, "book", "index.html"),
-      withProvenanceLink(
-        quietBook,
-        `https://github.com/chasebryan/orange/commit/${otherCommit}`,
-        `Synced from orange ${otherCommit.slice(0, 7)}`,
-      ),
+      withSyncLine(quietBook, `https://github.com/chasebryan/orange/commit/${otherCommit}`, otherCommit.slice(0, 7)),
     );
     const mismatchedResult = runVerify(mismatched, provenanceEnv);
     if (mismatchedResult.status === 0 || !outputOf(mismatchedResult).includes(`must show "${provenanceLabel}"`)) {
@@ -1186,17 +1217,26 @@ function selfTest() {
       throw new Error("self-test: FALSE GREEN: a mismatched book provenance SHA did not fail");
     }
     console.log("self-test: mismatched book provenance SHA failed as expected");
+    const livingEyebrow = path.join(temp, "provenance-eyebrow");
+    fs.cpSync(good, livingEyebrow, { recursive: true });
+    fs.writeFileSync(
+      path.join(livingEyebrow, "book", "index.html"),
+      withSyncLine(setEyebrow(builtBook, "A LIVING GUIDE"), provenanceHref, provenanceShort),
+    );
+    const eyebrowResult = runVerify(livingEyebrow, provenanceEnv);
+    if (eyebrowResult.status === 0 || !/header or sync line contains living wording/.test(outputOf(eyebrowResult))) {
+      console.error(outputOf(eyebrowResult));
+      throw new Error("self-test: FALSE GREEN: eyebrow A LIVING GUIDE did not fail");
+    }
+    console.log("self-test: eyebrow A LIVING GUIDE failed as expected");
     const claimed = path.join(temp, "provenance-claim");
     fs.cpSync(good, claimed, { recursive: true });
     fs.writeFileSync(
       path.join(claimed, "book", "index.html"),
-      withProvenanceLink(quietBook, provenanceHref, provenanceLabel).replace(
-        "</main>",
-        "<p>The hosted book is up to date.</p></main>",
-      ),
+      withSyncLine(quietBook, provenanceHref, provenanceShort, " The book is up to date."),
     );
     const claimedResult = runVerify(claimed, provenanceEnv);
-    if (claimedResult.status === 0 || !/contains up to date wording/.test(outputOf(claimedResult))) {
+    if (claimedResult.status === 0 || !/header or sync line contains up to date wording/.test(outputOf(claimedResult))) {
       console.error(outputOf(claimedResult));
       throw new Error("self-test: FALSE GREEN: an up to date book claim did not fail");
     }
