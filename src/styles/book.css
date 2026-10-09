@@ -261,12 +261,22 @@
   cursor: pointer;
 }
 .book-copy-code:hover { color: var(--accent); }
-.book-prose table {
-  display: block;
-  width: 100%;
+.book-table-scroll {
   max-width: 100%;
   margin: 1.5em 0;
   overflow-x: auto;
+}
+.book-table-scroll:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+.book-prose table {
+  display: table;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  margin: 0;
+  overflow: visible;
   border-collapse: collapse;
   border-block: 1px solid var(--line);
   color: var(--ink);
@@ -289,8 +299,12 @@
 .book-prose hr { margin-block: var(--space-lg); border: 0; border-top: 1px solid var(--line); }
 .book-prose sub, .book-prose sup { font-size: 0.75em; line-height: 0; }
 .book-prose math, .book-prose .math, .book-prose mjx-container { font-family: var(--font-serif); line-height: 1.45; }
+.book-prose :is(h2, h3, h4) { position: relative; padding-right: 1.15rem; }
 .book-heading-anchor {
-  margin-left: 0.4rem;
+  position: absolute;
+  right: 0;
+  bottom: 0.12em;
+  margin: 0;
   color: var(--accent);
   font: 0.85rem / 1 var(--font-mono);
   text-decoration: none !important;
@@ -311,6 +325,25 @@
 .book-introduction .book-introduction-note { color: var(--muted); font-size: var(--text-sm); line-height: 1.7; }
 .book-edition { display: block; margin-block: var(--space-sm) var(--space-xs); color: var(--muted); font: var(--text-xs) / 1.5 var(--font-mono); }
 .book-parts { margin-top: var(--space-xl); }
+.book-section-blocks { margin-top: var(--space-xl); }
+.book-block { margin-top: var(--space-xl); }
+.book-block > :is(h2, h3) { margin-top: 0; }
+.book-block > p { margin-bottom: 0; max-width: var(--measure); text-wrap: pretty; }
+.book-block-version {
+  margin-left: 0.65rem;
+  color: var(--muted);
+  font: 500 var(--text-xs) / 1 var(--font-mono);
+  letter-spacing: 0.04em;
+  vertical-align: 0.2em;
+}
+.book-sync {
+  margin: 0 0 var(--space-md);
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+.book-sync a { color: var(--ink); }
+.book-sync code { font: 0.92em / 1 var(--font-mono); }
 .book-checks { margin-top: var(--space-xl); max-width: var(--measure); }
 .book-checks p { margin: 0; }
 .book-start { margin: var(--space-lg) 0 0; }
@@ -332,7 +365,8 @@
   list-style: none;
 }
 .book-contents-group li { margin: 0; padding: 0; }
-.book-contents-group a {
+.book-contents-group a,
+.book-contents-group li > span {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -398,6 +432,8 @@
   .book-prose { font-size: 1.0625rem; }
   .book-prose h2 { font-size: 1.55rem; }
   .book-prose h3 { font-size: 1.25rem; }
+  .book-contents-group h3 { font-size: var(--text-xs); line-height: 1.5; }
+  .book-checks p { font-size: 1rem; }
   .book-prose pre { padding-inline: 0.85rem; font-size: 0.72rem; }
   .book-chapters, .book-search-results, .book-page-contents nav, .part-cards { grid-template-columns: 1fr; }
   .book-introduction { grid-template-columns: 1fr; }
@@ -413,6 +449,7 @@
   .book-prose { color: #000; font-size: 11pt; }
   .book-prose pre { overflow-wrap: anywhere; white-space: pre-wrap; break-inside: avoid; font-size: 8pt; background: #fff !important; color: #000 !important; }
   .book-prose h2, .book-prose h3 { break-after: avoid; }
-  .book-prose table { display: table; overflow: visible; font-size: 9pt; }
+  .book-table-scroll { overflow: visible; }
+  .book-prose table { display: table; overflow: visible; width: 100%; min-width: 0; max-width: 100%; font-size: 9pt; }
   .book-prose blockquote { break-inside: avoid; }
 }

@@ -1,0 +1,111 @@
+---
+import StatusMarker from "./StatusMarker.astro";
+import type { BookRow, BookSync } from "../lib/book-status";
+
+interface Group {
+  part: string;
+  rows: BookRow[];
+}
+interface Props {
+  blockTag: "h2" | "h3";
+  variant: "cards" | "contents";
+  curriculumGroups: Group[];
+  manuscriptGroups: Group[];
+  version: string;
+  sync: BookSync | null;
+}
+const { blockTag, variant, curriculumGroups, manuscriptGroups, version, sync } = Astro.props;
+const BlockTag = blockTag;
+const PartTag = blockTag === "h2" ? "h3" : "h4";
+const curriculumNote =
+  "A new Novice, Journeyman and Master curriculum is being written. Its chapters will appear here as each one passes review.";
+const blocks = [
+  {
+    id: "curriculum-block-title",
+    title: "The curriculum (in progress)",
+    groups: curriculumGroups,
+    version: "",
+    emptyNote: curriculumNote,
+  },
+  {
+    id: "manuscript-block-title",
+    title: "The earlier manuscript",
+    groups: manuscriptGroups,
+    version,
+    emptyNote: "",
+  },
+];
+---
+
+<div class="book-section-blocks">
+  {
+    sync && (
+      <p class="book-sync">
+        Synced from orange <a href={sync.href} rel="noopener noreferrer"><code>{sync.short}</code></a>.
+      </p>
+    )
+  }
+  {
+    blocks.map((block) => (
+      <section class="book-block" aria-labelledby={block.id}>
+        <BlockTag id={block.id}>
+          {block.title}
+          {block.version && <span class="book-block-version">{block.version}</span>}
+        </BlockTag>
+        {block.groups.length > 0 ? (
+          variant === "cards" ? (
+            <ol class="part-cards">
+              {block.groups.map((group) => (
+                <li class="part-card">
+                  {group.part && <PartTag>{group.part}</PartTag>}
+                  <ol>
+                    {group.rows.map((row) => (
+                      <li data-status={row.status}>
+                        {row.href ? (
+                          <a href={row.href}>
+                            <span>{row.title}</span>
+                            <StatusMarker status={row.status} />
+                          </a>
+                        ) : (
+                          <>
+                            <span>{row.title}</span>
+                            <StatusMarker status={row.status} />
+                          </>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            block.groups.map((group) => (
+              <div class="book-contents-group">
+                {group.part && <PartTag>{group.part}</PartTag>}
+                <ol>
+                  {group.rows.map((row) => (
+                    <li data-status={row.status}>
+                      {row.href ? (
+                        <a href={row.href}>
+                          <span>{row.title}</span>
+                          <StatusMarker status={row.status} />
+                        </a>
+                      ) : (
+                        <span>
+                          <span>{row.title}</span>
+                          <StatusMarker status={row.status} />
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))
+          )
+        ) : (
+          block.emptyNote && <p>{block.emptyNote}</p>
+        )}
+      </section>
+    ))
+  }
+</div>

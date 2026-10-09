@@ -1,4 +1,6 @@
 import { defineConfig } from "astro/config";
+import { satteri } from "@astrojs/markdown-satteri";
+import { bookTableHastPlugin } from "./src/lib/book-table-hast.mjs";
 
 export default defineConfig({
   site: "https://nosuchmachine.net",
@@ -45,6 +47,7 @@ export default defineConfig({
         },
       ],
     },
+    processor: satteri({ hastPlugins: [bookTableHastPlugin] }),
   },
   // Keep scripts and images as files. The Cloudflare CSP allows same-origin
   // scripts and forbids inline event handlers, so nothing executable is inlined.
