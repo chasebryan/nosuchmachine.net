@@ -49,13 +49,9 @@ Review and commit the updated vendored manuscript, downloadable source, metadata
 
 ## Deploy
 
-https://nosuchmachine.net is served by Cloudflare Pages. The apex and www resolve to Cloudflare anycast addresses, and responses include `server: cloudflare` and `cf-ray`. GitHub Pages is not enabled for this repository and does not serve the domain. `.github/workflows/deploy-github-pages.yml` and `public/CNAME` have been removed so Pages cannot claim the hostname.
+https://nosuchmachine.net is served by Cloudflare Pages Git integration on project `nosuchmachine-net`. The apex and www resolve to Cloudflare anycast addresses, and responses include `server: cloudflare` and `cf-ray`. There is no GitHub Actions deploy workflow. GitHub Pages is not enabled, and `.github/workflows/deploy-github-pages.yml` and `public/CNAME` have been removed so Pages cannot claim the hostname.
 
-`.github/workflows/deploy-cloudflare.yml` publishes project `nosuchmachine-net` with Wrangler. It runs on `workflow_dispatch`, a daily schedule (06:17 UTC), and `repository_dispatch` type `orange-book-updated`. Each run executes `npm run sync:book` before the build so the Orange Book can be refreshed from `chasebryan/orange`. The workflow is read-only for `GITHUB_TOKEN` and does not run on pull requests.
-
-It needs repository secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. The October 2026 Actions run failed because those secrets were missing, and the workflow was disabled manually afterwards. Re-enable **Deploy Cloudflare Pages** in the Actions tab after the secrets exist.
-
-Cloudflare Pages Git integration publishes `main` and branch previews without these secrets. Keep the Pages project name `nosuchmachine-net` (see `wrangler.toml`) and the custom domains on that project. Set the project's Node.js version to `22.23.3` (`.nvmrc`) if the dashboard build is pinned.
+The dashboard build command is `npm run build:pages`. That script syncs the book, typechecks, builds, and verifies, and it stops on the first failure (`&&`), so a book sync that cannot reach Orange never publishes `dist`. Build output is `dist`. Node is `22.23.3` from `.nvmrc`.
 
 Production apex `https://nosuchmachine.net` is a **Cloudflare** zone. Historically it was published by Cloudflare Pages project `wuci-ji` from [`chasebryan/-wuci-ji`](https://github.com/chasebryan/-wuci-ji). This repository is now the source of truth for the public portfolio.
 
@@ -63,10 +59,10 @@ Production apex `https://nosuchmachine.net` is a **Cloudflare** zone. Historical
 
 ### Cloudflare Pages
 
-1. Cloudflare API token with **Cloudflare Pages — Edit** (and Account read) for project `nosuchmachine-net`.
-2. Repository secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
-3. Re-enable the **Deploy Cloudflare Pages** workflow if it is still disabled, then run it with **workflow_dispatch** or wait for the daily schedule.
-4. Custom domains on project `nosuchmachine-net`: `nosuchmachine.net` and `www.nosuchmachine.net`. Remove those hostnames from the old `wuci-ji` Pages project if they are still attached.
+1. Workers & Pages → `nosuchmachine-net` → Settings → Builds: build command `npm run build:pages`, build output directory `dist`.
+2. The Pages build image reads `.nvmrc` (same setting as `NODE_VERSION`). Confirm the build log uses Node `22.23.3`. The v3 image defaults to `22.16.0` when nothing pins Node, which is older than `engines`. If a log shows that default, set environment variable `NODE_VERSION` to `22.23.3` for Production and Preview.
+3. Custom domains stay on `nosuchmachine-net`: `nosuchmachine.net` and `www.nosuchmachine.net`. Remove those hostnames from the old `wuci-ji` project if they are still attached.
+4. Book rebuilds: Settings → Builds → Add deploy hook, branch `main`. Orange posts that URL; do not put the URL in this repo.
 5. Keep Always Use HTTPS and HSTS on the zone. `bottle.nosuchmachine.net` is a separate Worker; do not change it.
 
 GitHub Pages is retired for this site. Do not turn Pages back on for `nosuchmachine.net`.
