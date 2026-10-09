@@ -1,0 +1,9 @@
+{
+  "description": "Axe waivers for the pages site CI scans: /, every built /book/ page, and /404. A violation that is not listed fails. A listed violation that no longer reproduces also fails, so delete it once the page is clean. A page with no entry has no waivers. Optional \"scheme\" is \"light\" or \"dark\"; omit it to require the waiver in both.",
+  "pages": {
+    "/": [],
+    "/book/": [],
+    "/book/chapter-1/": [],
+    "/404": []
+  }
+}

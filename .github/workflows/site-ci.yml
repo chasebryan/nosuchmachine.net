@@ -1,0 +1,80 @@
+name: Site CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  site:
+    name: Required site CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+      # sync:book may fetch https://github.com/chasebryan/orange (ref configurable,
+      # default main). Outbound HTTPS must stay open. A failed sync fails this job.
+      # Do not continue into the build with an empty book.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # .nvmrc is 22.23.3. Do not substitute a floating major such as "22".
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Cache Puppeteer Chrome
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: ~/.cache/puppeteer
+          key: puppeteer-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: |
+          if [ -f tsconfig.json ]; then
+            npm run check
+          else
+            echo "No tsconfig.json; skipping astro check"
+          fi
+
+      # Team's sync is an npm script, not a prebuild hook. Run it only when
+      # package.json defines sync:book. A missing script is skipped. A failing
+      # sync fails the job (the if-body is not the condition, so bash -e applies).
+      - name: Sync the Orange Book
+        run: |
+          if node -e "process.exit(require('./package.json').scripts?.['sync:book'] ? 0 : 1)"; then
+            npm run sync:book
+          else
+            echo "no sync:book script yet"
+          fi
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify build
+        run: node scripts/verify-build.mjs
+
+      - name: Verify the checker fails on a bad dist
+        run: node scripts/verify-build.mjs --self-test
+
+      - name: Check internal links and anchors
+        run: node scripts/check-links.mjs
+
+      - name: Verify the accessibility probe
+        run: node scripts/check-a11y.mjs --self-test
+
+      - name: Check accessibility
+        run: node scripts/check-a11y.mjs

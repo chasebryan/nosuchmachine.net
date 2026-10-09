@@ -1,0 +1,14 @@
+{
+  "notes": "Flip enabled to true to require the check even before every marker is present. Home section ids are also required automatically once all of them are present, so current main (which only has about) stays green and the check locks on after Ideas' sections land. data-status values are always validated when the attribute appears. Set chapterDataStatus.enabled to true, or export SITE_CI_EXPECT_CHAPTER_STATUS=1, to require data-status on every built chapter page. SITE_CI_EXPECT_HOME_SECTIONS=1 forces the home section ids the same way. src/content/book/source/provenance.json is always required. bookProvenance.enabled requires the /book/ sync line. Live, living, and up to date wording are checked only in that page's header and sync line. Do not add or remove ids or statuses here; verify-build rejects a changed contract.",
+  "homeSectionIds": {
+    "enabled": false,
+    "ids": ["hero", "current", "listing", "non-claims", "book-parts", "about"]
+  },
+  "chapterDataStatus": {
+    "enabled": false,
+    "allowed": ["drafted", "planned"]
+  },
+  "bookProvenance": {
+    "enabled": true
+  }
+}
