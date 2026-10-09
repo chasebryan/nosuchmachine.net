@@ -2,7 +2,8 @@
 import BookLayout from "../../layouts/BookLayout.astro";
 import StatusMarker from "../../components/StatusMarker.astro";
 import book from "../../data/book.json";
-import { groupBookRows, loadBookRows, showContentSlots } from "../../lib/book-status";
+import { groupBookRows, loadBookRows } from "../../lib/book-status";
+import { orangeRevision } from "../../data/orange-sources";
 const bookGroups = groupBookRows(loadBookRows(book.chapters));
 ---
 
@@ -10,29 +11,27 @@ const bookGroups = groupBookRows(loadBookRows(book.chapters));
   <div class="book-introduction">
     <img src="/projects/orange/book-cover.svg" alt="The Orange Book cover: the Orange emblem in cream on an orange field." width="400" height="560" />
     <div>
-      <p>The Orange Book explains why Orange exists, what it is intended to become, what has actually been built, and which questions remain open.</p>
-      <p class="book-introduction-note">It is not a normative language specification, proof, assurance report, license grant, or release claim.</p>
+      <p>This site hosts two drafts. Neither is a finished book.</p>
+      <p>The pages here are the earlier manuscript, <a href={book.sourceUrl}>docs/THE_ORANGE_BOOK.md</a>: the original 17-chapter text plus appendices. It is an earlier draft. Chapter numbers stay as they are until one renumbering pass later. This is not the Novice, Journeyman, and Master curriculum.</p>
+      <p class="book-introduction-note">That curriculum is a separate work in docs/book/, being written now. It is not these pages, and it is not complete. These pages are also not a normative specification, proof, assurance report, license grant, or release claim.</p>
       <span class="book-edition">Living pre-alpha reader guide</span>
     </div>
   </div>
 
-  {showContentSlots && (
-    <h2 class="copy-slot">TODO(content): Novice, Journeyman, Master</h2>
-  )}
+  <h2>Novice, Journeyman, and Master</h2>
+  <p>That name belongs to the curriculum in docs/book/. This site does not list its chapters. It is being written now, and it is not finished.</p>
 
-  {showContentSlots && (
-    <section class="book-checks" aria-labelledby="book-checks-title">
-      <h2 id="book-checks-title" class="copy-slot">TODO(content): how chapters are checked</h2>
-      <p class="copy-slot">TODO(content): checking note</p>
-    </section>
-  )}
+  <section class="book-checks" aria-labelledby="book-checks-title">
+    <h2 id="book-checks-title">How the hosted chapters are checked</h2>
+    <p>The hosted chapters are manuscript {book.version}, snapshot {book.snapshot}, revision {book.revision}. The site checks that text against the vendored manuscript. That check is not a new compiler run. The home-page listing is compiler/fixtures/s3b/valid-sha256-functions.or. compiler/crates/orangec/tests/s3b_conformance.rs expects sha256::round0_a = 0x5d6aebcd. A fixture result is not a proof or a security claim. Compiler sentences on this site were checked against orange main {orangeRevision} on 9 October 2026, a later revision than this manuscript. Compiler tests were not re-run.</p>
+  </section>
 
   <p class="book-start">
-    <a class="button button-primary" href="/book/preface/">Start reading <span aria-hidden="true">→</span></a>
+    <a class="button button-primary" href="/book/preface/">Start the manuscript <span aria-hidden="true">→</span></a>
   </p>
 
   <section id="book-parts" class="book-contents-list" aria-labelledby="book-contents-title">
-    <h2 id="book-contents-title">Inside the book</h2>
+    <h2 id="book-contents-title">Inside the earlier manuscript</h2>
     {bookGroups.map((group) => (
       <div class="book-contents-group">
         {group.part && <h3>{group.part}</h3>}

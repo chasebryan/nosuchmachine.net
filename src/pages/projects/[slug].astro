@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects, type Project } from "../../data/projects";
-import { showContentSlots } from "../../lib/book-status";
+import { orangeRevision, tryCommands } from "../../data/orange-sources";
 export function getStaticPaths() {
   return projects.map((project) => ({
     params: { slug: project.slug },
@@ -13,6 +13,9 @@ interface Props {
 }
 const { project } = Astro.props;
 const isOrange = project.slug === "orange";
+if (isOrange && !project.sources.some((source) => source.href.includes(orangeRevision))) {
+  throw new Error("Orange sources must be pinned to the checked orange main revision.");
+}
 ---
 
 <BaseLayout title={project.name} description={project.summary}>
@@ -128,15 +131,13 @@ const isOrange = project.slug === "orange";
           </section>
         )}
         {isOrange && (
-          <section id="try" aria-labelledby={showContentSlots ? "try-title" : "try-roadmap"}>
-            {showContentSlots && (
-              <>
-                <h2 id="try-title" class="copy-slot">TODO(content): how to try it</h2>
-                <pre class="shell-listing"><code class="copy-slot">TODO(content): shell commands</code></pre>
-              </>
-            )}
-            <p class="try-roadmap" id={showContentSlots ? undefined : "try-roadmap"}>
-              <a class="text-link link-external" href="https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ROADMAP.md" rel="noopener noreferrer">Roadmap <span class="external-icon" aria-hidden="true">↗</span></a>
+          <section id="try" aria-labelledby="try-title">
+            <h2 id="try-title">How to try it</h2>
+            <p>These commands are copied from the Orange README. Rust 1.96.1 is pinned in rust-toolchain.toml. The compiler has no third-party dependencies. The repository gate runs on Linux 6.2 or newer.</p>
+            <pre class="shell-listing"><code>{tryCommands}</code></pre>
+            <p>S0 through S2 are done. S3 is in progress. S4 through S8 and 1.0 are open. orangec --version reports implemented slice S3u. Three of ten gates are closed, counting finished stages, not time.</p>
+            <p class="try-roadmap">
+              <a class="text-link link-external" href={`https://github.com/chasebryan/orange/blob/${orangeRevision}/docs/ROADMAP.md`} rel="noopener noreferrer">Roadmap <span class="external-icon" aria-hidden="true">↗</span></a>
             </p>
           </section>
         )}
@@ -167,9 +168,9 @@ const isOrange = project.slug === "orange";
                 ))}
               </ul>
               <p>
-                Reviewed October 1, 2026. Project descriptions reflect a source
-                review; repository validation claims were not independently
-                reproduced.
+                {isOrange
+                  ? `Checked 9 October 2026 against orange main ${orangeRevision}. Compiler tests were not re-run.`
+                  : "Reviewed October 1, 2026. Project descriptions reflect a source review; repository validation claims were not independently reproduced."}
               </p>
             </details>
           )}

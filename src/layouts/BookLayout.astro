@@ -9,8 +9,9 @@ type Chapter = (typeof book.chapters)[number];
 interface Props {
   chapter?: Chapter;
   headings?: { depth: number; slug: string; text: string }[];
+  description?: string;
 }
-const { chapter, headings = [] } = Astro.props;
+const { chapter, headings = [], description } = Astro.props;
 const parts = [...new Set(book.chapters.map((entry) => entry.part))];
 const index = chapter ? book.chapters.findIndex((entry) => entry.slug === chapter.slug) : -1;
 const previous = index > 0 ? book.chapters[index - 1] : undefined;
@@ -21,7 +22,7 @@ const sourceUrl = chapter
   : book.sourceUrl;
 ---
 
-<BaseLayout title={chapter ? `${chapter.title} · The Orange Book` : book.title} description={chapter?.description ?? "Read The Orange Book by Chase Bryan: a guide to the ideas, language, compiler, and current state of Orange."}>
+<BaseLayout title={chapter ? `${chapter.title} · The Orange Book` : book.title} description={description ?? chapter?.description ?? "The Orange Book is a pre-alpha reader guide to Orange: why it exists, what is built, and what is not. It is not a proof, an assurance report, or a release claim."}>
   <div class="book-shell shell">
     <aside class="book-sidebar">
       <details id="book-navigation" open>

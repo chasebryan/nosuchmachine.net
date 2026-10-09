@@ -5,9 +5,11 @@ import StatusBadge from "../components/StatusBadge.astro";
 import StatusMarker from "../components/StatusMarker.astro";
 import book from "../data/book.json";
 import { getProject } from "../data/projects";
-import { groupBookRows, loadBookRows, showContentSlots } from "../lib/book-status";
+import { groupBookRows, loadBookRows } from "../lib/book-status";
+import { orangeRevision, sha256Fixture, sha256FixturePath } from "../data/orange-sources";
 const orange = getProject("orange")!;
 const bookGroups = groupBookRows(loadBookRows(book.chapters));
+const sha256FixtureUrl = `https://github.com/chasebryan/orange/blob/${orangeRevision}/${sha256FixturePath}`;
 ---
 
 <BaseLayout>
@@ -41,7 +43,7 @@ const bookGroups = groupBookRows(loadBookRows(book.chapters));
 
     <section id="current" class="band shell" aria-labelledby="current-title">
       <div class="section-label">
-        {showContentSlots && <h2 class="copy-slot">TODO(content): what works today</h2>}
+        <h2>What works today</h2>
         <span class="section-label-note">LANGUAGE DESIGN & CRYPTOGRAPHY</span>
       </div>
       <h2 id="current-title" class="eyebrow section-kicker"><span class="status-dot" aria-hidden="true"></span> CURRENT PROJECT</h2>
@@ -52,22 +54,18 @@ const bookGroups = groupBookRows(loadBookRows(book.chapters));
       </div>
     </section>
 
-    {showContentSlots && (
-      <section id="listing" class="band shell" aria-labelledby="listing-title">
-        <div class="section-label">
-          <h2 id="listing-title" class="copy-slot">TODO(content): listing heading</h2>
-        </div>
-        <CodeListing>
-          <span slot="caption" class="copy-slot">TODO(content): repo path</span>
-          <span class="copy-slot">TODO(content): Orange source listing</span>
-        </CodeListing>
-      </section>
-    )}
+    <section id="listing" class="band shell" aria-labelledby="listing-title">
+      <div class="section-label">
+        <h2 id="listing-title">A checked SHA-256 fragment</h2>
+      </div>
+      <CodeListing><a slot="caption" href={sha256FixtureUrl}>{sha256FixturePath}</a>{sha256Fixture}</CodeListing>
+      <p>compiler/crates/orangec/tests/s3b_conformance.rs evaluates this file and expects sha256::round0_a = 0x5d6aebcd. That is a conformance check of the fixture. It is not native code, a proof, or a security property.</p>
+    </section>
 
     <section id="non-claims" class="band shell" aria-labelledby="non-claims-title">
       <div class="note">
-        <p class="eyebrow" id={showContentSlots ? undefined : "non-claims-title"}>PROJECT STATUS / {orange.status.toUpperCase()}</p>
-        {showContentSlots && <h2 id="non-claims-title" class="copy-slot">TODO(content): what Orange doesn’t claim</h2>}
+        <p class="eyebrow">PROJECT STATUS / {orange.status.toUpperCase()}</p>
+        <h2 id="non-claims-title">What Orange does not claim</h2>
         <ul>
           {orange.limitations.map((limit) => (
             <li>{limit}</li>
@@ -78,13 +76,11 @@ const bookGroups = groupBookRows(loadBookRows(book.chapters));
 
     <section id="book-parts" class="band shell" aria-labelledby="book-parts-title">
       <div class="section-label">
-        {showContentSlots ? (
-          <h2 id="book-parts-title" class="copy-slot">TODO(content): Novice, Journeyman, Master</h2>
-        ) : (
-          <h2 id="book-parts-title">{book.title}</h2>
-        )}
+        <h2 id="book-parts-title">The earlier manuscript</h2>
         <a href="/book/">Read the Orange Book <span aria-hidden="true">→</span></a>
       </div>
+      <p>This list is the original 17-chapter manuscript plus appendices, docs/THE_ORANGE_BOOK.md. It is an earlier draft. Those chapter numbers stay until one renumbering pass later. It is not the finished three-part Book.</p>
+      <p>Novice, Journeyman, and Master is a separate curriculum in docs/book/, being written now. It is not this list, and it is not complete.</p>
       <ol class="part-cards">
         {bookGroups.map((group) => (
           <li class="part-card">
