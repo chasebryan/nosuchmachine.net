@@ -10,7 +10,17 @@ import { classifyUrl, distRoot, htmlTags, idsIn, routeToFile, walkFiles } from "
 // id is already in the built homepage, so current main is not failed early.
 const HOME_SECTION_IDS = ["hero", "current", "listing", "non-claims", "book-parts", "about"];
 const CHAPTER_STATUSES = ["drafted", "planned"];
-const SHA_FIELDS = ["sha", "commit", "revision", "orangeCommit", "orangeSha"];
+const DOCS_BOOK_PARTS = ["Novice", "Journeyman", "Master"];
+const MANUSCRIPT_PARTS = new Set([
+  "Front matter",
+  "Part I: Why Orange",
+  "Part II: Meaning and Trust",
+  "Part III: Building the Language",
+  "Part IV: Cryptography in Practice",
+  "Part V: Operating Orange",
+  "Appendices",
+  "Back matter",
+]);
 
 function decodeAttribute(value) {
   return value
@@ -343,11 +353,12 @@ function assertExpectations(root, homeHtml) {
   }
 }
 
-function manifestChapters(parsed) {
-  if (Array.isArray(parsed)) return parsed;
-  if (parsed && Array.isArray(parsed.chapters)) return parsed.chapters;
-  assert.fail(
-    "src/content/book/manifest.json must be a chapter array or an object with a chapters array. Each chapter needs part, slug, title, status (drafted or planned), and a full orange commit SHA (sha, commit, revision, orangeCommit, or orangeSha).",
+function hostedManuscriptSlugs() {
+  const book = JSON.parse(fs.readFileSync("src/data/book.json", "utf8"));
+  return new Set(
+    book.chapters
+      .filter((chapter) => MANUSCRIPT_PARTS.has(chapter.part))
+      .map((chapter) => chapter.slug),
   );
 }
 
@@ -369,38 +380,52 @@ function assertManifest(root) {
   } catch (error) {
     assert.fail(`Book manifest is not valid JSON: ${error.message}`);
   }
-  const chapters = manifestChapters(parsed);
   assert.ok(
-    chapters.length > 0,
+    parsed && typeof parsed === "object" && !Array.isArray(parsed),
+    "Book manifest must be an object with version, snapshot, commit, docsBook, and chapters.",
+  );
+  assert.equal(typeof parsed.version, "string", "Book manifest is missing version");
+  assert.ok(parsed.version.trim(), "Book manifest has an empty version");
+  assert.equal(typeof parsed.snapshot, "string", "Book manifest is missing snapshot");
+  assert.ok(parsed.snapshot.trim(), "Book manifest has an empty snapshot");
+  assert.match(
+    typeof parsed.commit === "string" ? parsed.commit : "",
+    /^[a-f0-9]{40}$/,
+    "Book manifest commit must be a full 40-hex SHA",
+  );
+  assert.equal(typeof parsed.docsBook, "boolean", "Book manifest docsBook must be a boolean");
+  assert.ok(Array.isArray(parsed.chapters), "Book manifest chapters must be an array");
+  assert.ok(
+    parsed.chapters.length > 0,
     "Book manifest lists no chapters. Refusing to ship an empty /book.",
   );
-  for (const chapter of chapters) {
-    const label = chapter?.slug || "(missing slug)";
-    assert.equal(typeof chapter.part, "string", `Manifest chapter ${label} is missing part`);
-    assert.ok(chapter.part.trim(), `Manifest chapter ${label} has an empty part`);
-    assert.equal(typeof chapter.slug, "string", `Manifest chapter is missing slug`);
+  const manuscriptSlugs = hostedManuscriptSlugs();
+  for (const chapter of parsed.chapters) {
+    assert.ok(chapter && typeof chapter === "object", "Manifest chapter must be an object");
+    assert.equal(typeof chapter.slug, "string", "Manifest chapter is missing slug");
     assert.ok(chapter.slug.trim(), "Manifest chapter has an empty slug");
-    assert.equal(typeof chapter.title, "string", `Manifest chapter ${label} is missing title`);
-    assert.ok(chapter.title.trim(), `Manifest chapter ${label} has an empty title`);
+    assert.equal(typeof chapter.title, "string", `Manifest chapter ${chapter.slug} is missing title`);
+    assert.ok(chapter.title.trim(), `Manifest chapter ${chapter.slug} has an empty title`);
     assert.ok(
       CHAPTER_STATUSES.includes(chapter.status),
       `Manifest status for ${chapter.slug} must be drafted or planned, got ${JSON.stringify(chapter.status)}`,
     );
-    const sha = SHA_FIELDS.map((field) => chapter[field]).find(
-      (value) => typeof value === "string" && value.trim(),
-    );
-    assert.match(
-      sha || "",
-      /^[a-f0-9]{40}$/i,
-      `Manifest chapter ${chapter.slug} needs a full orange commit SHA in ${SHA_FIELDS.join(", ")}`,
-    );
     const page = routeToFile(root, `/book/${chapter.slug}/`);
+    const hostedManuscriptPage = manuscriptSlugs.has(chapter.slug) && fs.existsSync(page) && fs.statSync(page).size > 0;
     assert.ok(
       fs.existsSync(page) && fs.statSync(page).size > 0,
       `Manifest chapter ${chapter.slug} (${chapter.status}) has no built page at /book/${chapter.slug}/. Refusing to ship an incomplete book.`,
     );
+    if (parsed.docsBook && !hostedManuscriptPage) {
+      assert.ok(
+        DOCS_BOOK_PARTS.includes(chapter.part),
+        `Manifest chapter ${chapter.slug} has no hosted manuscript page, so part must be Novice, Journeyman, or Master, got ${JSON.stringify(chapter.part)}`,
+      );
+    }
   }
-  console.log(`Manifest: ${chapters.length} chapters, each with a built page and status drafted or planned.`);
+  console.log(
+    `Manifest: ${parsed.chapters.length} chapters, docsBook ${parsed.docsBook}, each with a built page and status drafted or planned.`,
+  );
 }
 
 function verify() {
@@ -827,43 +852,107 @@ function selfTest() {
     }
     console.log("self-test: invalid data-status failed as expected");
     const revision = "4394a66201ff59d73bdd1dea38637bf9b7f37421";
+    const manifestHead = {
+      version: "0.27",
+      snapshot: "2026-10-05",
+      commit: revision,
+    };
     const validManifest = path.join(temp, "manifest-valid.json");
     fs.writeFileSync(
       validManifest,
       JSON.stringify({
+        ...manifestHead,
+        docsBook: false,
         chapters: [
-          { part: "Front matter", slug: "preface", title: "Preface", status: "drafted", sha: revision },
-          { part: "Part I: Why Orange", slug: "chapter-1", title: "Chapter 1", status: "planned", commit: revision },
+          { slug: "preface", title: "Preface", status: "drafted" },
+          { slug: "chapter-1", title: "Chapter 1", status: "planned" },
         ],
       }),
     );
     const manifestOk = runVerify(good, { BOOK_MANIFEST: validManifest });
-    if (manifestOk.status !== 0 || !outputOf(manifestOk).includes("Manifest: 2 chapters")) {
+    if (manifestOk.status !== 0 || !outputOf(manifestOk).includes("Manifest: 2 chapters, docsBook false")) {
       console.error(outputOf(manifestOk));
-      throw new Error("self-test: FALSE GREEN: a valid book manifest was rejected");
+      throw new Error("self-test: FALSE GREEN: a docsBook false manifest without per-chapter part or commit was rejected");
     }
-    console.log("self-test: valid manifest passed");
+    console.log("self-test: docsBook false manifest passed");
+    const docsDist = path.join(temp, "docs-book-dist");
+    fs.cpSync(good, docsDist, { recursive: true });
+    fs.mkdirSync(path.join(docsDist, "book/rings"), { recursive: true });
+    fs.copyFileSync(
+      path.join(good, "book/preface/index.html"),
+      path.join(docsDist, "book/rings/index.html"),
+    );
+    const docsManifest = path.join(temp, "manifest-docs.json");
+    fs.writeFileSync(
+      docsManifest,
+      JSON.stringify({
+        ...manifestHead,
+        docsBook: true,
+        chapters: [
+          { slug: "preface", title: "Preface", status: "drafted", part: "Front matter" },
+          { slug: "chapter-1", title: "Chapter 1", status: "drafted" },
+          { slug: "rings", title: "Rings", status: "planned", part: "Journeyman" },
+        ],
+      }),
+    );
+    const docsOk = runVerify(docsDist, { BOOK_MANIFEST: docsManifest });
+    if (docsOk.status !== 0 || !outputOf(docsOk).includes("Manifest: 3 chapters, docsBook true")) {
+      console.error(outputOf(docsOk));
+      throw new Error("self-test: FALSE GREEN: a docsBook true manifest was rejected");
+    }
+    console.log("self-test: docsBook true manifest passed");
     const manifestCases = [
       {
         name: "manifest status",
         expect: /must be drafted or planned/,
-        body: { chapters: [{ part: "Front matter", slug: "preface", title: "Preface", status: "draft", sha: revision }] },
+        dist: good,
+        body: {
+          ...manifestHead,
+          docsBook: false,
+          chapters: [{ slug: "preface", title: "Preface", status: "draft" }],
+        },
       },
       {
         name: "manifest missing page",
         expect: /has no built page/,
-        body: { chapters: [{ part: "Front matter", slug: "not-a-chapter", title: "Missing", status: "planned", sha: revision }] },
+        dist: good,
+        body: {
+          ...manifestHead,
+          docsBook: false,
+          chapters: [{ slug: "not-a-chapter", title: "Missing", status: "planned" }],
+        },
       },
       {
         name: "empty manifest",
         expect: /lists no chapters/,
-        body: { chapters: [] },
+        dist: good,
+        body: { ...manifestHead, docsBook: false, chapters: [] },
+      },
+      {
+        name: "manifest docs part",
+        expect: /part must be Novice, Journeyman, or Master/,
+        dist: docsDist,
+        body: {
+          ...manifestHead,
+          docsBook: true,
+          chapters: [{ slug: "rings", title: "Rings", status: "planned", part: "Front matter" }],
+        },
+      },
+      {
+        name: "manifest docs part omitted",
+        expect: /part must be Novice, Journeyman, or Master/,
+        dist: docsDist,
+        body: {
+          ...manifestHead,
+          docsBook: true,
+          chapters: [{ slug: "rings", title: "Rings", status: "drafted" }],
+        },
       },
     ];
     for (const manifestCase of manifestCases) {
       const file = path.join(temp, `${manifestCase.name.replaceAll(" ", "-")}.json`);
       fs.writeFileSync(file, JSON.stringify(manifestCase.body));
-      const result = runVerify(good, { BOOK_MANIFEST: file });
+      const result = runVerify(manifestCase.dist, { BOOK_MANIFEST: file });
       if (result.status === 0 || !manifestCase.expect.test(outputOf(result))) {
         console.error(outputOf(result));
         throw new Error(`self-test: FALSE GREEN: ${manifestCase.name} did not fail as expected`);
