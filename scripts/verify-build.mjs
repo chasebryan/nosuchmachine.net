@@ -600,7 +600,8 @@ function verify() {
   for (const file of files) {
     const html = fs.readFileSync(file, "utf8");
     const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
-    assert.equal(new Set(ids).size, ids.length, `Duplicate IDs: ${file}`);
+    const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
+    assert.deepEqual(duplicateIds, [], `Duplicate IDs: ${file}: ${duplicateIds.join(", ")}`);
     assert.ok(ids.includes("main"), `Missing main content target: ${file}`);
     assert.equal(
       [...html.matchAll(/<main\b/g)].length,
@@ -657,6 +658,14 @@ function runVerify(directory, extraEnv = {}) {
 
 function outputOf(result) {
   return `${result.stdout || ""}\n${result.stderr || ""}`;
+}
+
+function homeSectionIds(html) {
+  const found = [];
+  for (const tag of htmlTags(html)) {
+    if (HOME_SECTION_IDS.includes(tag.attrs.id)) found.push(tag.attrs.id);
+  }
+  return found;
 }
 
 function selfTest() {
@@ -750,28 +759,34 @@ function selfTest() {
     fs.cpSync(good, withSections, { recursive: true });
     const homeFile = path.join(withSections, "index.html");
     const builtHome = fs.readFileSync(homeFile, "utf8");
-    const absentSections = HOME_SECTION_IDS.filter((id) => !builtHome.includes(`id="${id}"`));
-    if (absentSections.length === 0) {
-      if (!outputOf(passed).includes("Homepage section ids required")) {
-        console.error(outputOf(passed));
-        throw new Error("self-test: FALSE GREEN: homepage section ids were present but not required");
-      }
-      console.log("self-test: homepage section ids already required on this dist");
-    } else {
-      fs.writeFileSync(
-        homeFile,
-        builtHome.replace(
-          "</body>",
-          `${absentSections.map((id) => `<div id="${id}"></div>`).join("")}</body>`,
-        ),
-      );
-      const sectionsOn = runVerify(withSections);
-      if (sectionsOn.status !== 0 || !outputOf(sectionsOn).includes("Homepage section ids required")) {
-        console.error(outputOf(sectionsOn));
-        throw new Error("self-test: FALSE GREEN: homepage section ids were not required once all of them were present");
-      }
-      console.log("self-test: homepage section ids lock on when present");
+    const strippedHome = builtHome.replace(
+      /\sid\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))/g,
+      (attribute, doubleQuoted, singleQuoted, bare) => {
+        const id = doubleQuoted ?? singleQuoted ?? bare;
+        return HOME_SECTION_IDS.includes(id) ? "" : attribute;
+      },
+    );
+    const strippedIds = homeSectionIds(strippedHome);
+    assert.deepEqual(strippedIds, [], `self-test: section ids survived stripping: ${strippedIds.join(", ")}`);
+    const injectedHome = strippedHome.replace(
+      "</body>",
+      `${HOME_SECTION_IDS.map((id) => `<div id="${id}"></div>`).join("")}</body>`,
+    );
+    const injectedIds = homeSectionIds(injectedHome);
+    assert.deepEqual(
+      injectedIds,
+      [...HOME_SECTION_IDS],
+      "self-test: injected homepage section ids are not the expected set",
+    );
+    fs.writeFileSync(homeFile, injectedHome);
+    const sectionsOn = runVerify(withSections);
+    if (sectionsOn.status !== 0 || !outputOf(sectionsOn).includes("Homepage section ids required")) {
+      console.error(outputOf(sectionsOn));
+      throw new Error("self-test: FALSE GREEN: homepage section ids were not required once all of them were present");
     }
+    console.log("self-test: homepage section ids lock on when present");
+    const originalSectionIds = idsIn(path.join(good, "index.html"));
+    const absentSections = HOME_SECTION_IDS.filter((id) => !originalSectionIds.has(id));
     const forced = runVerify(good, { SITE_CI_EXPECT_HOME_SECTIONS: "1" });
     if (absentSections.length === 0) {
       if (forced.status !== 0 || !outputOf(forced).includes("Homepage section ids required")) {
