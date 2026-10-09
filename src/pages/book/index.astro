@@ -1,11 +1,13 @@
 ---
 import BookLayout from "../../layouts/BookLayout.astro";
-import StatusMarker from "../../components/StatusMarker.astro";
+import BookBlocks from "../../components/BookBlocks.astro";
 import book from "../../data/book.json";
-import { groupBookRows, loadBookRows, loadCurriculumRows } from "../../lib/book-status";
+import { groupBookRows, loadBookSync, loadCurriculumRows, loadManifestInfo, loadManuscriptRows } from "../../lib/book-status";
 import { orangeRevision } from "../../data/orange-sources";
-const bookGroups = groupBookRows(loadBookRows(book.chapters));
+const info = loadManifestInfo();
 const curriculumGroups = groupBookRows(loadCurriculumRows(book.chapters));
+const manuscriptGroups = groupBookRows(loadManuscriptRows(book.chapters));
+const sync = loadBookSync();
 ---
 
 <BookLayout>
@@ -15,39 +17,18 @@ const curriculumGroups = groupBookRows(loadCurriculumRows(book.chapters));
       <p>This site hosts two drafts. Neither is a finished book.</p>
       <p>The pages here are the earlier manuscript, <a href={book.sourceUrl}>docs/THE_ORANGE_BOOK.md</a>: the original 17-chapter text plus appendices. It is an earlier draft. Chapter numbers stay as they are until one renumbering pass later. This is not the Novice, Journeyman, and Master curriculum.</p>
       <p class="book-introduction-note">That curriculum is a separate work in docs/book/, being written now. It is not these pages, and it is not complete. These pages are also not a normative specification, proof, assurance report, license grant, or release claim.</p>
-      <span class="book-edition">Living pre-alpha reader guide</span>
+      <span class="book-edition">Pre-alpha reader guide</span>
     </div>
   </div>
 
-  <section class="book-curriculum" aria-labelledby="curriculum-title">
-    <h2 id="curriculum-title">Novice, Journeyman, and Master</h2>
-    {curriculumGroups.length > 0 ? (
-      curriculumGroups.map((group) => (
-        <div class="book-contents-group">
-          {group.part && <h3>{group.part}</h3>}
-          <ol>
-            {group.rows.map((row) => (
-              <li data-status={row.status}>
-                {row.href ? (
-                  <a href={row.href}>
-                    <span>{row.title}</span>
-                    <StatusMarker status={row.status} />
-                  </a>
-                ) : (
-                  <span>
-                    <span>{row.title}</span>
-                    <StatusMarker status={row.status} />
-                  </span>
-                )}
-              </li>
-            ))}
-          </ol>
-        </div>
-      ))
-    ) : (
-      <p>A new Novice, Journeyman and Master curriculum is being written. Its chapters will appear here as each one passes review.</p>
-    )}
-  </section>
+  <BookBlocks
+    blockTag="h2"
+    variant="contents"
+    curriculumGroups={curriculumGroups}
+    manuscriptGroups={manuscriptGroups}
+    version={info.version}
+    sync={sync}
+  />
 
   <section class="book-checks" aria-labelledby="book-checks-title">
     <h2 id="book-checks-title">How the hosted chapters are checked</h2>
@@ -57,30 +38,4 @@ const curriculumGroups = groupBookRows(loadCurriculumRows(book.chapters));
   <p class="book-start">
     <a class="button button-primary" href="/book/preface/">Start the manuscript <span aria-hidden="true">→</span></a>
   </p>
-
-  <section id="book-parts" class="book-contents-list" aria-labelledby="book-contents-title">
-    <h2 id="book-contents-title">Inside the earlier manuscript</h2>
-    {bookGroups.map((group) => (
-      <div class="book-contents-group">
-        {group.part && <h3>{group.part}</h3>}
-        <ol>
-          {group.rows.map((row) => (
-            <li data-status={row.status}>
-              {row.href ? (
-                <a href={row.href}>
-                  <span>{row.title}</span>
-                  <StatusMarker status={row.status} />
-                </a>
-              ) : (
-                <span>
-                  <span>{row.title}</span>
-                  <StatusMarker status={row.status} />
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
-    ))}
-  </section>
 </BookLayout>

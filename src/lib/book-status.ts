@@ -27,6 +27,31 @@ const manifests = import.meta.glob("../content/book/manifest.json", {
   import: "default",
 });
 
+// Written by the book sync next to the snapshot. Not a fallback for manifest.json.
+const provenances = import.meta.glob("../content/book/source/provenance.json", {
+  eager: true,
+  import: "default",
+});
+
+const commitPattern = /^[0-9a-f]{40}$/i;
+
+export type BookSync = { commit: string; short: string; href: string };
+
+/** Orange commit the hosted book was synced from, or null when provenance is missing or invalid. */
+export function loadBookSync(): BookSync | null {
+  for (const raw of Object.values(provenances)) {
+    if (!raw || typeof raw !== "object") continue;
+    const commit = (raw as { commit?: unknown }).commit;
+    if (typeof commit !== "string" || !commitPattern.test(commit)) continue;
+    return {
+      commit,
+      short: commit.slice(0, 7),
+      href: `https://github.com/chasebryan/orange/commit/${commit}`,
+    };
+  }
+  return null;
+}
+
 function entriesFrom(raw: unknown): ManifestEntry[] {
   if (Array.isArray(raw)) return raw as ManifestEntry[];
   if (raw && typeof raw === "object") {
@@ -88,19 +113,57 @@ export function loadBookRows(chapters: ChapterSource[]): BookRow[] {
   }));
 }
 
-const curriculumParts = new Set(["Novice", "Journeyman", "Master"]);
+const curriculumOrder = ["Novice", "Journeyman", "Master"] as const;
+const curriculumParts = new Set<string>(curriculumOrder);
 
-function manifestDocsBook(): boolean {
+export type ManifestInfo = { docsBook: boolean; version: string };
+
+/** Manifest flags, with safe defaults when manifest.json is absent. */
+export function loadManifestInfo(): ManifestInfo {
+  let docsBook = false;
+  let version = "";
   for (const raw of Object.values(manifests)) {
-    if (raw && typeof raw === "object" && (raw as { docsBook?: unknown }).docsBook === true) return true;
+    if (!raw || typeof raw !== "object") continue;
+    const record = raw as { docsBook?: unknown; version?: unknown };
+    if (record.docsBook === true) docsBook = true;
+    if (!version && typeof record.version === "string") version = record.version.trim();
   }
-  return false;
+  return { docsBook, version };
 }
 
-/** Novice, Journeyman, and Master rows, only after docs/book is in the manifest. */
+/** Hosted chapters from book.json. Manuscript rows do not come from the manifest. */
+export function loadManuscriptRows(chapters: ChapterSource[]): BookRow[] {
+  return chapters.map((chapter) => ({
+    slug: chapter.slug,
+    title: chapter.title,
+    part: chapter.part,
+    status: "drafted",
+    href: `/book/${chapter.slug}/`,
+  }));
+}
+
+/** Novice, Journeyman, and Master rows, only when the manifest says docsBook. */
 export function loadCurriculumRows(chapters: ChapterSource[]): BookRow[] {
-  if (!manifestDocsBook()) return [];
-  return loadBookRows(chapters).filter((row) => curriculumParts.has(row.part));
+  if (!loadManifestInfo().docsBook) return [];
+  const bySlug = new Map(chapters.map((chapter) => [chapter.slug, chapter]));
+  const rows = manifestEntries()
+    .filter((entry) => entry.slug && entry.title && curriculumParts.has((entry.part ?? "").trim()))
+    .map((entry) => {
+      const slug = entry.slug!;
+      const known = bySlug.get(slug);
+      return {
+        slug,
+        title: entry.title!,
+        part: (entry.part ?? "").trim(),
+        status: knownStatus(entry.status, Boolean(known)),
+        href: known ? `/book/${slug}/` : undefined,
+      };
+    });
+  return rows.sort(
+    (a, b) =>
+      curriculumOrder.indexOf(a.part as (typeof curriculumOrder)[number]) -
+      curriculumOrder.indexOf(b.part as (typeof curriculumOrder)[number]),
+  );
 }
 
 export function groupBookRows(rows: BookRow[]): { part: string; rows: BookRow[] }[] {
