@@ -41,10 +41,10 @@ const bookGroups = groupBookRows(loadBookRows(book.chapters));
 
     <section id="current" class="band shell" aria-labelledby="current-title">
       <div class="section-label">
-        {showContentSlots && <h2 id="current-title" class="copy-slot">TODO(content): what works today</h2>}
+        {showContentSlots && <h2 class="copy-slot">TODO(content): what works today</h2>}
         <span class="section-label-note">LANGUAGE DESIGN & CRYPTOGRAPHY</span>
       </div>
-      <p class="eyebrow section-kicker" id={showContentSlots ? undefined : "current-title"}><span class="status-dot" aria-hidden="true"></span> CURRENT PROJECT</p>
+      <h2 id="current-title" class="eyebrow section-kicker"><span class="status-dot" aria-hidden="true"></span> CURRENT PROJECT</h2>
       <div class="principles" aria-label="Inside Orange">
         <div class="principle"><span class="principle-number">01 / SPECIFICATION</span><h3>Start with the mathematics.</h3><p>Typed specifications keep the meaning of a cryptographic idea explicit.</p></div>
         <div class="principle"><span class="principle-number">02 / PRECISION</span><h3>Make the rules clear.</h3><p>Integers, fixed-width words, and modular values each have defined semantics.</p></div>
