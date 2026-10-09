@@ -2,9 +2,10 @@
 import BookLayout from "../../layouts/BookLayout.astro";
 import StatusMarker from "../../components/StatusMarker.astro";
 import book from "../../data/book.json";
-import { groupBookRows, loadBookRows } from "../../lib/book-status";
+import { groupBookRows, loadBookRows, loadCurriculumRows } from "../../lib/book-status";
 import { orangeRevision } from "../../data/orange-sources";
 const bookGroups = groupBookRows(loadBookRows(book.chapters));
+const curriculumGroups = groupBookRows(loadCurriculumRows(book.chapters));
 ---
 
 <BookLayout>
@@ -18,8 +19,35 @@ const bookGroups = groupBookRows(loadBookRows(book.chapters));
     </div>
   </div>
 
-  <h2>Novice, Journeyman, and Master</h2>
-  <p>That name belongs to the curriculum in docs/book/. This site does not list its chapters. It is being written now, and it is not finished.</p>
+  <section class="book-curriculum" aria-labelledby="curriculum-title">
+    <h2 id="curriculum-title">Novice, Journeyman, and Master</h2>
+    {curriculumGroups.length > 0 ? (
+      curriculumGroups.map((group) => (
+        <div class="book-contents-group">
+          {group.part && <h3>{group.part}</h3>}
+          <ol>
+            {group.rows.map((row) => (
+              <li data-status={row.status}>
+                {row.href ? (
+                  <a href={row.href}>
+                    <span>{row.title}</span>
+                    <StatusMarker status={row.status} />
+                  </a>
+                ) : (
+                  <span>
+                    <span>{row.title}</span>
+                    <StatusMarker status={row.status} />
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))
+    ) : (
+      <p>A new Novice, Journeyman and Master curriculum is being written. Its chapters will appear here as each one passes review.</p>
+    )}
+  </section>
 
   <section class="book-checks" aria-labelledby="book-checks-title">
     <h2 id="book-checks-title">How the hosted chapters are checked</h2>

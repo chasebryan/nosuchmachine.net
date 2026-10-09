@@ -88,6 +88,21 @@ export function loadBookRows(chapters: ChapterSource[]): BookRow[] {
   }));
 }
 
+const curriculumParts = new Set(["Novice", "Journeyman", "Master"]);
+
+function manifestDocsBook(): boolean {
+  for (const raw of Object.values(manifests)) {
+    if (raw && typeof raw === "object" && (raw as { docsBook?: unknown }).docsBook === true) return true;
+  }
+  return false;
+}
+
+/** Novice, Journeyman, and Master rows, only after docs/book is in the manifest. */
+export function loadCurriculumRows(chapters: ChapterSource[]): BookRow[] {
+  if (!manifestDocsBook()) return [];
+  return loadBookRows(chapters).filter((row) => curriculumParts.has(row.part));
+}
+
 export function groupBookRows(rows: BookRow[]): { part: string; rows: BookRow[] }[] {
   const groups: { part: string; rows: BookRow[] }[] = [];
   for (const row of rows) {

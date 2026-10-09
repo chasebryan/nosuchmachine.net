@@ -311,6 +311,9 @@
 .book-introduction .book-introduction-note { color: var(--muted); font-size: var(--text-sm); line-height: 1.7; }
 .book-edition { display: block; margin-block: var(--space-sm) var(--space-xs); color: var(--muted); font: var(--text-xs) / 1.5 var(--font-mono); }
 .book-parts { margin-top: var(--space-xl); }
+.book-curriculum { margin-top: var(--space-xl); max-width: var(--measure); }
+.book-curriculum > h2 { margin-top: 0; }
+.book-curriculum > p { margin: 0; text-wrap: pretty; }
 .book-checks { margin-top: var(--space-xl); max-width: var(--measure); }
 .book-checks p { margin: 0; }
 .book-start { margin: var(--space-lg) 0 0; }
@@ -332,7 +335,8 @@
   list-style: none;
 }
 .book-contents-group li { margin: 0; padding: 0; }
-.book-contents-group a {
+.book-contents-group a,
+.book-contents-group li > span {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -398,6 +402,7 @@
   .book-prose { font-size: 1.0625rem; }
   .book-prose h2 { font-size: 1.55rem; }
   .book-prose h3 { font-size: 1.25rem; }
+  .book-contents-group h3 { font-size: var(--text-xs); line-height: 1.5; }
   .book-prose pre { padding-inline: 0.85rem; font-size: 0.72rem; }
   .book-chapters, .book-search-results, .book-page-contents nav, .part-cards { grid-template-columns: 1fr; }
   .book-introduction { grid-template-columns: 1fr; }
