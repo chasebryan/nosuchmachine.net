@@ -5,17 +5,17 @@
   "type": "module",
   "description": "No Such Machine — signals, mathematics, cryptography, and independent work by Chase Bryan.",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "start": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "verify": "node scripts/verify-build.mjs",
     "sync:book": "node scripts/sync-orange-book.mjs",
     "sync:book:offline": "node scripts/sync-orange-book.mjs --offline"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.23.3"
   },
   "dependencies": {
     "@astrojs/check": "0.9.10",

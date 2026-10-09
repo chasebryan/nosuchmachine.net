@@ -19,6 +19,7 @@ Chase Bryan’s independent work in mathematics and cryptography, centered on Or
 ## Develop
 
 ```sh
+# Node 22.23.3 (.nvmrc). engines.node is >=22.23.3 so the locked undici floor (>=22.19.0) is met.
 npm ci
 npm run dev
 npm run check
@@ -48,49 +49,27 @@ Review and commit the updated vendored manuscript, downloadable source, metadata
 
 ## Deploy
 
-Cloudflare Pages Git integration is connected to this repository and successfully built the redesign preview on October 1, 2026. It publishes the production branch and branch previews without GitHub repository secrets. The Actions deployment workflow is a manual fallback; it requires `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, which were absent at review time.
+https://nosuchmachine.net is served by Cloudflare Pages. The apex and www resolve to Cloudflare anycast addresses, and responses include `server: cloudflare` and `cf-ray`. GitHub Pages is not enabled for this repository and does not serve the domain. `.github/workflows/deploy-github-pages.yml` and `public/CNAME` have been removed so Pages cannot claim the hostname.
+
+`.github/workflows/deploy-cloudflare.yml` publishes project `nosuchmachine-net` with Wrangler. It runs on `workflow_dispatch`, a daily schedule (06:17 UTC), and `repository_dispatch` type `orange-book-updated`. Each run executes `npm run sync:book` before the build so the Orange Book can be refreshed from `chasebryan/orange`. The workflow is read-only for `GITHUB_TOKEN` and does not run on pull requests.
+
+It needs repository secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. The October 2026 Actions run failed because those secrets were missing, and the workflow was disabled manually afterwards. Re-enable **Deploy Cloudflare Pages** in the Actions tab after the secrets exist.
+
+Cloudflare Pages Git integration publishes `main` and branch previews without these secrets. Keep the Pages project name `nosuchmachine-net` (see `wrangler.toml`) and the custom domains on that project. Set the project's Node.js version to `22.23.3` (`.nvmrc`) if the dashboard build is pinned.
 
 Production apex `https://nosuchmachine.net` is a **Cloudflare** zone. Historically it was published by Cloudflare Pages project `wuci-ji` from [`chasebryan/-wuci-ji`](https://github.com/chasebryan/-wuci-ji). This repository is now the source of truth for the public portfolio.
 
 `bottle.nosuchmachine.net` remains a separate Cloudflare Worker in `-wuci-ji` — do not remove that subdomain.
 
-### Recommended: Cloudflare Pages (keep current host)
+### Cloudflare Pages
 
-**Option A — Dashboard Git connect (no GitHub secrets)**
+1. Cloudflare API token with **Cloudflare Pages — Edit** (and Account read) for project `nosuchmachine-net`.
+2. Repository secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
+3. Re-enable the **Deploy Cloudflare Pages** workflow if it is still disabled, then run it with **workflow_dispatch** or wait for the daily schedule.
+4. Custom domains on project `nosuchmachine-net`: `nosuchmachine.net` and `www.nosuchmachine.net`. Remove those hostnames from the old `wuci-ji` Pages project if they are still attached.
+5. Keep Always Use HTTPS and HSTS on the zone. `bottle.nosuchmachine.net` is a separate Worker; do not change it.
 
-1. Cloudflare Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
-2. Select `chasebryan/nosuchmachine.net`, production branch `main`.
-3. Build settings:
-   - Framework preset: **None**
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Node version: `22`
-4. Project name: `nosuchmachine-net` (matches `wrangler.toml`).
-5. After the first green deploy: **Custom domains** → add `nosuchmachine.net` and `www.nosuchmachine.net`.
-6. Open the old Pages project **`wuci-ji`** → **Custom domains** → **remove** `nosuchmachine.net` / `www` so only the new project owns the apex.
-7. Confirm Always Use HTTPS + HSTS remain enabled on the zone. Keep Web Analytics / NEL off (same privacy posture as before).
-
-**Option B — GitHub Actions + Wrangler**
-
-1. Create a Cloudflare API token with **Cloudflare Pages — Edit** (and Account read).
-2. In this repo: **Settings → Secrets and variables → Actions**, add:
-   - `CLOUDFLARE_API_TOKEN`
-   - `CLOUDFLARE_ACCOUNT_ID`
-3. Merge the deploy workflow to `main` (or run **Deploy Cloudflare Pages** via `workflow_dispatch`).
-4. Complete custom-domain cutover steps 5–7 from Option A if the project is new.
-
-### Alternative: GitHub Pages
-
-Only if you intentionally leave Cloudflare Pages for the apex:
-
-1. Repo **Settings → Pages → Source: GitHub Actions**.
-2. Uncomment the `push:` trigger in `.github/workflows/deploy-github-pages.yml`, merge, and run the workflow once.
-3. In the Cloudflare DNS zone for `nosuchmachine.net`, replace Pages-managed apex records with GitHub Pages targets:
-   - `A` `@` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - `AAAA` `@` → `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
-   - `CNAME` `www` → `chasebryan.github.io`
-4. Remove the apex/www custom domains from Cloudflare Pages project `wuci-ji` (and any `nosuchmachine-net` project) so Cloudflare stops answering for those hostnames.
-5. Keep nameservers on Cloudflare if `bottle.nosuchmachine.net` (Worker) should stay put.
+GitHub Pages is retired for this site. Do not turn Pages back on for `nosuchmachine.net`.
 
 ## License
 

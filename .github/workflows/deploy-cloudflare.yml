@@ -1,8 +1,25 @@
 name: Deploy Cloudflare Pages
 
+# Production publisher for https://nosuchmachine.net.
+# DNS for the apex and www is Cloudflare (A/AAAA anycast, nameservers
+# *.ns.cloudflare.com). Live responses send `server: cloudflare` and `cf-ray`,
+# and the `_headers` policy. GitHub Pages is not configured for this repo and
+# does not serve the domain; that workflow has been removed.
+#
+# This job never runs on pull_request or pull_request_target, so a fork PR
+# cannot receive Cloudflare credentials or a write token. The default
+# GITHUB_TOKEN stays contents:read. wrangler-action is not given a GitHub token.
+#
+# If Actions shows this workflow as disabled, re-enable it. The October 2026
+# run failed closed because CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID
+# were unset, and the workflow was then disabled manually.
+
 on:
-  # Cloudflare Pages Git integration publishes main and branch previews.
-  # Keep Actions as a manually invoked fallback publisher.
+  repository_dispatch:
+    types: [orange-book-updated]
+  schedule:
+    # 06:17 UTC daily. Off the hour so it does not pile onto :00 schedules.
+    - cron: "17 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -10,24 +27,33 @@ permissions:
 
 concurrency:
   group: cloudflare-pages-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || github.event_name == 'repository_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          node-version: "22"
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install
         run: npm ci
+
+      - name: Sync the Orange Book
+        # Team owns scripts/sync-orange-book.mjs. It runs here, before the
+        # build, and is what pulls docs from chasebryan/orange main.
+        # client_payload is intentionally unused.
+        run: npm run sync:book
 
       - name: Build
         run: npm run check && npm run build && npm run verify
@@ -39,12 +65,13 @@ jobs:
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
             echo "::error::Missing CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID repo secrets."
-            echo "Add them under Settings → Secrets and variables → Actions, or connect this repo in the Cloudflare Pages dashboard instead."
+            echo "Add them under Settings → Secrets and variables → Actions."
+            echo "The token needs Cloudflare Pages edit on project nosuchmachine-net."
             exit 1
           fi
 
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
