@@ -19,7 +19,7 @@ prove, and a comparison designed to choose among five of them.
 
 ## Every arrow needs a reason
 
-The [architecture](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/docs/ARCHITECTURE.md#1-architecture-objective) draws the
+The [architecture](https://github.com/chasebryan/orange/blob/12b0e12d4013299365630de37f34af3fe0783260/docs/ARCHITECTURE.md#1-architecture-objective) draws the
 direct-native path as a chain: source modules elaborate into Spec, Impl, and
 Game Cores; the implementation lowers into CT IR; verified or validated passes
 transform CT IR; the result lowers into Machine IR; checked encoding produces
@@ -80,9 +80,9 @@ and a report must show which one was made.
 
 ## Five candidate strategies
 
-[D-010](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/docs/DECISIONS.md#d-010--compiler-strategy) compares five compiler strategies
+[D-010](https://github.com/chasebryan/orange/blob/12b0e12d4013299365630de37f34af3fe0783260/docs/DECISIONS.md#d-010--compiler-strategy) compares five compiler strategies
 symmetrically in the
-[compiler-strategy suite](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/docs/COMPILER_STRATEGY_DECISION_SUITE.md):
+[compiler-strategy suite](https://github.com/chasebryan/orange/blob/12b0e12d4013299365630de37f34af3fe0783260/docs/COMPILER_STRATEGY_DECISION_SUITE.md):
 
 | ID | Strategy | Where the claim frontier ends |
 | --- | --- | --- |
@@ -150,7 +150,7 @@ is not a proof of anything, but it is a cheap, early, and very loud alarm.
 Orange has no intermediate representation beyond the Typed Reference Core, no
 lowering, no optimization, no code generation, no object output, and no target.
 The initial target envelope is proposed under
-[D-011](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/docs/DECISIONS.md#d-011--initial-native-target-envelope) as x86-64 and
+[D-011](https://github.com/chasebryan/orange/blob/12b0e12d4013299365630de37f34af3fe0783260/docs/DECISIONS.md#d-011--initial-native-target-envelope) as x86-64 and
 AArch64 on Linux, with host tools on Linux, macOS, and Windows. None of it is
 implemented.
 
