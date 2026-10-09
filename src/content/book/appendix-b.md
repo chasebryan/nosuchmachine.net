@@ -5,7 +5,7 @@ order: 19
 description: "A summary of the project's decision register and the status of its controlling decisions."
 ---
 
-The [decision register](https://github.com/chasebryan/orange/blob/12b0e12d4013299365630de37f34af3fe0783260/docs/DECISIONS.md) is the authority. This ledger is a
+The [decision register](https://github.com/chasebryan/orange/blob/d794b4333c0500d7542d28b8b2ffe3cde5b1bf41/docs/DECISIONS.md) is the authority. This ledger is a
 snapshot of its statuses for readers who want the whole map at once. `directed`
 means explicit owner direction with details still open; `accepted` means
 ratified at an exact revision; `proposed` means a recommended answer awaiting

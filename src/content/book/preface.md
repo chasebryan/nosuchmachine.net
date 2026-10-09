@@ -102,7 +102,7 @@ The manuscript uses four kinds of statements:
 The distinction is not decorative. A proposed architecture cannot become an
 accepted one merely because a chapter speaks about it fluently. When this book
 and a normative source disagree, the normative source, accepted Orange
-Enhancement Proposal, and [decision register](https://github.com/chasebryan/orange/blob/12b0e12d4013299365630de37f34af3fe0783260/docs/DECISIONS.md) control. The book
+Enhancement Proposal, and [decision register](https://github.com/chasebryan/orange/blob/d794b4333c0500d7542d28b8b2ffe3cde5b1bf41/docs/DECISIONS.md) control. The book
 must then be corrected.
 
 The book has five parts. Part I explains why Orange exists and what kind of
