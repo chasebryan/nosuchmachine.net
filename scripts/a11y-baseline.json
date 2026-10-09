@@ -4,14 +4,6 @@
     "/": [],
     "/book/": [],
     "/book/chapter-1/": [],
-    "/book/chapter-8/": [
-      {
-        "id": "scrollable-region-focusable",
-        "target": "table:nth-child(315)",
-        "owner": "Beautifyer",
-        "summary": "A chapter 8 table is display:block with overflow-x:auto in src/styles/book.css (.book-prose table) and has no keyboard access. The selector is the current table position."
-      }
-    ],
     "/404": []
   }
 }
