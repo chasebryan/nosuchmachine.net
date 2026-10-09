@@ -15,9 +15,9 @@ or two readers, can disagree about what was written.
 This chapter follows one small Orange program from bytes to value. Everything
 in the walk-through is **current**: it describes what the `orangec` compiler in
 this repository does today, under the normative
-[lexical and grammar specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/LANGUAGE_2026.md), the accepted
-[typed-literal semantics](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/SEMANTICS_2026.md), and the
-[pure expression specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/EXPRESSIONS_2026.md) now in the owner's
+[lexical and grammar specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/LANGUAGE_2026.md), the accepted
+[typed-literal semantics](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/SEMANTICS_2026.md), and the
+[pure expression specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/EXPRESSIONS_2026.md) now in the owner's
 review. The last part of the chapter
 turns to what the complete semantic Core is meant to become, which remains
 open.
@@ -110,7 +110,8 @@ the syntax tree in source order and does five things:
 2. It resolves each typed specification's signature. The scalar types are
    `Int` and `Bool`, with no width; `Word[8]`, `Word[16]`, `Word[32]`, and
    `Word[64]`, with the width written as a plain decimal token; and `Mod[m]`,
-   whose modulus is a constant. `T^n` is an array of any of them, and a name
+   a constant modulus, or one that a sized function computes from its own
+   sizes. `T^n` is an array of any of them, and a name
    declared by `type` stands for its type. `Word[08]`, `Word[0x8]`,
    `Word[12]`, `Int[8]`, and every other form are errors. Parameter names must
    be distinct within one function.
@@ -137,13 +138,20 @@ like any other call, and because uses have no cycle, the call graph of the
 whole program is acyclic when each module's own is.
 
 Within a module, types come before functions. The analyzer first evaluates
-every modulus the module writes, once each: a modulus is built from integer
-literals with `+`, `-`, `*`, `<<`, and parentheses, and must lie from 2
-through 2^521 − 1. It then resolves the `type` declarations in source order,
-each against the names declared before it, and only then the signatures. A
-declared name is another spelling of its type, so a module that writes `F`
-and one that writes `Mod[(1 << 255) - 19]` mean the same thing, and the name
-stays in its module.
+every modulus that uses no size name, once each and in source order: those
+in `type` declarations, then those in each typed spec's finite
+type-parameter lists, parameters, result, bindings, and body. Such a
+modulus is built from integer literals with `+`, `-`, `*`, `<<`, and
+parentheses, and must lie from 2 through 2^521 − 1. A test's moduli are
+resolved only where its body is checked. A sized function may use that
+same vocabulary and its own size names. A modulus that uses a function's
+finite size names is evaluated again in each concrete instance, and that
+instance is checked with the exact modulus those sizes give, still from 2
+through 2^521 − 1. It then resolves the `type` declarations in source
+order, each against the names declared before it, and only then the
+signatures. A declared name is another spelling of its type, so a module
+that writes `F` and one that writes `Mod[(1 << 255) - 19]` mean the same
+thing, and the name stays in its module.
 
 The types are where the language's character first shows. `Int` is the
 type of mathematical integers. It has no maximum and does not overflow. The
@@ -281,13 +289,13 @@ failure, a Game Core for probabilistic experiments, and a Proof IR checked by
 a small authoritative checker. A canonical Core would have a deterministic
 encoding, so that two tools, or two revisions, can agree on exactly which
 definition a theorem is about. The
-[architecture](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ARCHITECTURE.md#4-core-semantic-family) describes those
-proposals in detail; [D-004](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md#d-004--semantic-strata) decides their
+[architecture](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/ARCHITECTURE.md#4-core-semantic-family) describes those
+proposals in detail; [D-004](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/DECISIONS.md#d-004--semantic-strata) decides their
 number and relationships.
 
 ## The next steps of meaning
 
-The eighteen current slices complete bounded parts of the roadmap's S3 stage:
+The twenty-one current slices complete bounded parts of the roadmap's S3 stage:
 literals first, then pure expressions with parameters, calls, and operators
 over integers and words, then `let` bindings and explicit conversions, then
 fixed-length arrays, then loops over literal ranges with indices proved in
@@ -305,7 +313,12 @@ once for each, then arrays of up to 65,536 elements, so that a standard's long
 vectors are written whole, then known-answer tests and equality of whole
 arrays and tuples, so that a standard's examples are claims inside the
 program, then shift and rotation amounts computed from data, each with the
-value the arithmetic gives.
+value the arithmetic gives, then arrays of scalar rows, so that a state is a
+table whose axes are checked separately, then modulus expressions over a
+function's own finite sizes, each instance checked with its exact residue
+domain, then arrays of three and four dimensions and update paths, so that a
+matrix of polynomials is one type and a state is updated one index per
+dimension.
 The rest of S3 adds the remaining substance of a language: records with named
 fields, functions generic over any modulus rather than a listed few, and
 explicit failure

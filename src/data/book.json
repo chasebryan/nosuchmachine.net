@@ -1,10 +1,11 @@
 {
   "title": "The Orange Book",
   "author": "Chase Bryan",
-  "version": "0.26",
-  "snapshot": "2026-10-02",
-  "revision": "4394a66201ff59d73bdd1dea38637bf9b7f37421",
-  "sourceUrl": "https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/THE_ORANGE_BOOK.md",
+  "version": "0.27",
+  "snapshot": "2026-10-05",
+  "revision": "1f555642dd8798b5a9f6329802af7e985d5b11e4",
+  "ref": "main",
+  "sourceUrl": "https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/THE_ORANGE_BOOK.md",
   "chapters": [
     {
       "slug": "preface",
