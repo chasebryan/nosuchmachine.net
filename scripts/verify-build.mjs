@@ -749,25 +749,42 @@ function selfTest() {
     const withSections = path.join(temp, "home-sections");
     fs.cpSync(good, withSections, { recursive: true });
     const homeFile = path.join(withSections, "index.html");
-    fs.writeFileSync(
-      homeFile,
-      fs.readFileSync(homeFile, "utf8").replace(
-        "</body>",
-        '<div id="hero"></div><div id="current"></div><div id="listing"></div><div id="non-claims"></div><div id="book-parts"></div></body>',
-      ),
-    );
-    const sectionsOn = runVerify(withSections);
-    if (sectionsOn.status !== 0 || !outputOf(sectionsOn).includes("Homepage section ids required")) {
-      console.error(outputOf(sectionsOn));
-      throw new Error("self-test: FALSE GREEN: homepage section ids were not required once all of them were present");
+    const builtHome = fs.readFileSync(homeFile, "utf8");
+    const absentSections = HOME_SECTION_IDS.filter((id) => !builtHome.includes(`id="${id}"`));
+    if (absentSections.length === 0) {
+      if (!outputOf(passed).includes("Homepage section ids required")) {
+        console.error(outputOf(passed));
+        throw new Error("self-test: FALSE GREEN: homepage section ids were present but not required");
+      }
+      console.log("self-test: homepage section ids already required on this dist");
+    } else {
+      fs.writeFileSync(
+        homeFile,
+        builtHome.replace(
+          "</body>",
+          `${absentSections.map((id) => `<div id="${id}"></div>`).join("")}</body>`,
+        ),
+      );
+      const sectionsOn = runVerify(withSections);
+      if (sectionsOn.status !== 0 || !outputOf(sectionsOn).includes("Homepage section ids required")) {
+        console.error(outputOf(sectionsOn));
+        throw new Error("self-test: FALSE GREEN: homepage section ids were not required once all of them were present");
+      }
+      console.log("self-test: homepage section ids lock on when present");
     }
-    console.log("self-test: homepage section ids lock on when present");
     const forced = runVerify(good, { SITE_CI_EXPECT_HOME_SECTIONS: "1" });
-    if (forced.status === 0 || !/Homepage is missing section ids:/.test(outputOf(forced))) {
+    if (absentSections.length === 0) {
+      if (forced.status !== 0 || !outputOf(forced).includes("Homepage section ids required")) {
+        console.error(outputOf(forced));
+        throw new Error("self-test: FALSE GREEN: forcing homepage section ids failed even though they are present");
+      }
+      console.log("self-test: forced homepage section ids passed because they are present");
+    } else if (forced.status === 0 || !/Homepage is missing section ids:/.test(outputOf(forced))) {
       console.error(outputOf(forced));
-      throw new Error("self-test: FALSE GREEN: SITE_CI_EXPECT_HOME_SECTIONS=1 did not fail current main");
+      throw new Error("self-test: FALSE GREEN: SITE_CI_EXPECT_HOME_SECTIONS=1 did not fail while section ids were missing");
+    } else {
+      console.log("self-test: forced homepage section ids failed as expected");
     }
-    console.log("self-test: forced homepage section ids failed as expected");
     const planned = path.join(temp, "planned-status");
     fs.cpSync(good, planned, { recursive: true });
     const preface = path.join(planned, "book/preface/index.html");
