@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "repository": "https://github.com/chasebryan/orange",
   "ref": "main",
-  "commit": "94c2fda3b26c41a707272468dd59054695d882ed",
+  "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4",
   "title": "The Orange Book",
   "author": "Chase Bryan",
   "version": "0.27",
@@ -17,7 +17,7 @@
       "title": "Preface",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part I: Why Orange",
@@ -25,7 +25,7 @@
       "title": "Chapter 1: The Seams Are the System",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part I: Why Orange",
@@ -33,7 +33,7 @@
       "title": "Chapter 2: Claims, Not Labels",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part I: Why Orange",
@@ -41,7 +41,7 @@
       "title": "Chapter 3: One Language, Several Semantic Worlds",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part II: Meaning and Trust",
@@ -49,7 +49,7 @@
       "title": "Chapter 4: From Surface Text to Meaning",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part II: Meaning and Trust",
@@ -57,7 +57,7 @@
       "title": "Chapter 5: Proof Search Is Not Proof Checking",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part II: Meaning and Trust",
@@ -65,7 +65,7 @@
       "title": "Chapter 6: Secrets Are a Semantic Concern",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part III: Building the Language",
@@ -73,7 +73,7 @@
       "title": "Chapter 7: No Disposable Prototype",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part III: Building the Language",
@@ -81,7 +81,7 @@
       "title": "Chapter 8: Orange 2026: The Smallest Honest Slice",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part III: Building the Language",
@@ -89,7 +89,7 @@
       "title": "Chapter 9: From Core to Native Bytes",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part III: Building the Language",
@@ -97,7 +97,7 @@
       "title": "Chapter 10: The Foreign Boundary",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part IV: Cryptography in Practice",
@@ -105,7 +105,7 @@
       "title": "Chapter 11: Standards as Versioned Inputs",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part IV: Cryptography in Practice",
@@ -113,7 +113,7 @@
       "title": "Chapter 12: The Corpus as Acceptance Test",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part IV: Cryptography in Practice",
@@ -121,7 +121,7 @@
       "title": "Chapter 13: Interoperability and External Validation",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part V: Operating Orange",
@@ -129,7 +129,7 @@
       "title": "Chapter 14: Evidence That Survives the Build",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part V: Operating Orange",
@@ -137,7 +137,7 @@
       "title": "Chapter 15: Offline Replay and Trust Budgets",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part V: Operating Orange",
@@ -145,7 +145,7 @@
       "title": "Chapter 16: Solo Work Through Incremental Gates",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Part V: Operating Orange",
@@ -153,7 +153,7 @@
       "title": "Chapter 17: Releases, Updates, and Failure",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Appendices",
@@ -161,7 +161,7 @@
       "title": "Appendix A: Current Grammar and CLI",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Appendices",
@@ -169,7 +169,7 @@
       "title": "Appendix B: Decision Ledger",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Appendices",
@@ -177,7 +177,7 @@
       "title": "Appendix C: Claim Vocabulary",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Appendices",
@@ -185,7 +185,7 @@
       "title": "Appendix D: Source Notes",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Back matter",
@@ -193,7 +193,7 @@
       "title": "Manuscript map",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     },
     {
       "part": "Back matter",
@@ -201,7 +201,7 @@
       "title": "Sources and drafting disclosure",
       "status": "drafted",
       "source": "docs/THE_ORANGE_BOOK.md",
-      "commit": "94c2fda3b26c41a707272468dd59054695d882ed"
+      "commit": "1f555642dd8798b5a9f6329802af7e985d5b11e4"
     }
   ]
 }

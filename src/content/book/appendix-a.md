@@ -6,28 +6,28 @@ description: "A reference for the current grammar, types, operators, commands, a
 ---
 
 This appendix restates the implemented Orange 2026 surface for convenience.
-The [lexical and grammar specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LANGUAGE_2026.md) and the
-[typed-literal semantics](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/SEMANTICS_2026.md) are normative, and the
-[pure expression specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/EXPRESSIONS_2026.md), the
-[bindings and conversions specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/BINDINGS_2026.md), the
-[arrays specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ARRAYS_2026.md), the
-[loops specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LOOPS_2026.md), the
-[conditions specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/CONDITIONS_2026.md), the
-[lookups specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LOOKUPS_2026.md), the
-[modules specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/MODULES_2026.md), the
-[modular arithmetic specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/MODULAR_2026.md), the
-[blocks specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/BLOCKS_2026.md), the
-[tuples specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/TUPLES_2026.md), the
-[bytes specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/BYTES_2026.md), the
-[sizes specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/SIZES_2026.md), the
-[byte order specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ORDER_2026.md), the
-[type parameters specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/TYPE_PARAMETERS_2026.md), the
-[lengths specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LENGTHS_2026.md), the
-[tests specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/TESTS_2026.md), the
-[computed amounts specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/AMOUNTS_2026.md), the
-[nested arrays specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/NESTED_ARRAYS_2026.md), the
-[static moduli specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/STATIC_MODULI_2026.md), and the
-[array dimensions specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/DIMENSIONS_2026.md) are proposed under
+The [lexical and grammar specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/LANGUAGE_2026.md) and the
+[typed-literal semantics](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/SEMANTICS_2026.md) are normative, and the
+[pure expression specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/EXPRESSIONS_2026.md), the
+[bindings and conversions specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/BINDINGS_2026.md), the
+[arrays specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/ARRAYS_2026.md), the
+[loops specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/LOOPS_2026.md), the
+[conditions specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/CONDITIONS_2026.md), the
+[lookups specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/LOOKUPS_2026.md), the
+[modules specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/MODULES_2026.md), the
+[modular arithmetic specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/MODULAR_2026.md), the
+[blocks specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/BLOCKS_2026.md), the
+[tuples specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/TUPLES_2026.md), the
+[bytes specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/BYTES_2026.md), the
+[sizes specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/SIZES_2026.md), the
+[byte order specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/ORDER_2026.md), the
+[type parameters specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/TYPE_PARAMETERS_2026.md), the
+[lengths specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/LENGTHS_2026.md), the
+[tests specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/TESTS_2026.md), the
+[computed amounts specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/AMOUNTS_2026.md), the
+[nested arrays specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/NESTED_ARRAYS_2026.md), the
+[static moduli specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/STATIC_MODULI_2026.md), and the
+[array dimensions specification](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/DIMENSIONS_2026.md) are proposed under
 OEP-0005 through OEP-0021 and OEP-0023 through OEP-0025 and in the owner's
 review. Where this summary and those documents differ, they control.
 
