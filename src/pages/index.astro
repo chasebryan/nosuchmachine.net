@@ -62,12 +62,12 @@ const conformancePath = ["compiler", "crates", "orangec", "tests", "s3b_conforma
       <div class="section-label">
         <h2 id="listing-title">A checked SHA-256 fragment</h2>
       </div>
-      <CodeListing><a slot="caption" href={sha256FixtureUrl}>{sha256FixturePath.split("/").map((segment, index, parts) => (
+      <CodeListing><span slot="caption">Copied from orange {orangeRevision.slice(0, 7)} <a href={sha256FixtureUrl}>{sha256FixturePath.split("/").map((segment, index, parts) => (
         <>
           <span class="code-path-seg">{segment}</span>
           {index < parts.length - 1 && <span class="code-path-sep">/<wbr /></span>}
         </>
-      ))}</a>{sha256Fixture}</CodeListing>
+      ))}</a></span>{sha256Fixture}</CodeListing>
       <p>{conformancePath.map((segment, index, parts) => (
         <>
           <span class="code-path-seg">{segment}</span>
