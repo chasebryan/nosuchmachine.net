@@ -1,9 +1,17 @@
 {
-  "description": "Axe waivers for /, /book/, /book/chapter-1/, and /404. A violation that is not listed fails site CI. A listed violation that no longer reproduces also fails, so delete it once the page is clean. Optional \"scheme\" is \"light\" or \"dark\"; omit it to require the waiver in both. The 31 color-contrast waivers from the pre-visual-design styles no longer reproduce on main (fixed in #5; the heading-order skip was fixed in #8), so these lists are empty.",
+  "description": "Axe waivers for the pages site CI scans: /, every built /book/ page, and /404. A violation that is not listed fails. A listed violation that no longer reproduces also fails, so delete it once the page is clean. A page with no entry has no waivers. Optional \"scheme\" is \"light\" or \"dark\"; omit it to require the waiver in both.",
   "pages": {
     "/": [],
     "/book/": [],
     "/book/chapter-1/": [],
+    "/book/chapter-8/": [
+      {
+        "id": "scrollable-region-focusable",
+        "target": "table:nth-child(315)",
+        "owner": "Beautifyer",
+        "summary": "A chapter 8 table is display:block with overflow-x:auto in src/styles/book.css (.book-prose table) and has no keyboard access. The selector is the current table position."
+      }
+    ],
     "/404": []
   }
 }

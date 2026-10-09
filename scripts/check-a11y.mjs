@@ -8,13 +8,17 @@ const require = createRequire(import.meta.url);
 const axePath = require.resolve("axe-core");
 const root = path.resolve("dist");
 const baselinePath = path.resolve("scripts/a11y-baseline.json");
-const pages = [
-  { route: "/", status: 200 },
-  { route: "/book/", status: 200 },
-  { route: "/book/chapter-1/", status: 200 },
-  { route: "/404", requestPath: "/this-page-is-not-published", status: 404 },
-];
 const colorSchemes = ["light", "dark"];
+
+function builtBookRoutes() {
+  const bookDir = path.join(root, "book");
+  if (!fs.existsSync(bookDir)) return [];
+  return fs
+    .readdirSync(bookDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && fs.existsSync(path.join(bookDir, entry.name, "index.html")))
+    .map((entry) => `/book/${entry.name}/`)
+    .sort();
+}
 
 function contentType(file) {
   const types = {
@@ -84,6 +88,13 @@ if (!fs.existsSync(root)) {
   console.error("dist/ is missing. Run npm run build before the accessibility check.");
   process.exit(1);
 }
+
+const pages = [
+  { route: "/", status: 200 },
+  { route: "/book/", status: 200 },
+  ...builtBookRoutes().map((route) => ({ route, status: 200 })),
+  { route: "/404", requestPath: "/this-page-is-not-published", status: 404 },
+];
 
 const baseline = JSON.parse(fs.readFileSync(baselinePath, "utf8"));
 const csp = siteCsp();
@@ -185,9 +196,9 @@ try {
         console.log(`CSP kept chapter syntax color ${applied.declared} -> ${applied.computed} (${scheme})`);
       }
     }
-    const pageBaseline = baseline.pages?.[pageSpec.route];
+    const pageBaseline = Object.hasOwn(baseline.pages ?? {}, pageSpec.route) ? baseline.pages[pageSpec.route] : [];
     if (!Array.isArray(pageBaseline)) {
-      failures.push(`scripts/a11y-baseline.json is missing a pages["${pageSpec.route}"] array`);
+      failures.push(`scripts/a11y-baseline.json pages["${pageSpec.route}"] must be an array`);
       await page.close();
       continue;
     }
@@ -235,6 +246,12 @@ try {
     console.log(`${label}: ${found} axe node(s), ${applicable.length} waived in the baseline`);
     await page.close();
   }
+  }
+  const scanned = new Set(pages.map((page) => page.route));
+  for (const route of Object.keys(baseline.pages ?? {})) {
+    if (!scanned.has(route)) {
+      failures.push(`scripts/a11y-baseline.json lists ${route}, but that page was not scanned`);
+    }
   }
 } finally {
   await browser.close();

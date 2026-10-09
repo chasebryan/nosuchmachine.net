@@ -353,6 +353,15 @@ function assertExpectations(root, homeHtml) {
   }
 }
 
+function chapterCommit(chapter) {
+  for (const field of ["commit", "sha", "revision", "orangeCommit", "orangeSha"]) {
+    const value = chapter[field];
+    if (typeof value !== "string" || !value.trim()) continue;
+    return { field, value: value.trim() };
+  }
+  return null;
+}
+
 function hostedManuscriptSlugs() {
   const book = JSON.parse(fs.readFileSync("src/data/book.json", "utf8"));
   return new Set(
@@ -409,6 +418,15 @@ function assertManifest(root) {
     assert.ok(
       CHAPTER_STATUSES.includes(chapter.status),
       `Manifest status for ${chapter.slug} must be drafted or planned, got ${JSON.stringify(chapter.status)}`,
+    );
+    const ownCommit = chapterCommit(chapter);
+    const resolvedCommit = ownCommit ? ownCommit.value : parsed.commit;
+    assert.match(
+      resolvedCommit,
+      /^[a-f0-9]{40}$/,
+      ownCommit
+        ? `Manifest chapter ${chapter.slug} ${ownCommit.field} must be a full 40-hex SHA`
+        : `Manifest chapter ${chapter.slug} needs the manifest commit as a full 40-hex SHA`,
     );
     const page = routeToFile(root, `/book/${chapter.slug}/`);
     const hostedManuscriptPage = manuscriptSlugs.has(chapter.slug) && fs.existsSync(page) && fs.statSync(page).size > 0;
@@ -875,6 +893,24 @@ function selfTest() {
       throw new Error("self-test: FALSE GREEN: a docsBook false manifest without per-chapter part or commit was rejected");
     }
     console.log("self-test: docsBook false manifest passed");
+    const withChapterCommit = path.join(temp, "manifest-chapter-commit.json");
+    fs.writeFileSync(
+      withChapterCommit,
+      JSON.stringify({
+        ...manifestHead,
+        docsBook: false,
+        chapters: [
+          { slug: "preface", title: "Preface", status: "drafted", part: "Front matter", commit: revision },
+          { slug: "chapter-1", title: "Chapter 1", status: "planned", part: "Part I: Why Orange", commit: revision },
+        ],
+      }),
+    );
+    const chapterCommitOk = runVerify(good, { BOOK_MANIFEST: withChapterCommit });
+    if (chapterCommitOk.status !== 0 || !outputOf(chapterCommitOk).includes("Manifest: 2 chapters, docsBook false")) {
+      console.error(outputOf(chapterCommitOk));
+      throw new Error("self-test: FALSE GREEN: a manifest with per-chapter commits was rejected");
+    }
+    console.log("self-test: per-chapter commit passed");
     const docsDist = path.join(temp, "docs-book-dist");
     fs.cpSync(good, docsDist, { recursive: true });
     fs.mkdirSync(path.join(docsDist, "book/rings"), { recursive: true });
@@ -927,6 +963,16 @@ function selfTest() {
         expect: /lists no chapters/,
         dist: good,
         body: { ...manifestHead, docsBook: false, chapters: [] },
+      },
+      {
+        name: "manifest chapter sha",
+        expect: /commit must be a full 40-hex SHA/,
+        dist: good,
+        body: {
+          ...manifestHead,
+          docsBook: false,
+          chapters: [{ slug: "preface", title: "Preface", status: "drafted", commit: "abc" }],
+        },
       },
       {
         name: "manifest docs part",
