@@ -127,21 +127,31 @@ try {
     if (response?.status() !== pageSpec.status) {
       failures.push(`${label} returned HTTP ${response?.status()}, expected ${pageSpec.status}`);
     }
-    const presented = await page.evaluate(() => {
-      const styled = [...document.querySelectorAll("code span[style]")].find((element) =>
-        /(?:^|;)\s*color\s*:\s*#(?:[0-9a-f]{6}|[0-9a-f]{3})\b/i.test(element.getAttribute("style") || ""),
-      );
+    const presented = await page.evaluate((scheme) => {
+      function hexProp(style, name) {
+        const match = style.match(new RegExp(`(?:^|;)\\s*${name}\\s*:\\s*(#[0-9a-f]{6}|#[0-9a-f]{3})\\b`, "i"));
+        return match ? match[1] : null;
+      }
+      const styled = [...document.querySelectorAll("code span[style]")].find((element) => {
+        const style = element.getAttribute("style") || "";
+        return hexProp(style, "color") || hexProp(style, "--shiki-light") || hexProp(style, "--shiki-dark");
+      });
       let inlineStyleApplied = null;
       if (styled) {
-        const declared = styled.getAttribute("style").match(/(?:^|;)\s*color\s*:\s*(#[0-9a-f]{6}|#[0-9a-f]{3})/i)[1];
-        const hex = declared.slice(1);
-        const expanded = hex.length === 3 ? hex.split("").map((char) => char + char).join("") : hex;
-        const value = Number.parseInt(expanded, 16);
-        inlineStyleApplied = {
-          declared,
-          expected: `rgb(${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255})`,
-          computed: getComputedStyle(styled).color,
-        };
+        const style = styled.getAttribute("style");
+        const declared = hexProp(style, "color") || hexProp(style, "--shiki-light");
+        const dark = hexProp(style, "--shiki-dark");
+        const chosen = scheme === "dark" && dark ? dark : declared;
+        if (chosen) {
+          const hex = chosen.slice(1);
+          const expanded = hex.length === 3 ? hex.split("").map((char) => char + char).join("") : hex;
+          const value = Number.parseInt(expanded, 16);
+          inlineStyleApplied = {
+            declared: chosen,
+            expected: `rgb(${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255})`,
+            computed: getComputedStyle(styled).color,
+          };
+        }
       }
       let styleRules = 0;
       for (const sheet of document.styleSheets) {
@@ -153,7 +163,7 @@ try {
         }
       }
       return { inlineStyleApplied, styleRules };
-    });
+    }, scheme);
     watchCsp = false;
     await page.setBypassCSP(true);
     await page.reload({ waitUntil: "load", timeout: 30000 });
