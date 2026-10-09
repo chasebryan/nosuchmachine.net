@@ -1,66 +1,8 @@
-import { readdir, readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
-
-// Layout markup stays with the design. These build rewrites keep the book
-// index from shifting on mobile without editing those files: the cover SVG is
-// 1600×2400, and the contents <details> must not paint open and then collapse
-// after the reader script loads. Desktop still shows the contents immediately
-// via an external stylesheet (no <style> element, so a style-src-elem of
-// 'self' can stay strict).
-const desktopNavLink = '<link rel="stylesheet" href="/book-nav-boot.css">';
-
-function bookLayoutStability() {
-  return {
-    name: "book-layout-stability",
-    hooks: {
-      "astro:build:done": async ({ dir }) => {
-        const root = fileURLToPath(dir);
-        const pages = [];
-        async function walk(directory) {
-          for (const entry of await readdir(directory, { withFileTypes: true })) {
-            const full = path.join(directory, entry.name);
-            if (entry.isDirectory()) await walk(full);
-            else if (entry.name.endsWith(".html")) pages.push(full);
-          }
-        }
-        await walk(root);
-        for (const file of pages) {
-          const html = await readFile(file, "utf8");
-          let next = html;
-          if (next.includes('id="book-navigation"')) {
-            next = next.replace(
-              '<details id="book-navigation" open>',
-              '<details id="book-navigation">',
-            );
-            if (!next.includes('href="/book-nav-boot.css"')) {
-              next = next.replace("</head>", `${desktopNavLink}</head>`);
-            }
-          }
-          if (next.includes('src="/projects/orange/book-cover.svg"')) {
-            next = next.replace(
-              /<img\b[^>]*\bsrc="\/projects\/orange\/book-cover\.svg"[^>]*>/,
-              (tag) => {
-                const open = tag.replace(/\s(?:width|height)="[^"]*"/g, "").replace(/\s*\/?>$/, "");
-                return `${open} width="1600" height="2400">`;
-              },
-            );
-            if (!next.includes('width="1600" height="2400"')) {
-              throw new Error(`book-layout-stability: could not set the cover aspect ratio in ${file}`);
-            }
-          }
-          if (next !== html) await writeFile(file, next);
-        }
-      },
-    },
-  };
-}
 
 export default defineConfig({
   site: "https://nosuchmachine.net",
   trailingSlash: "always",
-  integrations: [bookLayoutStability()],
   build: {
     format: "directory",
   },
