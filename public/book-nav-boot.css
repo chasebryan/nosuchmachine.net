@@ -1,0 +1,5 @@
+/* Desktop paints the contents before book-reader.ts sets details.open. */
+@media (min-width: 981px) {
+  #book-navigation > .book-sidebar-content { display: block; }
+  #book-navigation .contents-toggle { transform: rotate(180deg); }
+}
