@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import http from "node:http";
+import os from "node:os";
 import path from "node:path";
 import { createRequire } from "node:module";
 import puppeteer from "puppeteer";
@@ -46,7 +47,7 @@ function siteCsp() {
   return match[1].trim();
 }
 
-function startServer(csp) {
+function startServer(csp, serveRoot = root) {
   const server = http.createServer((request, response) => {
     const url = new URL(request.url || "/", "http://127.0.0.1");
     let pathname;
@@ -56,8 +57,8 @@ function startServer(csp) {
       response.writeHead(400).end("Bad path");
       return;
     }
-    let file = path.resolve(root, `.${pathname}`);
-    const relative = path.relative(root, file);
+    let file = path.resolve(serveRoot, `.${pathname}`);
+    const relative = path.relative(serveRoot, file);
     if (relative.startsWith("..") || path.isAbsolute(relative)) {
       response.writeHead(400).end("Bad path");
       return;
@@ -65,7 +66,15 @@ function startServer(csp) {
     if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, "index.html");
     let status = 200;
     if (!fs.existsSync(file) || !fs.statSync(file).isFile()) {
-      file = path.join(root, "404.html");
+      const missing = path.join(serveRoot, "404.html");
+      if (!fs.existsSync(missing)) {
+        response.writeHead(404, {
+          "content-type": "text/plain; charset=utf-8",
+          "content-security-policy": csp,
+        }).end("missing");
+        return;
+      }
+      file = missing;
       status = 404;
     }
     response.writeHead(status, {
@@ -84,6 +93,166 @@ function violationKey(ruleId, target) {
   return `${ruleId}\n${target}`;
 }
 
+const cspRefusal = /content security policy|refused to (apply|load|execute|connect|frame)/i;
+
+async function armCspWatch(page) {
+  const messages = [];
+  let watching = true;
+  page.on("console", (message) => {
+    if (!watching) return;
+    const text = message.text();
+    if (cspRefusal.test(text)) messages.push(text);
+  });
+  await page.evaluateOnNewDocument(() => {
+    window.__cspViolations = [];
+    document.addEventListener("securitypolicyviolation", (event) => {
+      window.__cspViolations.push({
+        directive: event.violatedDirective || event.effectiveDirective || "",
+        blockedURI: event.blockedURI || "",
+        sample: event.sample || "",
+      });
+    });
+  });
+  return {
+    messages,
+    stop() {
+      watching = false;
+    },
+    violations() {
+      return page.evaluate(() => window.__cspViolations || []);
+    },
+  };
+}
+
+function cspFailure(label, messages, violations) {
+  if (messages.length === 0 && violations.length === 0) return null;
+  const lines = [`${label} CSP blocked a style or asset:`];
+  for (const item of messages) lines.push(`  console: ${item}`);
+  for (const item of violations) {
+    const sample = item.sample ? ` (${item.sample})` : "";
+    lines.push(`  securitypolicyviolation: ${item.directive} blocked ${item.blockedURI}${sample}`);
+  }
+  return lines.join("\n");
+}
+
+function launchBrowser() {
+  return puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+  });
+}
+
+async function runSelfTest() {
+  const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "a11y-csp-"));
+  fs.writeFileSync(
+    path.join(fixture, "theme.css"),
+    "@media (prefers-color-scheme: dark) {\n  .astro-code span { color: var(--shiki-dark) !important; }\n}\n",
+  );
+  fs.mkdirSync(path.join(fixture, "dual"));
+  fs.writeFileSync(
+    path.join(fixture, "dual", "index.html"),
+    `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dual theme</title>
+  <link rel="stylesheet" href="/theme.css">
+</head>
+<body>
+  <pre class="astro-code"><code><span id="tok" style="color:#0E1116;--shiki-dark:#F0F3F6">let</span></code></pre>
+</body>
+</html>
+`,
+  );
+  fs.mkdirSync(path.join(fixture, "blocked"));
+  fs.writeFileSync(
+    path.join(fixture, "blocked", "index.html"),
+    `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Blocked style</title>
+  <style>body { color: #ff0000; }</style>
+</head>
+<body><p>blocked</p></body>
+</html>
+`,
+  );
+
+  const csp = siteCsp();
+  const server = await startServer(csp, fixture);
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  const browser = await launchBrowser();
+  const problems = [];
+  try {
+    const page = await browser.newPage();
+    const watch = await armCspWatch(page);
+    await page.emulateMediaFeatures([{ name: "prefers-color-scheme", value: "dark" }]);
+    await page.goto(`${origin}/dual/`, { waitUntil: "load", timeout: 30000 });
+    const sample = await page.evaluate(() => {
+      const element = document.getElementById("tok");
+      return {
+        declared: element.getAttribute("style") || "",
+        computed: getComputedStyle(element).color,
+      };
+    });
+    const violations = await watch.violations();
+    watch.stop();
+    const overrideReport = cspFailure("dual-theme override", watch.messages, violations);
+    if (overrideReport) {
+      problems.push(`Dual-theme override must pass, but the probe reported a CSP block:\n${overrideReport}`);
+    }
+    if (!sample.declared.includes("#0E1116")) {
+      problems.push(`Dual-theme fixture lost its inline #0E1116 color: ${sample.declared}`);
+    }
+    if (sample.computed !== "rgb(240, 243, 246)") {
+      problems.push(
+        `Dual-theme fixture did not apply var(--shiki-dark). Computed ${sample.computed}, expected rgb(240, 243, 246).`,
+      );
+    } else if (!overrideReport) {
+      console.log(
+        "Self-test: dark dual-theme override kept inline #0E1116 and computed rgb(240, 243, 246) with no CSP violation.",
+      );
+    }
+    await page.close();
+
+    const blockedPage = await browser.newPage();
+    const blockedWatch = await armCspWatch(blockedPage);
+    await blockedPage.goto(`${origin}/blocked/`, { waitUntil: "load", timeout: 30000 });
+    const blockedViolations = await blockedWatch.violations();
+    blockedWatch.stop();
+    const blockedReport = cspFailure("blocked inline style", blockedWatch.messages, blockedViolations);
+    const signal = [
+      ...blockedWatch.messages,
+      ...blockedViolations.map((item) => `${item.directive} ${item.blockedURI}`),
+    ].join("\n");
+    if (!blockedReport || !/style-src|inline style/i.test(signal)) {
+      problems.push(
+        "Blocked inline <style> must fail the CSP probe, but no style securitypolicyviolation or console refusal was recorded.",
+      );
+    } else {
+      const how = blockedViolations.map((item) => item.directive).filter(Boolean).join(", ") || "console refusal";
+      console.log(`Self-test: blocked inline style failed the probe (${how}).`);
+    }
+    await blockedPage.close();
+  } finally {
+    await browser.close();
+    await new Promise((resolve) => server.close(resolve));
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+  if (problems.length > 0) {
+    console.error(`Accessibility self-test failed (${problems.length}):`);
+    for (const problem of problems) console.error(`\n${problem}`);
+    process.exit(1);
+  }
+  console.log("Accessibility self-test passed: a dual-theme override is not a CSP block, and a blocked inline style fails the probe.");
+}
+
+if (process.argv.includes("--self-test")) {
+  await runSelfTest();
+  process.exit(0);
+}
+
 if (!fs.existsSync(root)) {
   console.error("dist/ is missing. Run npm run build before the accessibility check.");
   process.exit(1);
@@ -100,10 +269,7 @@ const baseline = JSON.parse(fs.readFileSync(baselinePath, "utf8"));
 const csp = siteCsp();
 const server = await startServer(csp);
 const origin = `http://127.0.0.1:${server.address().port}`;
-const browser = await puppeteer.launch({
-  headless: true,
-  args: ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
-});
+const browser = await launchBrowser();
 
 const failures = [];
 try {
@@ -112,47 +278,14 @@ try {
     const page = await browser.newPage();
     await page.emulateMediaFeatures([{ name: "prefers-color-scheme", value: scheme }]);
     const label = `${pageSpec.route} (${scheme})`;
-    const cspMessages = [];
-    let watchCsp = true;
-    page.on("console", (message) => {
-      if (!watchCsp) return;
-      const text = message.text();
-      if (/content security policy|refused to (apply|load|execute|connect|frame)/i.test(text)) {
-        cspMessages.push(text);
-      }
-    });
+    const cspWatch = await armCspWatch(page);
     await page.setViewport({ width: 1280, height: 2400 });
     const requestPath = pageSpec.requestPath || pageSpec.route;
     const response = await page.goto(`${origin}${requestPath}`, { waitUntil: "load", timeout: 30000 });
     if (response?.status() !== pageSpec.status) {
       failures.push(`${label} returned HTTP ${response?.status()}, expected ${pageSpec.status}`);
     }
-    const presented = await page.evaluate((scheme) => {
-      function hexProp(style, name) {
-        const match = style.match(new RegExp(`(?:^|;)\\s*${name}\\s*:\\s*(#[0-9a-f]{6}|#[0-9a-f]{3})\\b`, "i"));
-        return match ? match[1] : null;
-      }
-      const styled = [...document.querySelectorAll("code span[style]")].find((element) => {
-        const style = element.getAttribute("style") || "";
-        return hexProp(style, "color") || hexProp(style, "--shiki-light") || hexProp(style, "--shiki-dark");
-      });
-      let inlineStyleApplied = null;
-      if (styled) {
-        const style = styled.getAttribute("style");
-        const declared = hexProp(style, "color") || hexProp(style, "--shiki-light");
-        const dark = hexProp(style, "--shiki-dark");
-        const chosen = scheme === "dark" && dark ? dark : declared;
-        if (chosen) {
-          const hex = chosen.slice(1);
-          const expanded = hex.length === 3 ? hex.split("").map((char) => char + char).join("") : hex;
-          const value = Number.parseInt(expanded, 16);
-          inlineStyleApplied = {
-            declared: chosen,
-            expected: `rgb(${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255})`,
-            computed: getComputedStyle(styled).color,
-          };
-        }
-      }
+    const presented = await page.evaluate(() => {
       let styleRules = 0;
       for (const sheet of document.styleSheets) {
         try {
@@ -162,9 +295,10 @@ try {
           break;
         }
       }
-      return { inlineStyleApplied, styleRules };
-    }, scheme);
-    watchCsp = false;
+      return { styleRules };
+    });
+    const cspViolations = await cspWatch.violations();
+    cspWatch.stop();
     await page.setBypassCSP(true);
     await page.reload({ waitUntil: "load", timeout: 30000 });
     await page.evaluate(() => {
@@ -188,23 +322,10 @@ try {
       }));
     });
     const result = { ...presented, violations };
-    if (cspMessages.length > 0) {
-      failures.push(`${label} CSP blocked a built asset:\n${cspMessages.map((item) => `  ${item}`).join("\n")}`);
-    }
+    const blocked = cspFailure(label, cspWatch.messages, cspViolations);
+    if (blocked) failures.push(blocked);
     if (result.styleRules <= 0) {
       failures.push(`${label} loaded no stylesheet rules under the site CSP (${result.styleRules})`);
-    }
-    if (pageSpec.route === "/book/chapter-1/") {
-      const applied = result.inlineStyleApplied;
-      if (!applied) {
-        failures.push("Chapter page has no colored style attribute; cannot confirm the CSP still allows Shiki");
-      } else if (applied.computed !== applied.expected) {
-        failures.push(
-          `Chapter syntax color was blocked by CSP. Declared ${applied.declared} (${applied.expected}), computed ${applied.computed}.`,
-        );
-      } else {
-        console.log(`CSP kept chapter syntax color ${applied.declared} -> ${applied.computed} (${scheme})`);
-      }
     }
     const pageBaseline = Object.hasOwn(baseline.pages ?? {}, pageSpec.route) ? baseline.pages[pageSpec.route] : [];
     if (!Array.isArray(pageBaseline)) {

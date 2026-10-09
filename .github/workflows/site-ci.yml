@@ -72,5 +72,8 @@ jobs:
       - name: Check internal links and anchors
         run: node scripts/check-links.mjs
 
+      - name: Verify the accessibility probe
+        run: node scripts/check-a11y.mjs --self-test
+
       - name: Check accessibility
         run: node scripts/check-a11y.mjs
