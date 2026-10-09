@@ -353,6 +353,90 @@ function assertExpectations(root, homeHtml) {
   }
 }
 
+const BOOK_PROVENANCE_CANDIDATES = [
+  "src/content/book/provenance.json",
+  "src/content/book/source/provenance.json",
+];
+
+function visibleText(html) {
+  return html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replaceAll("&amp;", "&")
+    .replaceAll("&quot;", '"')
+    .replaceAll("&#39;", "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function freshnessClaims(text) {
+  const claims = [];
+  if (/\blive\b/i.test(text) || /\bliving\b/i.test(text)) claims.push("live");
+  if (/\bup[- ]to[- ]date\b/i.test(text)) claims.push("up to date");
+  return claims;
+}
+
+function provenanceAnchors(html) {
+  const found = [];
+  for (const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)) {
+    const hrefMatch = match[1].match(/\bhref="([^"]*)"/);
+    if (!hrefMatch) continue;
+    found.push({
+      href: decodeAttribute(hrefMatch[1]),
+      text: match[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(),
+    });
+  }
+  return found;
+}
+
+function loadBookProvenance() {
+  const configured = process.env.BOOK_PROVENANCE;
+  const candidates = configured ? [configured] : BOOK_PROVENANCE_CANDIDATES;
+  const file = candidates.find((candidate) => fs.existsSync(candidate));
+  assert.ok(file, `Book provenance file not found (${candidates.join(" or ")}).`);
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (error) {
+    assert.fail(`Book provenance ${file} is not JSON: ${error.message}`);
+  }
+  const commit = typeof parsed.commit === "string" ? parsed.commit.trim() : "";
+  assert.match(commit, /^[a-f0-9]{40}$/, `Book provenance ${file} commit must be a full 40-hex SHA`);
+  return { file, commit, short: commit.slice(0, 7) };
+}
+
+function assertBookProvenance(root) {
+  const expectations = JSON.parse(fs.readFileSync("scripts/ci-expectations.json", "utf8"));
+  assert.equal(
+    typeof expectations.bookProvenance?.enabled,
+    "boolean",
+    "scripts/ci-expectations.json bookProvenance.enabled must be a boolean",
+  );
+  const required =
+    expectations.bookProvenance.enabled === true || process.env.SITE_CI_EXPECT_BOOK_PROVENANCE === "1";
+  if (!required) {
+    console.log(
+      "Book provenance display is not required yet. Set bookProvenance.enabled to true in scripts/ci-expectations.json, or export SITE_CI_EXPECT_BOOK_PROVENANCE=1, once /book/ shows the pinned orange commit.",
+    );
+    return;
+  }
+  const { file, commit, short } = loadBookProvenance();
+  const href = `https://github.com/chasebryan/orange/commit/${commit}`;
+  const html = readRoute(root, "/book/");
+  const shown = provenanceAnchors(html).some(
+    (anchor) => anchor.href === href && anchor.text.toLowerCase().includes(short),
+  );
+  assert.ok(shown, `Book page /book/ must show short SHA ${short} from ${file} linked to ${href}.`);
+  const claims = freshnessClaims(visibleText(html));
+  assert.deepEqual(
+    claims,
+    [],
+    `Book page /book/ claims the book is ${claims.join(" and ")}. The hosted book is a pinned revision, not a live or up to date copy.`,
+  );
+  console.log(`Book provenance required: ${short} from ${file} linked to ${href}.`);
+}
+
 function chapterCommit(chapter) {
   for (const field of ["commit", "sha", "revision", "orangeCommit", "orangeSha"]) {
     const value = chapter[field];
@@ -684,6 +768,7 @@ function verify() {
     }
   }
   assertExpectations(root, home);
+  assertBookProvenance(root);
   assertManifest(root);
   console.log(
     `Verified Orange-only homepage, ${book.chapters.length} hosted book chapters with reading navigation and search, ${catalog.length} project routes and source references, ${files.length} HTML pages, ${checkedLinks} local links/assets, sitemap, and CSP-compatible scripts.`,
@@ -1024,6 +1109,67 @@ function selfTest() {
     }
     console.log("self-test: missing CORS detach failed as expected");
     console.log(`self-test: ${cases.length} mutated dist trees failed for the expected reasons`);
+
+    const provenanceCommit = "1f555642dd8798b5a9f6329802af7e985d5b11e4";
+    const provenanceShort = provenanceCommit.slice(0, 7);
+    const provenanceHref = `https://github.com/chasebryan/orange/commit/${provenanceCommit}`;
+    const otherCommit = "0123456789abcdef0123456789abcdef01234567";
+    const provenanceFile = path.join(temp, "book-provenance.json");
+    fs.writeFileSync(provenanceFile, `${JSON.stringify({ commit: provenanceCommit })}\n`);
+    const bookIndex = path.join(good, "book", "index.html");
+    const builtBook = fs.readFileSync(bookIndex, "utf8");
+    const quietBook = builtBook
+      .replaceAll("A LIVING GUIDE TO ORANGE", "A PINNED GUIDE TO ORANGE")
+      .replaceAll("Living pre-alpha reader guide", "Pinned pre-alpha reader guide");
+    function withProvenanceLink(html, href, label) {
+      return html.replace("</main>", `<p>Orange commit <a href="${href}">${label}</a>.</p></main>`);
+    }
+    const provenanceEnv = {
+      SITE_CI_EXPECT_BOOK_PROVENANCE: "1",
+      BOOK_PROVENANCE: provenanceFile,
+    };
+    const matched = path.join(temp, "provenance-match");
+    fs.cpSync(good, matched, { recursive: true });
+    fs.writeFileSync(
+      path.join(matched, "book", "index.html"),
+      withProvenanceLink(quietBook, provenanceHref, provenanceShort),
+    );
+    const matchedResult = runVerify(matched, provenanceEnv);
+    if (matchedResult.status !== 0 || !outputOf(matchedResult).includes(`Book provenance required: ${provenanceShort}`)) {
+      console.error(outputOf(matchedResult));
+      throw new Error("self-test: FALSE GREEN: a book page showing the provenance SHA was rejected");
+    }
+    console.log("self-test: matching book provenance SHA passed");
+    const mismatched = path.join(temp, "provenance-mismatch");
+    fs.cpSync(good, mismatched, { recursive: true });
+    fs.writeFileSync(
+      path.join(mismatched, "book", "index.html"),
+      withProvenanceLink(quietBook, `https://github.com/chasebryan/orange/commit/${otherCommit}`, otherCommit.slice(0, 7)),
+    );
+    const mismatchedResult = runVerify(mismatched, provenanceEnv);
+    if (
+      mismatchedResult.status === 0 ||
+      !new RegExp(`must show short SHA ${provenanceShort}`).test(outputOf(mismatchedResult))
+    ) {
+      console.error(outputOf(mismatchedResult));
+      throw new Error("self-test: FALSE GREEN: a mismatched book provenance SHA did not fail");
+    }
+    console.log("self-test: mismatched book provenance SHA failed as expected");
+    const claimed = path.join(temp, "provenance-claim");
+    fs.cpSync(good, claimed, { recursive: true });
+    fs.writeFileSync(
+      path.join(claimed, "book", "index.html"),
+      withProvenanceLink(quietBook, provenanceHref, provenanceShort).replace(
+        "</main>",
+        "<p>The hosted book is up to date.</p></main>",
+      ),
+    );
+    const claimedResult = runVerify(claimed, provenanceEnv);
+    if (claimedResult.status === 0 || !/claims the book is up to date/.test(outputOf(claimedResult))) {
+      console.error(outputOf(claimedResult));
+      throw new Error("self-test: FALSE GREEN: an up to date book claim did not fail");
+    }
+    console.log("self-test: up to date book claim failed as expected");
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
