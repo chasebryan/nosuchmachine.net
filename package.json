@@ -7,7 +7,6 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "prebuild": "node scripts/sync-orange-book.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",

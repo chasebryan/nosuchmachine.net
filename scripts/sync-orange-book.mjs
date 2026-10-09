@@ -3,10 +3,11 @@
  * Fetch The Orange Book from the public orange repository and regenerate the
  * hosted reader. The default ref is main; set ORANGE_BOOK_REF or pass --ref.
  *
- *   node scripts/sync-orange-book.mjs                 # fetch and write
- *   node scripts/sync-orange-book.mjs --offline       # committed snapshot, no network
- *   node scripts/sync-orange-book.mjs --check         # compare, no network, no writes
- *   ORANGE_BOOK_OFFLINE=1 npm run build               # local build without fetching
+ *   npm run sync:book                                     # fetch and write
+ *   npm run sync:book:offline                             # committed snapshot, no network
+ *   node scripts/sync-orange-book.mjs --check             # compare, no network, no writes
+ *
+ * Nothing in `npm run build` fetches the Book. Call `sync:book` first.
  *
  * A failed fetch exits non-zero. There is no silent fallback to the previous
  * text. --offline is refused when CI is set, so a continuous-integration build
