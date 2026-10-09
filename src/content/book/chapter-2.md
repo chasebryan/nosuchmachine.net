@@ -20,9 +20,9 @@ accepted the source, a proof kernel checked a theorem, a compiler preserved the
 theorem, or a reviewer inspected the final object. The strongest available
 interpretation tends to win, even when it is the least justified.
 
-Orange's [proposed public assurance model](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/ASSURANCE.md#3-claim-model) replaces
+Orange's [proposed public assurance model](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/docs/ASSURANCE.md#3-claim-model) replaces
 that compression with a set of separately named claims.
-[D-005](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/DECISIONS.md#d-005--public-assurance-model) has not yet been accepted,
+[D-005](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/docs/DECISIONS.md#d-005--public-assurance-model) has not yet been accepted,
 so the complete claim taxonomy and product record format remain proposals. The
 underlying discipline, however, already controls how the project describes its
 present compiler: say exactly what happened, bind the statement to an artifact
@@ -209,8 +209,8 @@ Orange trust report is intended to print that closure, not a marketing summary.
 ## The provisional record and the current compiler
 
 The repository contains a provisional Gate 0
-[claim-record schema](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/schemas/gate0/claim-record-v0.1.schema.json) and
-[conformance fixtures](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/conformance/foundation/README.md). They demonstrate
+[claim-record schema](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/schemas/gate0/claim-record-v0.1.schema.json) and
+[conformance fixtures](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/conformance/foundation/README.md). They demonstrate
 structural ideas: an exact subject, identified or inapplicable contexts,
 assumptions, exclusions, evidence references, a typed basis, an outcome, and a
 review policy. They are explicitly non-product records with synthetic fixture

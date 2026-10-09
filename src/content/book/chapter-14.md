@@ -61,7 +61,7 @@ that the evidence in front of them describes the bytes in front of them.
 
 ## Thin manifests and thick bundles
 
-The [architecture](https://github.com/chasebryan/orange/blob/1f555642dd8798b5a9f6329802af7e985d5b11e4/docs/ARCHITECTURE.md#102-evidence-bundle) distinguishes two forms
+The [architecture](https://github.com/chasebryan/orange/blob/bdd704a0ff8a7209bdcec27b9fe5887f4a7d7def/docs/ARCHITECTURE.md#102-evidence-bundle) distinguishes two forms
 of evidence:
 
 - a **thin evidence manifest** content-addresses objects that may live
