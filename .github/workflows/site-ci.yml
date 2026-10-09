@@ -19,10 +19,9 @@ jobs:
     timeout-minutes: 20
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
-      # npm run build must be allowed to reach the network. The book sync fetches
-      # https://github.com/chasebryan/orange (ref configurable, default main) once
-      # that step is part of the build. A failed sync fails this job; do not keep
-      # going with an empty dist/book.
+      # sync:book may fetch https://github.com/chasebryan/orange (ref configurable,
+      # default main). Outbound HTTPS must stay open. A failed sync fails this job.
+      # Do not continue into the build with an empty book.
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -48,6 +47,17 @@ jobs:
             npm run check
           else
             echo "No tsconfig.json; skipping astro check"
+          fi
+
+      # Team's sync is an npm script, not a prebuild hook. Run it only when
+      # package.json defines sync:book. A missing script is skipped. A failing
+      # sync fails the job (the if-body is not the condition, so bash -e applies).
+      - name: Sync the Orange Book
+        run: |
+          if node -e "process.exit(require('./package.json').scripts?.['sync:book'] ? 0 : 1)"; then
+            npm run sync:book
+          else
+            echo "no sync:book script yet"
           fi
 
       - name: Build
