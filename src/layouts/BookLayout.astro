@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import StatusMarker from "../components/StatusMarker.astro";
 import "../styles/book.css";
 import book from "../data/book.json";
+import { loadChapterStatus, statusFor } from "../lib/book-status";
 
 type Chapter = (typeof book.chapters)[number];
 interface Props {
@@ -13,6 +15,7 @@ const parts = [...new Set(book.chapters.map((entry) => entry.part))];
 const index = chapter ? book.chapters.findIndex((entry) => entry.slug === chapter.slug) : -1;
 const previous = index > 0 ? book.chapters[index - 1] : undefined;
 const next = book.chapters[index + 1];
+const statuses = loadChapterStatus();
 const sourceUrl = chapter
   ? `${book.sourceUrl}#${chapter.title.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s/g, "-")}`
   : book.sourceUrl;
@@ -36,12 +39,18 @@ const sourceUrl = chapter
               <div class="book-part">
                 <p>{part}</p>
                 <ol>
-                  {book.chapters.filter((entry) => entry.part === part).map((entry) => (
-                    <li><a href={`/book/${entry.slug}/`} aria-current={chapter?.slug === entry.slug ? "page" : undefined}>
-                      {entry.title.replace(/^(Chapter \d+|Appendix [A-D]): /, "")}
-                      {(entry.slug.startsWith("chapter-") || entry.slug.startsWith("appendix-")) && <span class="book-chapter-number">{entry.slug.replace("chapter-", "").replace("appendix-", "").toUpperCase()}</span>}
+                  {book.chapters.filter((entry) => entry.part === part).map((entry) => {
+                    const status = statusFor(statuses, entry.slug);
+                    return (
+                    <li data-status={status}><a href={`/book/${entry.slug}/`} aria-current={chapter?.slug === entry.slug ? "page" : undefined}>
+                      <span class="chapter-label">{entry.title.replace(/^(Chapter \d+|Appendix [A-D]): /, "")}</span>
+                      <span class="chapter-meta">
+                        {(entry.slug.startsWith("chapter-") || entry.slug.startsWith("appendix-")) && <span class="book-chapter-number">{entry.slug.replace("chapter-", "").replace("appendix-", "").toUpperCase()}</span>}
+                        <StatusMarker status={status} />
+                      </span>
                     </a></li>
-                  ))}
+                    );
+                  })}
                 </ol>
               </div>
             ))}

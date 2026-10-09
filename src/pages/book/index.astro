@@ -1,7 +1,9 @@
 ---
 import BookLayout from "../../layouts/BookLayout.astro";
+import StatusMarker from "../../components/StatusMarker.astro";
 import book from "../../data/book.json";
-const parts = [...new Set(book.chapters.map((chapter) => chapter.part))];
+import { groupBookRows, loadBookRows, showContentSlots } from "../../lib/book-status";
+const bookGroups = groupBookRows(loadBookRows(book.chapters));
 ---
 
 <BookLayout>
@@ -11,17 +13,44 @@ const parts = [...new Set(book.chapters.map((chapter) => chapter.part))];
       <p>The Orange Book explains why Orange exists, what it is intended to become, what has actually been built, and which questions remain open.</p>
       <p class="book-introduction-note">It is not a normative language specification, proof, assurance report, license grant, or release claim.</p>
       <span class="book-edition">Living pre-alpha reader guide</span>
-      <a class="button button-primary" href="/book/preface/">Start reading <span aria-hidden="true">→</span></a>
     </div>
   </div>
-  <section class="book-contents-list" aria-labelledby="book-contents-title">
+
+  {showContentSlots && (
+    <h2 class="copy-slot">TODO(content): Novice, Journeyman, Master</h2>
+  )}
+
+  {showContentSlots && (
+    <section class="book-checks" aria-labelledby="book-checks-title">
+      <h2 id="book-checks-title" class="copy-slot">TODO(content): how chapters are checked</h2>
+      <p class="copy-slot">TODO(content): checking note</p>
+    </section>
+  )}
+
+  <p class="book-start">
+    <a class="button button-primary" href="/book/preface/">Start reading <span aria-hidden="true">→</span></a>
+  </p>
+
+  <section id="book-parts" class="book-contents-list" aria-labelledby="book-contents-title">
     <h2 id="book-contents-title">Inside the book</h2>
-    {parts.map((part) => (
+    {bookGroups.map((group) => (
       <div class="book-contents-group">
-        <h3>{part}</h3>
+        {group.part && <h3>{group.part}</h3>}
         <ol>
-          {book.chapters.filter((chapter) => chapter.part === part).map((chapter) => (
-            <li><a href={`/book/${chapter.slug}/`}><span>{chapter.title}</span><span aria-hidden="true">→</span></a></li>
+          {group.rows.map((row) => (
+            <li data-status={row.status}>
+              {row.href ? (
+                <a href={row.href}>
+                  <span>{row.title}</span>
+                  <StatusMarker status={row.status} />
+                </a>
+              ) : (
+                <span>
+                  <span>{row.title}</span>
+                  <StatusMarker status={row.status} />
+                </span>
+              )}
+            </li>
           ))}
         </ol>
       </div>

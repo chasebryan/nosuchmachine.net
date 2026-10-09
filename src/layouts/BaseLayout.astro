@@ -14,6 +14,10 @@ const pageTitle =
     : `${title} · No Such Machine`;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
+const here = Astro.url.pathname;
+const onHome = here === "/";
+const onBook = here.startsWith("/book/");
+const onReference = here.startsWith("/projects/orange/");
 ---
 
 <!doctype html>
@@ -21,8 +25,9 @@ const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#f5f3ed" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12110f" media="(prefers-color-scheme: dark)" />
     <meta name="description" content={description} />
     <meta name="author" content="Chase Bryan" />
     <meta property="og:site_name" content="No Such Machine" />
@@ -58,16 +63,13 @@ const isNotFound = Astro.url.pathname.replace(/\/$/, "") === "/404";
         <span>No Such Machine</span>
       </a>
       <nav aria-label="Main navigation">
-        <a href="/#work">Orange</a>
-        <a href="/book/" aria-current={Astro.url.pathname.startsWith("/book/") ? "location" : undefined}>Book</a>
-        <a href="/#about">About</a>
-        <a
-          class="nav-github"
-          href="https://github.com/chasebryan"
-          rel="noopener noreferrer"
-        >
-          GitHub <span aria-hidden="true">↗</span>
+        <a href="/#hero" aria-current={onHome ? "page" : undefined}>Orange</a>
+        <a href="/book/" aria-current={onBook ? "location" : undefined}>Book</a>
+        <a href="/projects/orange/" aria-current={onReference ? "page" : undefined}>Reference</a>
+        <a class="link-external" href="https://github.com/chasebryan/orange" rel="noopener noreferrer">
+          Source <span class="external-icon" aria-hidden="true">↗</span>
         </a>
+        <a href="/#about">About</a>
       </nav>
     </header>
     <slot />
