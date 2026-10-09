@@ -2,20 +2,23 @@
   {
     "slug": "orange",
     "name": "Orange",
-    "summary": "A mathematical language for cryptography, with a Rust frontend and exact reference evaluator.",
-    "purpose": "Cryptographic software crosses mathematics, implementation and security claims. Orange aims to keep those meanings explicit in one language and make each claim traceable to the evidence that supports it.",
-    "approach": "The implemented compiler separates lexing, bounded parsing, typed semantic analysis, a reference core and deterministic evaluation. Mathematical integers, fixed-width words and modular values have explicit semantics; standards-based fixtures make the current language fragment inspectable.",
+    "summary": "A pre-alpha mathematical language for cryptography. The compiler checks and evaluates a typed fragment; it does not generate native code or check proofs.",
+    "purpose": "Orange is a language for writing a cryptographic specification so a compiler can check it. The aim is one language for the mathematics, an implementation, narrowly worded claims, and evidence that can be replayed. What runs today is a compiler for a typed fragment of that language.",
+    "approach": "The compiler is a Rust workspace with no third-party crates. It lexes source, parses an editioned grammar, checks types, lowers a typed specification to a Typed Reference Core, and evaluates that core deterministically. orangec --version reports implemented slice S3u. The accepted semantic slice is S3a, typed literals; later S3 specifications are implemented and in review. Typed impl bodies, and refinement of an implementation against a specification, are not built.",
     "categories": ["Cryptography", "Languages"],
     "technologies": ["Rust", "Orange", "Cargo", "Python"],
     "capabilities": [
-      "Typed specification functions and deterministic reference evaluation",
-      "Exact integer, word and modular arithmetic with checked array and index rules",
-      "Bindings, bounded loops, modules and executable cryptographic test-vector fixtures"
+      "orangec check lexes, parses, and type-checks Orange 2026 source. orangec lex, orangec fmt, and orangec doc print tokens, a formatted source, or an offline HTML listing.",
+      "orangec eval reference-evaluates typed spec functions over mathematical integers, fixed-width words, modular values, arrays, bounded loops, and modules. orangec test runs known-answer tests written beside those functions.",
+      "orangec analyze computes exact cryptanalytic properties of one checked function at every input, and can read a linear layer or bound trails in a small substitution-permutation network. The numbers describe that function as written. They are not a security claim.",
+      "Standards fixtures and the algorithms directory are reference specifications. Compiler tests and algorithms/verify.py check them against published vectors. They are not native code, and they are not the roadmap's cryptography corpus.",
+      "orangec replay evaluates one function on a local witness file. orangec enc and orangec dec seal and open a file with an authenticated cipher written in Orange. The evaluator is not constant-time, nothing is verified, and keys are stored unencrypted."
     ],
     "limitations": [
-      "Pre-alpha; native code generation and proof checking remain future work",
-      "No independent review or whole-project formal verification",
-      "Evaluation of a specification does not establish constant-time behavior or cryptographic security"
+      "Proof checking, claim reports, evidence bundles, code generation, native targets, and a C ABI are not built.",
+      "Nothing in the repository has been independently reviewed or formally verified. Owner review is not independent review, and passing tests show only that the implemented slice behaved as tested.",
+      "A reference evaluation does not establish constant-time behavior or cryptographic security.",
+      "No outbound license has been chosen, so the repository grants no right to use, copy, or redistribute."
     ],
     "maturity": "Pre-alpha language",
     "status": "Pre-alpha",
@@ -26,18 +29,46 @@
         "href": "https://github.com/chasebryan/orange/blob/main/docs/THE_ORANGE_BOOK.md"
       },
       {
-        "label": "Compiler",
-        "href": "https://github.com/chasebryan/orange/tree/main/compiler"
+        "label": "Reference",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/compiler/README.md"
+      },
+      {
+        "label": "Roadmap",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ROADMAP.md"
       }
     ],
     "sources": [
       {
-        "label": "Project README",
-        "href": "https://github.com/chasebryan/orange/blob/1808210de853f3df7c10dcc3eff361cb5f17d557/README.md"
+        "label": "README.md",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/README.md"
       },
       {
-        "label": "Reviewed source revision",
-        "href": "https://github.com/chasebryan/orange/tree/1808210de853f3df7c10dcc3eff361cb5f17d557"
+        "label": "docs/ROADMAP.md",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ROADMAP.md"
+      },
+      {
+        "label": "docs/CRYPTANALYSIS_2026.md",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/CRYPTANALYSIS_2026.md"
+      },
+      {
+        "label": "compiler/README.md",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/compiler/README.md"
+      },
+      {
+        "label": "compiler/crates/orangec/src/main.rs",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/compiler/crates/orangec/src/main.rs"
+      },
+      {
+        "label": "compiler/fixtures/s3b/valid-sha256-functions.or",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/compiler/fixtures/s3b/valid-sha256-functions.or"
+      },
+      {
+        "label": "compiler/crates/orangec/tests/s3b_conformance.rs",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/compiler/crates/orangec/tests/s3b_conformance.rs"
+      },
+      {
+        "label": "algorithms/README.md",
+        "href": "https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/algorithms/README.md"
       }
     ],
     "featured": true,
