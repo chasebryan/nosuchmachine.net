@@ -14,8 +14,8 @@ describing the consequences of one fact about the project's circumstances.
 This chapter describes how Orange works under that fact without letting it
 distort either the engineering or the claims. The operating model is
 **directed**: it is set by explicit owner decisions,
-[D-023](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md#d-023--solo-project-operating-model) and the accepted
-[OEP-0001](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/governance/oeps/OEP-0001-solo-development.md), and it controls the
+[D-023](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/DECISIONS.md#d-023--solo-project-operating-model) and the accepted
+[OEP-0001](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/governance/oeps/OEP-0001-solo-development.md), and it controls the
 repository today.
 
 ## The plan that assumed an institution
@@ -100,7 +100,7 @@ true. Authority decides what the project will do. It cannot make a proof pass.
 ## The order of authority
 
 With one person holding every role, it matters which record wins when two
-disagree. [Governance](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/GOVERNANCE.md#current-authority) gives the order:
+disagree. [Governance](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/GOVERNANCE.md#current-authority) gives the order:
 
 1. explicit direction from the project owner;
 2. directed decisions in the decision register;
@@ -126,7 +126,7 @@ about leakage, however many other checks happened to pass in the same run.
 
 ## The roadmap as a ladder
 
-The [solo roadmap](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ROADMAP.md#5-capability-stages) orders the work into
+The [solo roadmap](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ROADMAP.md#5-capability-stages) orders the work into
 capability stages, each with a permanent outcome and an exit test:
 
 | Stage | Capability | State |
@@ -134,7 +134,7 @@ capability stages, each with a permanent outcome and an exit test:
 | S0 | Repository foundation | Closed for its solo scope |
 | S1 | Compiler foundation: sources, lexer, diagnostics, CLI | Closed |
 | S2 | Editioned grammar and bounded parser | Closed |
-| S3 | Semantic core and reference evaluator | Active; S3a complete; S3b through S3t in review |
+| S3 | Semantic core and reference evaluator | Active; S3a complete; S3b through S3u in review |
 | S4 | Proof and claim boundary | Open |
 | S5 | Compiler IRs and one output path | Open |
 | S6 | Memory, leakage, ABI, and native targets | Open |

@@ -7,11 +7,13 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "node scripts/sync-orange-book.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "verify": "node scripts/verify-build.mjs",
-    "sync:book": "node scripts/sync-orange-book.mjs"
+    "sync:book": "node scripts/sync-orange-book.mjs",
+    "sync:book:offline": "node scripts/sync-orange-book.mjs --offline"
   },
   "engines": {
     "node": ">=20"

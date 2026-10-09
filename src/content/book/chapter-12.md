@@ -11,7 +11,7 @@ quickly. Orange intends something more demanding. Its first-party cryptography
 packages are not examples. They are the acceptance test for the entire
 toolchain.
 
-The [project charter](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/PROJECT_CHARTER.md#8-product-principles) puts it as a
+The [project charter](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/PROJECT_CHARTER.md#8-product-principles) puts it as a
 principle: *the standard library proves the product*. The flagship corpus is not
 a marketing sample. It is the end-to-end acceptance suite for expressiveness,
 proof ergonomics, generated code, interoperability, documentation, and
@@ -40,7 +40,7 @@ later compiler must re-earn.
 
 The proposed corpus is chosen for the capabilities each family exercises, not
 for breadth or popularity. The
-[assurance model's corpus plan](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ASSURANCE.md#6-flagship-corpus-plan) pairs each
+[assurance model's corpus plan](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ASSURANCE.md#6-flagship-corpus-plan) pairs each
 family with its architectural purpose:
 
 | Family | What it exercises |
@@ -64,13 +64,13 @@ arithmetic and canonical encodings, where many historical bugs lived. ML-KEM
 and the signature family bring post-quantum standards whose errata are still
 recent.
 
-[D-015](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md#d-015--flagship-10-corpus) records this as a **proposed
+[D-015](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/DECISIONS.md#d-015--flagship-10-corpus) records this as a **proposed
 set**. Exact membership is decided before the S7 stage admits the corpus.
 
 ## What admission requires
 
 A corpus package is admitted only with a complete record. The
-[package-admission rules](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ASSURANCE.md#54-cryptography-package-admission) list
+[package-admission rules](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ASSURANCE.md#54-cryptography-package-admission) list
 what every stable algorithm, construction, and profile needs:
 
 - the exact normative publication, edition, errata snapshot, and source digest;

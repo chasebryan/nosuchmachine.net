@@ -24,7 +24,7 @@ declaration says what types flow across the boundary. It says almost nothing
 about what must be true of them.
 
 This chapter describes Orange's **proposed** answer. The foreign boundary is
-[D-013](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/DECISIONS.md#d-013--stable-foreign-boundary), and nothing in it is
+[D-013](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/DECISIONS.md#d-013--stable-foreign-boundary), and nothing in it is
 implemented.
 
 ## A header is not a contract
@@ -46,7 +46,7 @@ against the implementation, and carried in the evidence.
 
 ## The proposed contract
 
-The [architecture's foreign-interface section](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ARCHITECTURE.md#13-foreign-interface)
+The [architecture's foreign-interface section](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ARCHITECTURE.md#13-foreign-interface)
 lists what the stable integration boundary would state for every export:
 
 - exact scalar and aggregate layout;
@@ -130,7 +130,7 @@ fall outside what the contract promises, never silently accepted.
 One more boundary deserves mention because it is so easy to blur. A primitive
 standard defines mathematics and core algorithms. A deployment profile defines
 bytes on the wire: identifiers, encodings, negotiation, error handling, and
-state. The [research analysis](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/RESEARCH.md#410-primitive-correctness-is-not-protocol-interoperability)
+state. The [research analysis](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/RESEARCH.md#410-primitive-correctness-is-not-protocol-interoperability)
 uses post-quantum key encapsulation as the example. FIPS 203 defines ML-KEM;
 RFC 9935 specifies its use and key encodings in X.509; RFC 9936 specifies CMS
 integration and warns about compatibility boundaries with pre-standard Kyber.

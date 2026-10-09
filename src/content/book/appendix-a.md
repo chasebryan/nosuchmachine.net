@@ -6,27 +6,30 @@ description: "A reference for the current grammar, types, operators, commands, a
 ---
 
 This appendix restates the implemented Orange 2026 surface for convenience.
-The [lexical and grammar specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/LANGUAGE_2026.md) and the
-[typed-literal semantics](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/SEMANTICS_2026.md) are normative, and the
-[pure expression specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/EXPRESSIONS_2026.md), the
-[bindings and conversions specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/BINDINGS_2026.md), the
-[arrays specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ARRAYS_2026.md), the
-[loops specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/LOOPS_2026.md), the
-[conditions specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/CONDITIONS_2026.md), the
-[lookups specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/LOOKUPS_2026.md), the
-[modules specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/MODULES_2026.md), the
-[modular arithmetic specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/MODULAR_2026.md), the
-[blocks specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/BLOCKS_2026.md), the
-[tuples specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/TUPLES_2026.md), the
-[bytes specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/BYTES_2026.md), the
-[sizes specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/SIZES_2026.md), the
-[byte order specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ORDER_2026.md), the
-[type parameters specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/TYPE_PARAMETERS_2026.md), the
-[lengths specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/LENGTHS_2026.md), the
-[tests specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/TESTS_2026.md), and the
-[computed amounts specification](https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/AMOUNTS_2026.md) are proposed under
-OEP-0005 through OEP-0021 and in the owner's review. Where this summary and those
-documents differ, they control.
+The [lexical and grammar specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LANGUAGE_2026.md) and the
+[typed-literal semantics](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/SEMANTICS_2026.md) are normative, and the
+[pure expression specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/EXPRESSIONS_2026.md), the
+[bindings and conversions specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/BINDINGS_2026.md), the
+[arrays specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ARRAYS_2026.md), the
+[loops specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LOOPS_2026.md), the
+[conditions specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/CONDITIONS_2026.md), the
+[lookups specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LOOKUPS_2026.md), the
+[modules specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/MODULES_2026.md), the
+[modular arithmetic specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/MODULAR_2026.md), the
+[blocks specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/BLOCKS_2026.md), the
+[tuples specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/TUPLES_2026.md), the
+[bytes specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/BYTES_2026.md), the
+[sizes specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/SIZES_2026.md), the
+[byte order specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/ORDER_2026.md), the
+[type parameters specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/TYPE_PARAMETERS_2026.md), the
+[lengths specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/LENGTHS_2026.md), the
+[tests specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/TESTS_2026.md), the
+[computed amounts specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/AMOUNTS_2026.md), the
+[nested arrays specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/NESTED_ARRAYS_2026.md), the
+[static moduli specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/STATIC_MODULI_2026.md), and the
+[array dimensions specification](https://github.com/chasebryan/orange/blob/94c2fda3b26c41a707272468dd59054695d882ed/docs/DIMENSIONS_2026.md) are proposed under
+OEP-0005 through OEP-0021 and OEP-0023 through OEP-0025 and in the owner's
+review. Where this summary and those documents differ, they control.
 
 ## Grammar
 
@@ -71,7 +74,10 @@ expression      = arithmetic | chain("&") | chain("|") | chain("^") | shift
                 | chain("++") | conversion | update ;
 conversion      = prefixed "as" (parsed_type | tuple_type | order declared_type) ;
 order           = "big" | "little" ;
-update          = prefixed "with" "[" (expression | range) "]" "=" expression ;
+update          = prefixed "with" update_target "=" expression ;
+update_target   = "[" expression "]" path_index? path_index? path_index?
+                | "[" range "]" ;
+path_index      = "[" expression "]" ;
 arithmetic      = product (("+" | "-") product)* ;
 product         = prefixed ("*" prefixed)* ;
 chain(op)       = prefixed (op prefixed)+ ;
@@ -85,7 +91,8 @@ literal         = "-"? INTEGER ;
 primary         = IDENTIFIER suffix? | call suffix? | "(" expression ")"
                 | byte_string | tuple | array | fill | loop | conditional ;
 byte_string     = STRING | HEX_STRING ;
-suffix          = "." INTEGER (index | slice)? | index | slice ;
+suffix          = projection index* slice? | index+ slice? | slice ;
+projection      = "." INTEGER ;
 tuple           = "(" expression ("," expression)+ ","? ")" ;
 index           = "[" INTEGER "]" | "[" expression "]" ;
 slice           = "[" range "]" ;
@@ -111,7 +118,7 @@ name or a tuple pattern, `as` converts
 only after a complete operand, `for` starts a loop only before a name, `in` and
 `with` are words only in a loop's header, `in` also between a size's or a
 type parameter's name and its bounds or list, `with` updates only after a complete
-operand and before `[`, `if` starts a conditional only where a condition can
+operand and before `[`, which begins one through four indices or one range, `if` starts a conditional only where a condition can
 follow it, `else` is a word only after a conditional's value, `use` and `type`
 start declarations only at the head of a module before its first function,
 `Mod` takes a modulus only before `[`, `hex` begins a hex string only directly
@@ -149,13 +156,16 @@ included.
 | `Word[32]` | The integers modulo 2^32 | `0x` and 8 lowercase hex digits |
 | `Word[64]` | The integers modulo 2^64 | `0x` and 16 lowercase hex digits |
 | `Mod[m]` | The integers modulo a constant m from 2 through 2^521 − 1, as least residues 0 through m − 1 | Decimal |
-| `T^n` | Sequences of exactly n values of any type above, for n from 1 through 65,536 | The elements in order, separated by a comma and a space and enclosed in `[` and `]` |
+| `T^n` | Sequences of exactly n values of a scalar type above, for n from 1 through 65,536 | The elements in order, separated by a comma and a space and enclosed in `[` and `]` |
+| `A^n`, where a `type` name or a type parameter specialized to an array names an array of rank 1, 2, or 3 | n elements of that exact array, giving rank 2, 3, or 4; each axis is from 1 through 65,536 and the product of the axes is at most 65,536 scalars | The outer elements in order, each spelled as its type |
 | `(T, U, ...)` | Tuples of 2 through 16 values, each of a scalar or array type above and never a tuple | The elements in order, separated by a comma and a space and enclosed in `(` and `)` |
 
 No other type, width, or length is accepted; a name declared by `type` stands
-for the type it names. A modulus is a constant built from integer literals
-with `+`, `-`, `*`, `<<`, and parentheses, and two moduli are one type when
-they are equal. Word and residue literals are never wrapped, truncated,
+for the type it names, including an array of rank two, three, or four.
+Repeated `^` in one type remains rejected. A modulus is built from integer
+literals, parentheses, and `+`, `-`, `*`, and `<<`. Inside one sized function
+it may also use that function's own size names; a module-level alias stays a
+constant. Two moduli are one type when their values are equal. Word and residue literals are never wrapped, truncated,
 saturated, or coerced: a literal of `Mod[m]` has a magnitude less than m, and
 `-n` stands for m − n. No value changes type implicitly. `e as T` converts
 between any two scalar types other than `Bool`: it takes the integer value
@@ -164,14 +174,18 @@ residue modulo 2^n or m. The operand's type comes from its first
 name, call, conversion, or index, so a conversion of literals alone is an
 error. An array literal lists exactly as many elements as its type, and `x[k]`
 selects the element at position k, which must be proved below the length
-before anything runs. An index is checked as the word type of its first name,
+before anything runs. Further indices, as `m[i][j]`, select the next axis
+the same way, and a slice ends the chain. An index is checked as the word type of its first name,
 call, conversion, or element, and ranges over that type, narrowed by its
 operators; otherwise it is an `Int` built from integer literals, loop indices,
 and words converted with `as Int`, using `+`, `-`, `*`, `/`, `%`, and
-conditionals. An update, a fill, a join, a slice, or a slice update costs one
+conditionals. An update of one index, a fill, a join, a slice, or a slice update costs one
 evaluation step per 64 elements of the array it builds, or part of 64, and a
-byte string costs one. No operator but `++`, and no conversion without a byte
-order, applies to a whole array, and an array's elements are never arrays. A byte string `"..."`
+byte string costs one. A path of several indices costs that charge for each
+array it copies. No operator but `++`, and no conversion without a byte
+order, applies to a whole array. An array's elements are scalars or, through
+a `type` name or a type parameter specialized to an array, arrays of lower rank,
+up to four dimensions; they are never tuples. A byte string `"..."`
 of printable ASCII characters and the escapes `\"`, `\\`, `\n`, `\r`, `\t`,
 `\0`, and `\xNN`, or `hex"..."` of hex digit pairs, is the array `Word[8]^n`
 of its bytes. `a ++ b` is the elements of a followed by those of b, of one
