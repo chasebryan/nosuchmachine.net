@@ -12,13 +12,17 @@
  * text. --offline is refused when CI is set, so a continuous-integration build
  * cannot publish the committed snapshot after a missed fetch.
  *
- * Chapter status in src/content/book/manifest.json is copied only from an
- * orange manifest under docs/book/. Orange "draft" is stored as "drafted"
- * and "planned" as "planned", the two tokens the site reader understands.
- * "original" is the manuscript rollup: it is not a chapter status, it does
- * not mark the preface, and it does not add a row. Any other token stays
- * null (unmarked). This script does not infer "drafted" from a file merely
- * existing, and it does not claim the Book is complete.
+ * Chapter rows in src/content/book/manifest.json use the site reader's
+ * fields: part, slug, title, status ("drafted" or "planned"), and source.
+ * The orange commit is stored once at the top level (commit, ref) and again
+ * on each chapter so a checker can read it from the row. Orange "draft" is
+ * stored as "drafted" and "planned" as "planned". "original" is the
+ * manuscript rollup: it does not mark the preface and it does not add a row.
+ * Any other token is reported and not stored. A hosted chapter with no
+ * orange token is "drafted", which is the only status the reader will show
+ * for a page. A planned orange chapter with no hosted page is omitted,
+ * because the site check refuses a manifest row that does not build. This
+ * script does not claim the Book is complete.
  */
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
@@ -607,7 +611,7 @@ function mapAnchors(doc, pages) {
   return anchors;
 }
 
-function applyManifest(pages, extras, document, warnings) {
+function applyManifest(pages, document, warnings) {
   for (const entry of manifestEntries(document)) {
     const identity = entryIdentity(entry);
     const rawStatus = entry.status ?? entry.state;
@@ -616,7 +620,7 @@ function applyManifest(pages, extras, document, warnings) {
     const part = canonicalPart(entry.part);
     const label = identity.slug ?? identity.title ?? identity.source ?? "an unnamed chapter";
     if (rawStatus != null && rawStatus !== "" && !status) {
-      warnings.push(`Manifest status ${JSON.stringify(rawStatus)} for ${label} is not "drafted" or "planned"; left unmarked.`);
+      warnings.push(`Manifest status ${JSON.stringify(rawStatus)} for ${label} is not "drafted" or "planned"; that token was not stored.`);
     }
     if (entry.part != null && entry.part !== "" && !part && !knownOriginal(entry.part)) {
       warnings.push(`Manifest part ${JSON.stringify(entry.part)} for ${label} is not Novice, Journeyman, or Master; left unassigned.`);
@@ -637,16 +641,7 @@ function applyManifest(pages, extras, document, warnings) {
       warnings.push(`Manifest entry ${JSON.stringify(identity.source ?? identity.title ?? identity.slug)} did not match a hosted chapter and has no usable status; skipped.`);
       continue;
     }
-    let slug = identity.slug ?? (identity.title ? new GithubSlugger().slug(identity.title) : null);
-    if (!slug) continue;
-    if (pages.some((page) => page.slug === slug) || extras.some((extra) => extra.slug === slug)) slug = `${slug}-listed`;
-    extras.push({
-      part: part ?? null,
-      slug,
-      title: identity.title ?? identity.slug,
-      status,
-      source: identity.source,
-    });
+    warnings.push(`Manifest chapter ${label} is ${status} but has no hosted page; omitted from manifest.json.`);
   }
 }
 
@@ -725,8 +720,7 @@ function generate(source) {
     }
   }
   const warnings = [];
-  const extras = [];
-  if (source.manifestText != null) applyManifest(pages, extras, parseChapterManifest(source.manifestText, source.manifestPath), warnings);
+  if (source.manifestText != null) applyManifest(pages, parseChapterManifest(source.manifestText, source.manifestPath), warnings);
   const readme = source.bookFiles.get("docs/book/README.md") ?? "";
   const extrasInOrder = pages.filter((page) => page.kind !== "manuscript").sort((left, right) => {
     if (left.kind === "readme") return -1;
@@ -790,16 +784,14 @@ function generate(source) {
     manuscript: manuscriptPath,
     docsBook: source.bookFiles.size > 0,
     orangeManifest: source.manifestPath,
-    chapters: [
-      ...ordered.map((page) => ({
-        part: page.manifestPart,
-        slug: page.slug,
-        title: page.title,
-        status: page.status,
-        source: page.file,
-      })),
-      ...extras,
-    ],
+    chapters: ordered.map((page) => ({
+      part: page.manifestPart || page.sidebarPart,
+      slug: page.slug,
+      title: page.title,
+      status: page.status ?? "drafted",
+      source: page.file,
+      commit: source.commit,
+    })),
   };
   files.set(manifestOutput, `${JSON.stringify(manifest, null, 2)}\n`);
   const metadata = {
@@ -931,17 +923,23 @@ function selfTest() {
   const preface = chapters.find((chapter) => chapter.slug === "preface");
   const seams = chapters.find((chapter) => chapter.slug === "chapter-1");
   const rings = chapters.find((chapter) => chapter.slug === "rings");
-  if (novice?.status !== "drafted" || novice.part !== "Novice" || novice.slug !== "novice-chapter-1") {
+  if (novice?.status !== "drafted" || novice.part !== "Novice" || novice.slug !== "novice-chapter-1" || novice.commit !== "a".repeat(40) || novice.source !== "docs/book/NOVICE_OPENING.md") {
     throw new Error(`Novice chapter was not marked from the manifest: ${JSON.stringify(novice)}`);
   }
-  if (preface?.status !== null) throw new Error(`Unrecognized status was stored as ${preface.status}.`);
-  if (chapters.some((chapter) => chapter.slug === "original-manuscript" || chapter.status === "draft" || chapter.status === "original")) {
-    throw new Error(`Rollup or orange vocabulary leaked into the site manifest: ${JSON.stringify(chapters.filter((chapter) => chapter.status !== null))}`);
+  if (preface?.status !== "drafted" || preface.commit !== "a".repeat(40) || !preface.part) {
+    throw new Error(`Preface row was not a hosted drafted chapter: ${JSON.stringify(preface)}`);
   }
-  if (seams?.part !== "Master" || seams.status !== null) throw new Error(`Manuscript part mapping failed: ${JSON.stringify(seams)}`);
-  if (rings?.status !== "planned" || rings.part !== "Journeyman" || rings.slug !== "rings") throw new Error(`Planned chapter missing: ${JSON.stringify(rings)}`);
+  if (chapters.some((chapter) => !chapter.part || !chapter.slug || !chapter.title || !chapter.source || !/^[a-f0-9]{40}$/.test(chapter.commit) || (chapter.status !== "drafted" && chapter.status !== "planned"))) {
+    throw new Error(`A manifest row is missing part, slug, title, source, commit, or a drafted|planned status.`);
+  }
+  if (chapters.some((chapter) => chapter.slug === "original-manuscript" || chapter.slug === "rings" || chapter.status === "draft" || chapter.status === "original" || chapter.status == null)) {
+    throw new Error(`Rollup, omitted plan, or orange vocabulary leaked into the site manifest: ${JSON.stringify(chapters.map((chapter) => chapter.slug + ":" + chapter.status))}`);
+  }
+  if (seams?.part !== "Master" || seams.status !== "drafted" || seams.commit !== "a".repeat(40)) throw new Error(`Manuscript part mapping failed: ${JSON.stringify(seams)}`);
+  if (rings) throw new Error(`Planned chapter without a page was listed: ${JSON.stringify(rings)}`);
   if (result.files.has(`${chapterDirectory}/rings.md`)) throw new Error("A planned chapter with no source file was given a page.");
   if (!result.warnings.some((warning) => warning.includes("complete"))) throw new Error("Unrecognized status was not reported.");
+  if (!result.warnings.some((warning) => warning.includes("rings") && warning.includes("omitted"))) throw new Error(`Planned chapter was not omitted: ${result.warnings.join(" | ")}`);
   if (result.warnings.some((warning) => /original/i.test(warning))) throw new Error(`Original rollup was warned: ${result.warnings.join(" | ")}`);
   console.log("Orange Book sync self-test passed.");
 }
@@ -981,7 +979,7 @@ async function main() {
   }
   const mode = args.check ? "Verified" : "Synced";
   const book = source.bookFiles.size ? `${source.bookFiles.size} docs/book files` : "docs/book absent";
-  const listed = source.manifestPath ? `manifest ${source.manifestPath}` : "no orange manifest; every chapter status left unmarked";
+  const listed = source.manifestPath ? `manifest ${source.manifestPath}` : "no orange manifest; hosted chapters recorded as drafted";
   console.log(`${mode} ${result.ordered.length} Orange Book pages from ${source.ref} at ${source.commit}. ${book}; ${listed}.`);
   console.log(`${result.hostedLinks} hosted cross-references, ${result.repositoryLinks} repository links, manuscript ${result.manifest.version} (${result.manifest.snapshot}).`);
   for (const warning of result.warnings) console.log(`Warning: ${warning}`);
