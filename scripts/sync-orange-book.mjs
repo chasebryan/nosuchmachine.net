@@ -801,9 +801,9 @@ function generate(source) {
     const target = linkedFile(fromFile, destination);
     if (!target) return destination;
     if (target.file === "assets/identity/orange-book-cover.svg") return "/projects/orange/book-cover.svg";
-    const hosted = target.file === manuscriptPath || target.file.startsWith("docs/book/");
-    if (hosted && (source.bookFiles.has(target.file) || target.file === manuscriptPath) && target.file.endsWith(".md")) {
-      const route = target.fragment ? anchors.get(`${target.file}#${target.fragment}`) : firstPage.get(target.file) ?? "/book/";
+    const hostedChapter = target.file === manuscriptPath || firstPage.has(target.file);
+    if (hostedChapter && target.file.endsWith(".md")) {
+      const route = target.fragment ? anchors.get(`${target.file}#${target.fragment}`) : firstPage.get(target.file);
       if (route) { hostedLinks++; return route; }
       if (target.file === manuscriptPath) throw new Error(`Unknown manuscript anchor: ${destination}`);
       broken.push({ source: fromFile, destination, reason: "no hosted heading for this anchor" });
@@ -978,7 +978,7 @@ function selfTest() {
     manuscript,
     bookFiles: new Map([
       ["docs/book/README.md", "## Part 1, The Novice\n\n- [Before](NOVICE_OPENING.md#chapter-1-before-you-hide-anything)\n\n## Part 3, The Master\n\n- [Seams](../THE_ORANGE_BOOK.md#chapter-1-the-seams-are-the-system)\n"],
-      ["docs/book/NOVICE_OPENING.md", "# The Orange Book\n\n## Chapter 1: Before You Hide Anything\n\nA message can be read by someone it was not meant for.\n\nSee [the book](../book/).\n"],
+      ["docs/book/NOVICE_OPENING.md", "# The Orange Book\n\n## Chapter 1: Before You Hide Anything\n\nA message can be read by someone it was not meant for.\n\nSee [the book](../book/).\n\nSee [the index](README.md).\n"],
       ["docs/book/manifest.json", manifestText],
     ]),
     manifestPath: "docs/book/manifest.json",
@@ -1012,8 +1012,9 @@ function selfTest() {
   if (result.files.has(`${chapterDirectory}/rings.md`)) throw new Error("A planned chapter with no source file was given a page.");
   const hosted = result.files.get(`${chapterDirectory}/n1.md`) ?? "";
   const tree = `https://github.com/chasebryan/orange/tree/${commit}/docs/book/`;
-  if (!hosted.includes(tree) || !hosted.includes("## Chapter 1: Before You Hide Anything") || !hosted.includes('title: "N1. Before You Hide Anything"')) {
-    throw new Error(`Hosted novice page did not keep its heading and directory link: ${hosted.slice(0, 500)}`);
+  const index = `https://github.com/chasebryan/orange/blob/${commit}/docs/book/README.md`;
+  if (!hosted.includes(tree) || !hosted.includes(index) || !hosted.includes("## Chapter 1: Before You Hide Anything") || !hosted.includes('title: "N1. Before You Hide Anything"')) {
+    throw new Error(`Hosted novice page did not keep its heading and pinned links: ${hosted.slice(0, 700)}`);
   }
   const metadata = JSON.parse(result.files.get(metadataPath));
   if (metadata.chapters.length !== expectedSlugs.length || metadata.chapters.some((chapter) => chapter.part === "Novice" || chapter.part === "Journeyman" || chapter.part === "Master")) {
