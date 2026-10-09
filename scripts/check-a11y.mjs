@@ -14,6 +14,7 @@ const pages = [
   { route: "/book/chapter-1/", status: 200 },
   { route: "/404", requestPath: "/this-page-is-not-published", status: 404 },
 ];
+const colorSchemes = ["light", "dark"];
 
 function contentType(file) {
   const types = {
@@ -95,8 +96,11 @@ const browser = await puppeteer.launch({
 
 const failures = [];
 try {
+  for (const scheme of colorSchemes) {
   for (const pageSpec of pages) {
     const page = await browser.newPage();
+    await page.emulateMediaFeatures([{ name: "prefers-color-scheme", value: scheme }]);
+    const label = `${pageSpec.route} (${scheme})`;
     const cspMessages = [];
     let watchCsp = true;
     page.on("console", (message) => {
@@ -110,7 +114,7 @@ try {
     const requestPath = pageSpec.requestPath || pageSpec.route;
     const response = await page.goto(`${origin}${requestPath}`, { waitUntil: "load", timeout: 30000 });
     if (response?.status() !== pageSpec.status) {
-      failures.push(`${pageSpec.route} returned HTTP ${response?.status()}, expected ${pageSpec.status}`);
+      failures.push(`${label} returned HTTP ${response?.status()}, expected ${pageSpec.status}`);
     }
     const presented = await page.evaluate(() => {
       const styled = [...document.querySelectorAll("code span[style]")].find((element) =>
@@ -164,10 +168,10 @@ try {
     });
     const result = { ...presented, violations };
     if (cspMessages.length > 0) {
-      failures.push(`${pageSpec.route} CSP blocked a built asset:\n${cspMessages.map((item) => `  ${item}`).join("\n")}`);
+      failures.push(`${label} CSP blocked a built asset:\n${cspMessages.map((item) => `  ${item}`).join("\n")}`);
     }
     if (result.styleRules <= 0) {
-      failures.push(`${pageSpec.route} loaded no stylesheet rules under the site CSP (${result.styleRules})`);
+      failures.push(`${label} loaded no stylesheet rules under the site CSP (${result.styleRules})`);
     }
     if (pageSpec.route === "/book/chapter-1/") {
       const applied = result.inlineStyleApplied;
@@ -178,7 +182,7 @@ try {
           `Chapter syntax color was blocked by CSP. Declared ${applied.declared} (${applied.expected}), computed ${applied.computed}.`,
         );
       } else {
-        console.log(`CSP kept chapter syntax color ${applied.declared} -> ${applied.computed}`);
+        console.log(`CSP kept chapter syntax color ${applied.declared} -> ${applied.computed} (${scheme})`);
       }
     }
     const pageBaseline = baseline.pages?.[pageSpec.route];
@@ -187,12 +191,16 @@ try {
       await page.close();
       continue;
     }
+    const applicable = pageBaseline.filter((entry) => !entry.scheme || entry.scheme === scheme);
     const remaining = new Map();
-    for (const entry of pageBaseline) {
+    for (const entry of applicable) {
       for (const field of ["id", "target", "owner", "summary"]) {
         if (typeof entry[field] !== "string" || !entry[field].trim()) {
           failures.push(`Baseline entry on ${pageSpec.route} needs a non-empty ${field}`);
         }
+      }
+      if (entry.scheme && entry.scheme !== "light" && entry.scheme !== "dark") {
+        failures.push(`Baseline entry on ${pageSpec.route} has an unknown scheme ${entry.scheme}`);
       }
       const key = violationKey(entry.id, entry.target);
       remaining.set(key, (remaining.get(key) || 0) + 1);
@@ -206,7 +214,7 @@ try {
         }
         failures.push(
           [
-            `${pageSpec.route} ${violation.id} (${violation.impact}) ${node.target}`,
+            `${label} ${violation.id} (${violation.impact}) ${node.target}`,
             `  ${violation.help}`,
             `  ${node.html}`,
             `  ${violation.helpUrl}`,
@@ -219,14 +227,14 @@ try {
       if (count > 0) {
         const [id, target] = key.split("\n");
         failures.push(
-          `${pageSpec.route} baseline waiver no longer reproduces: ${id} ${target}. Remove it from scripts/a11y-baseline.json.`,
+          `${label} baseline waiver no longer reproduces: ${id} ${target}. Remove it from scripts/a11y-baseline.json.`,
         );
       }
     }
-    const waived = pageBaseline.length;
     const found = result.violations.reduce((sum, violation) => sum + violation.nodes.length, 0);
-    console.log(`${pageSpec.route}: ${found} axe node(s), ${waived} waived in the baseline`);
+    console.log(`${label}: ${found} axe node(s), ${applicable.length} waived in the baseline`);
     await page.close();
+  }
   }
 } finally {
   await browser.close();
@@ -238,4 +246,6 @@ if (failures.length > 0) {
   for (const failure of failures) console.error(`\n${failure}`);
   process.exit(1);
 }
-console.log(`Accessibility check passed for ${pages.map((page) => page.route).join(", ")} under the site CSP.`);
+console.log(
+  `Accessibility check passed for ${pages.map((page) => page.route).join(", ")} in ${colorSchemes.join(" and ")} under the site CSP.`,
+);

@@ -82,17 +82,23 @@ function assertSourceIsSelf(directives, name) {
 }
 
 function assertSecurityHeaders(root, htmlFiles) {
-  const source = fs.readFileSync("public/_headers", "utf8");
+  const headersPath = process.env.VERIFY_HEADERS || "public/_headers";
+  const source = fs.readFileSync(headersPath, "utf8");
   const published = path.join(root, "_headers");
   assert.ok(fs.existsSync(published), "Built dist is missing _headers");
   assert.equal(
     fs.readFileSync(published, "utf8"),
     source,
-    "dist/_headers drifted from public/_headers",
+    `dist/_headers drifted from ${headersPath}`,
   );
   const blocks = headerBlocks(source);
   const site = blocks.find((block) => block.path === "/*");
-  assert.ok(site, "public/_headers is missing the /* block");
+  assert.ok(site, `${headersPath} is missing the /* block`);
+  const detached = new Set(site.headers.filter((item) => item.unset).map((item) => item.unset));
+  assert.ok(
+    detached.has("access-control-allow-origin"),
+    "verify-build: /* must detach Access-Control-Allow-Origin",
+  );
   const header = (name) => site.headers.find((item) => item.name === name)?.value;
   assert.equal(header("x-content-type-options"), "nosniff");
   assert.equal(header("referrer-policy"), "strict-origin-when-cross-origin");
@@ -832,6 +838,24 @@ function selfTest() {
       }
       console.log(`self-test: ${manifestCase.name} failed as expected`);
     }
+    const headersText = fs.readFileSync(path.join(good, "_headers"), "utf8");
+    const withoutDetach = headersText.replace(/^[ \t]*! Access-Control-Allow-Origin[ \t]*\r?\n/m, "");
+    assert.notEqual(withoutDetach, headersText, "self-test fixture is missing the CORS detach line");
+    assert.ok(
+      !/access-control-allow-origin/i.test(withoutDetach),
+      "self-test fixture still detaches Access-Control-Allow-Origin",
+    );
+    const headersCopy = path.join(temp, "headers-no-acao");
+    fs.writeFileSync(headersCopy, withoutDetach);
+    const noDetachDist = path.join(temp, "no-acao");
+    fs.cpSync(good, noDetachDist, { recursive: true });
+    fs.writeFileSync(path.join(noDetachDist, "_headers"), withoutDetach);
+    const noDetach = runVerify(noDetachDist, { VERIFY_HEADERS: headersCopy });
+    if (noDetach.status === 0 || !/verify-build: \/\* must detach Access-Control-Allow-Origin/.test(outputOf(noDetach))) {
+      console.error(outputOf(noDetach));
+      throw new Error("self-test: FALSE GREEN: removing ! Access-Control-Allow-Origin did not fail");
+    }
+    console.log("self-test: missing CORS detach failed as expected");
     console.log(`self-test: ${cases.length} mutated dist trees failed for the expected reasons`);
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
