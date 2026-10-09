@@ -134,7 +134,7 @@ if (isOrange && !project.sources.some((source) => source.href.includes(orangeRev
           <section id="try" aria-labelledby="try-title">
             <h2 id="try-title">How to try it</h2>
             <p>These commands are copied from the Orange README. Rust 1.96.1 is pinned in rust-toolchain.toml. The compiler has no third-party dependencies. The repository gate runs on Linux 6.2 or newer.</p>
-            <pre class="shell-listing"><code>{tryCommands}</code></pre>
+            <pre class="shell-listing" tabindex="0" aria-label="Orange README quick start commands"><code>{tryCommands}</code></pre>
             <p>S0 through S2 are done. S3 is in progress. S4 through S8 and 1.0 are open. orangec --version reports implemented slice S3u. Three of ten gates are closed, counting finished stages, not time.</p>
             <p class="try-roadmap">
               <a class="text-link link-external" href={`https://github.com/chasebryan/orange/blob/${orangeRevision}/docs/ROADMAP.md`} rel="noopener noreferrer">Roadmap <span class="external-icon" aria-hidden="true">↗</span></a>
