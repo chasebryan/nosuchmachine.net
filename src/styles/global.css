@@ -61,13 +61,30 @@
     --note-bg: #241c16;
     --table-head: #2a261f;
     --focus: #ffb088;
-    /* Code surface stays light: Shiki is pinned to github-light in astro.config.mjs. */
+    /* Non-Shiki listings stay on the light code surface. Shiki blocks use the hook below. */
     --code-bg: #ffffff;
     --code-ink: #1b1914;
     --code-inline-bg: #efeae0;
     --code-caption-bg: #f3f0e8;
     --code-muted: #5c564c;
     --code-button: #e6e0d4;
+  }
+
+  /*
+    Shiki dual themes (astro.config.mjs) follow prefers-color-scheme.
+    book.css paints `.book-prose pre.astro-code` with `background-color` and
+    `color: var(--code-bg/ink) !important`, which would keep blocks white, so
+    the book selectors below are one step more specific. Beautifyer owns this file.
+  */
+  .astro-code,
+  .astro-code span,
+  html .book-prose pre.astro-code,
+  html .book-prose pre.astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
   }
 }
 
