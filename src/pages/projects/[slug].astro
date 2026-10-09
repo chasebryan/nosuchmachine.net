@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects, type Project } from "../../data/projects";
+import { showContentSlots } from "../../lib/book-status";
 export function getStaticPaths() {
   return projects.map((project) => ({
     params: { slug: project.slug },
@@ -127,11 +128,14 @@ const isOrange = project.slug === "orange";
           </section>
         )}
         {isOrange && (
-          <section id="try" aria-labelledby="try-title">
-            <h2 id="try-title" class="copy-slot">TODO(content): how to try it</h2>
-            <pre class="shell-listing"><code class="copy-slot">TODO(content): shell commands</code></pre>
-            <!-- TODO(content): confirm this roadmap href. It is the revision already cited by the hosted book, not a new claim. -->
-            <p class="try-roadmap">
+          <section id="try" aria-labelledby={showContentSlots ? "try-title" : "try-roadmap"}>
+            {showContentSlots && (
+              <>
+                <h2 id="try-title" class="copy-slot">TODO(content): how to try it</h2>
+                <pre class="shell-listing"><code class="copy-slot">TODO(content): shell commands</code></pre>
+              </>
+            )}
+            <p class="try-roadmap" id={showContentSlots ? undefined : "try-roadmap"}>
               <a class="text-link link-external" href="https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ROADMAP.md" rel="noopener noreferrer">Roadmap <span class="external-icon" aria-hidden="true">↗</span></a>
             </p>
           </section>

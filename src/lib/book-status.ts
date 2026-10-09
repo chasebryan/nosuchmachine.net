@@ -1,6 +1,24 @@
 export type ChapterStatus = "drafted" | "planned";
 
-type ManifestEntry = { slug?: string; status?: string };
+/** True in `astro dev`. Production builds omit empty copy slots. */
+export const showContentSlots = !import.meta.env.PROD;
+
+type ManifestEntry = {
+  slug?: string;
+  title?: string;
+  part?: string;
+  status?: string;
+};
+
+export type BookRow = {
+  slug: string;
+  title: string;
+  part: string;
+  status: ChapterStatus;
+  href?: string;
+};
+
+type ChapterSource = { slug: string; title: string; part: string };
 
 // The sync owner writes src/content/book/manifest.json. This glob stays empty
 // until that file exists, and this module does not create it.
@@ -37,4 +55,51 @@ export function statusFor(
   slug: string,
 ): ChapterStatus {
   return statuses.get(slug) ?? "drafted";
+}
+
+function knownStatus(value: string | undefined, hasPage: boolean): ChapterStatus {
+  if (value === "drafted" || value === "planned") return value;
+  return hasPage ? "drafted" : "planned";
+}
+
+/** Rows from manifest.json when the sync owner has written it, otherwise the hosted chapters. */
+export function loadBookRows(chapters: ChapterSource[]): BookRow[] {
+  const bySlug = new Map(chapters.map((chapter) => [chapter.slug, chapter]));
+  const manifest = manifestEntries().filter((entry) => entry.slug && entry.title);
+  if (manifest.length > 0) {
+    return manifest.map((entry) => {
+      const slug = entry.slug!;
+      const known = bySlug.get(slug);
+      return {
+        slug,
+        title: entry.title!,
+        part: entry.part?.trim() || known?.part || "",
+        status: knownStatus(entry.status, Boolean(known)),
+        href: known ? `/book/${slug}/` : undefined,
+      };
+    });
+  }
+  return chapters.map((chapter) => ({
+    slug: chapter.slug,
+    title: chapter.title,
+    part: chapter.part,
+    status: "drafted",
+    href: `/book/${chapter.slug}/`,
+  }));
+}
+
+export function groupBookRows(rows: BookRow[]): { part: string; rows: BookRow[] }[] {
+  const groups: { part: string; rows: BookRow[] }[] = [];
+  for (const row of rows) {
+    const current = groups.at(-1);
+    if (current && current.part === row.part) current.rows.push(row);
+    else groups.push({ part: row.part, rows: [row] });
+  }
+  return groups;
+}
+
+function manifestEntries(): ManifestEntry[] {
+  const entries: ManifestEntry[] = [];
+  for (const raw of Object.values(manifests)) entries.push(...entriesFrom(raw));
+  return entries;
 }

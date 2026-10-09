@@ -370,6 +370,21 @@ h2.copy-slot, h3.copy-slot {
   padding-block: 0.8rem;
   border-bottom: 1px solid var(--line);
 }
+.part-card li a {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+  color: inherit;
+  text-decoration: none;
+}
+.part-card li a:hover { color: var(--accent); }
+.section-label h2:not(.copy-slot) {
+  margin: 0;
+  font: 400 var(--text-xl) / 1.2 var(--font-serif);
+  letter-spacing: -0.03em;
+}
 
 .about-section {
   display: grid;
@@ -569,6 +584,7 @@ h2.copy-slot, h3.copy-slot {
   .project-art { max-width: 16rem; }
   .resource-list a { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
   .section-label { flex-direction: column; align-items: flex-start; }
+  .section-label:not(:has(h2, a)) { display: none; }
   .section-label-note { display: none; }
 }
 
