@@ -68,7 +68,14 @@ const isOrange = project.slug === "orange";
         <a href="#overview">Overview</a>
         <a href="#approach">How it works</a>
         <a href="#capabilities">What’s implemented</a>
-        <a href="#status">Current state</a>
+        {isOrange ? (
+          <>
+            <a href="#non-claims">Non-claims</a>
+            <a href="#try">How to try it</a>
+          </>
+        ) : (
+          <a href="#status">Current state</a>
+        )}
         <a href="#resources">Source & resources</a>
       </nav>
       <div class="project-prose">
@@ -88,22 +95,47 @@ const isOrange = project.slug === "orange";
             ))}
           </ul>
         </section>
-        <section
-          id="status"
-          class="project-status-box"
-          aria-labelledby="status-title"
-        >
-          <p class="eyebrow">PROJECT STATUS / {project.status.toUpperCase()}</p>
-          <h2 id="status-title">Where it stands</h2>
-          <p>{project.maturity}</p>
-          {project.limitations.length > 0 && (
-            <ul>
-              {project.limitations.map((limit) => (
-                <li>{limit}</li>
-              ))}
-            </ul>
-          )}
-        </section>
+        {isOrange ? (
+          <section id="non-claims" class="note" aria-labelledby="non-claims-title">
+            <p class="eyebrow">PROJECT STATUS / {project.status.toUpperCase()}</p>
+            <h2 id="non-claims-title">Where it stands</h2>
+            <p>{project.maturity}</p>
+            {project.limitations.length > 0 && (
+              <ul>
+                {project.limitations.map((limit) => (
+                  <li>{limit}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ) : (
+          <section
+            id="status"
+            class="project-status-box"
+            aria-labelledby="status-title"
+          >
+            <p class="eyebrow">PROJECT STATUS / {project.status.toUpperCase()}</p>
+            <h2 id="status-title">Where it stands</h2>
+            <p>{project.maturity}</p>
+            {project.limitations.length > 0 && (
+              <ul>
+                {project.limitations.map((limit) => (
+                  <li>{limit}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        )}
+        {isOrange && (
+          <section id="try" aria-labelledby="try-title">
+            <h2 id="try-title" class="copy-slot">TODO(content): how to try it</h2>
+            <pre class="shell-listing"><code class="copy-slot">TODO(content): shell commands</code></pre>
+            <!-- TODO(content): confirm this roadmap href. It is the revision already cited by the hosted book, not a new claim. -->
+            <p class="try-roadmap">
+              <a class="text-link link-external" href="https://github.com/chasebryan/orange/blob/4394a66201ff59d73bdd1dea38637bf9b7f37421/docs/ROADMAP.md" rel="noopener noreferrer">Roadmap <span class="external-icon" aria-hidden="true">↗</span></a>
+            </p>
+          </section>
+        )}
         <section id="resources" aria-labelledby="resources-title">
           <h2 id="resources-title">Source & resources</h2>
           <div class="resource-list">

@@ -1,0 +1,12 @@
+---
+interface Props {
+  status: "drafted" | "planned";
+}
+const { status } = Astro.props;
+const label = status === "planned" ? "Planned" : "Drafted";
+---
+
+<span class="status-marker" data-status={status}>
+  <span class="status-marker-icon" aria-hidden="true"></span>
+  {label}
+</span>

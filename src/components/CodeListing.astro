@@ -1,0 +1,13 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<figure class:list={["code-listing", className]}>
+  <figcaption class="code-listing-caption">
+    <slot name="caption" />
+  </figcaption>
+  <pre><code><slot /></code></pre>
+</figure>

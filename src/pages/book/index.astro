@@ -1,7 +1,10 @@
 ---
 import BookLayout from "../../layouts/BookLayout.astro";
+import StatusMarker from "../../components/StatusMarker.astro";
 import book from "../../data/book.json";
+import { loadChapterStatus, statusFor } from "../../lib/book-status";
 const parts = [...new Set(book.chapters.map((chapter) => chapter.part))];
+const statuses = loadChapterStatus();
 ---
 
 <BookLayout>
@@ -11,18 +14,63 @@ const parts = [...new Set(book.chapters.map((chapter) => chapter.part))];
       <p>The Orange Book explains why Orange exists, what it is intended to become, what has actually been built, and which questions remain open.</p>
       <p class="book-introduction-note">It is not a normative language specification, proof, assurance report, license grant, or release claim.</p>
       <span class="book-edition">Living pre-alpha reader guide</span>
-      <a class="button button-primary" href="/book/preface/">Start reading <span aria-hidden="true">→</span></a>
     </div>
   </div>
+
+  <section id="book-parts" class="book-parts" aria-labelledby="book-parts-title">
+    <h2 id="book-parts-title" class="copy-slot">TODO(content): Novice, Journeyman, Master</h2>
+    <!-- TODO(content): replace these slots with manifest.json (part, slug, title, status, sha). Do not author that file in this pass. -->
+    <ol class="part-cards">
+      <li class="part-card">
+        <h3>Novice</h3>
+        <ol>
+          <li data-status="drafted"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="drafted" /></li>
+          <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+        </ol>
+      </li>
+      <li class="part-card">
+        <h3>Journeyman</h3>
+        <ol>
+          <li data-status="drafted"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="drafted" /></li>
+          <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+        </ol>
+      </li>
+      <li class="part-card">
+        <h3>Master</h3>
+        <ol>
+          <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+          <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+        </ol>
+      </li>
+    </ol>
+  </section>
+
+  <section class="book-checks" aria-labelledby="book-checks-title">
+    <h2 id="book-checks-title" class="copy-slot">TODO(content): how chapters are checked</h2>
+    <p class="copy-slot">TODO(content): checking note</p>
+  </section>
+
+  <p class="book-start">
+    <a class="button button-primary" href="/book/preface/">Start reading <span aria-hidden="true">→</span></a>
+  </p>
+
   <section class="book-contents-list" aria-labelledby="book-contents-title">
     <h2 id="book-contents-title">Inside the book</h2>
     {parts.map((part) => (
       <div class="book-contents-group">
         <h3>{part}</h3>
         <ol>
-          {book.chapters.filter((chapter) => chapter.part === part).map((chapter) => (
-            <li><a href={`/book/${chapter.slug}/`}><span>{chapter.title}</span><span aria-hidden="true">→</span></a></li>
-          ))}
+          {book.chapters.filter((chapter) => chapter.part === part).map((chapter) => {
+            const status = statusFor(statuses, chapter.slug);
+            return (
+              <li data-status={status}>
+                <a href={`/book/${chapter.slug}/`}>
+                  <span>{chapter.title}</span>
+                  <StatusMarker status={status} />
+                </a>
+              </li>
+            );
+          })}
         </ol>
       </div>
     ))}

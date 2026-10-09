@@ -1,57 +1,114 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import CodeListing from "../components/CodeListing.astro";
+import StatusBadge from "../components/StatusBadge.astro";
+import StatusMarker from "../components/StatusMarker.astro";
 import { getProject } from "../data/projects";
 const orange = getProject("orange")!;
 ---
 
 <BaseLayout>
   <main id="main">
-    <section class="intro shell" aria-labelledby="intro-title">
+    <section id="hero" class="hero shell" aria-labelledby="hero-title">
       <p class="eyebrow">CHASE BRYAN <span aria-hidden="true">/</span> INDEPENDENT WORK</p>
-      <div class="intro-grid">
-        <h1 id="intro-title">Mathematics,<br />made <em>executable.</em></h1>
-        <p class="intro-note">I build languages and tools at the intersection of mathematics and cryptography. My focus is <a href="#work">Orange<span aria-hidden="true"> ↙</span></a>.</p>
-      </div>
-    </section>
-    <section id="work" class="work-section shell" aria-labelledby="orange-title">
-      <div class="section-label">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> CURRENT PROJECT</p>
-        <span class="section-label-note">LANGUAGE DESIGN & CRYPTOGRAPHY</span>
-      </div>
-      <div class="orange-feature">
-        <div class="orange-copy">
-          <div class="project-kicker"><span>OPEN SOURCE</span><span>{orange.status}</span></div>
-          <h2 id="orange-title">Orange<span>.</span></h2>
-          <p class="orange-tagline">A mathematical language<br class="desktop-break" /> for cryptography.</p>
-          <p class="orange-description">Write the specification. Make its meaning explicit. Explore it with a Rust frontend and an exact reference evaluator.</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker">
+            <StatusBadge status={orange.status}>{orange.status}</StatusBadge>
+            <span class="eyebrow">OPEN SOURCE</span>
+          </div>
+          <h1 id="hero-title">Orange<span class="hero-dot">.</span></h1>
+          <p class="hero-tagline">A mathematical language<br class="desktop-break" /> for cryptography.</p>
+          <p class="hero-statement">Mathematics, made <em>executable.</em></p>
+          <p class="hero-description">Write the specification. Make its meaning explicit. Explore it with a Rust frontend and an exact reference evaluator.</p>
+          <p class="hero-note">I build languages and tools at the intersection of mathematics and cryptography. My focus is <a href="#current">Orange<span aria-hidden="true"> ↙</span></a>.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="/projects/orange/">Explore Orange <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href={orange.githubUrl}>View source <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="/book/">Book <span aria-hidden="true">→</span></a>
+            <a class="button button-secondary link-external" href={orange.githubUrl} rel="noopener noreferrer">Source <span class="external-icon" aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="/projects/orange/">Reference <span aria-hidden="true">→</span></a>
           </div>
         </div>
-        <div class="orange-artwork" aria-hidden="true">
-          <div class="artwork-topline"><span>ORANGE</span><span>01</span></div>
-          <img class="orange-emblem" src="/projects/orange/emblem.svg" alt="" width="1024" height="1024" fetchpriority="high" />
-          <div class="artwork-bottomline"><span>MATHEMATICAL INTENT.<br />EXECUTABLE FORM.</span><span class="artwork-symbol">↗</span></div>
-        </div>
+        <figure class="hero-emblem" aria-hidden="true">
+          <img src="/projects/orange/emblem.svg" alt="" width="1024" height="1024" fetchpriority="high" />
+          <figcaption>MATHEMATICAL INTENT.<br />EXECUTABLE FORM.</figcaption>
+        </figure>
       </div>
-      <div class="project-caption">
-        <span>A language in development. Built in the open.</span>
-        <a href="/book/">Read the Orange Book <span aria-hidden="true">→</span></a>
+      <p class="hero-caption">A language in development. Built in the open.</p>
+    </section>
+
+    <section id="current" class="band shell" aria-labelledby="current-title">
+      <div class="section-label">
+        <h2 id="current-title" class="copy-slot">TODO(content): what works today</h2>
+        <span class="section-label-note">LANGUAGE DESIGN & CRYPTOGRAPHY</span>
       </div>
+      <p class="eyebrow section-kicker"><span class="status-dot" aria-hidden="true"></span> CURRENT PROJECT</p>
       <div class="principles" aria-label="Inside Orange">
         <div class="principle"><span class="principle-number">01 / SPECIFICATION</span><h3>Start with the mathematics.</h3><p>Typed specifications keep the meaning of a cryptographic idea explicit.</p></div>
         <div class="principle"><span class="principle-number">02 / PRECISION</span><h3>Make the rules clear.</h3><p>Integers, fixed-width words, and modular values each have defined semantics.</p></div>
         <div class="principle"><span class="principle-number">03 / EVALUATION</span><h3>Inspect the result.</h3><p>A deterministic reference evaluator makes specifications executable and inspectable.</p></div>
       </div>
     </section>
+
+    <section id="listing" class="band shell" aria-labelledby="listing-title">
+      <div class="section-label">
+        <h2 id="listing-title" class="copy-slot">TODO(content): listing heading</h2>
+      </div>
+      <CodeListing>
+        <span slot="caption" class="copy-slot">TODO(content): repo path</span>
+        <span class="copy-slot">TODO(content): Orange source listing</span>
+      </CodeListing>
+    </section>
+
+    <section id="non-claims" class="band shell" aria-labelledby="non-claims-title">
+      <div class="note">
+        <p class="eyebrow">PROJECT STATUS / {orange.status.toUpperCase()}</p>
+        <h2 id="non-claims-title" class="copy-slot">TODO(content): what Orange doesn’t claim</h2>
+        <ul>
+          {orange.limitations.map((limit) => (
+            <li>{limit}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="book-parts" class="band shell" aria-labelledby="book-parts-title">
+      <div class="section-label">
+        <h2 id="book-parts-title" class="copy-slot">TODO(content): Novice, Journeyman, Master</h2>
+        <a href="/book/">Read the Orange Book <span aria-hidden="true">→</span></a>
+      </div>
+      <!-- TODO(content): replace these slots with manifest.json (part, slug, title, status, sha). Do not author that file in this pass. -->
+      <ol class="part-cards">
+        <li class="part-card">
+          <h3>Novice</h3>
+          <ol>
+            <li data-status="drafted"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="drafted" /></li>
+            <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+          </ol>
+        </li>
+        <li class="part-card">
+          <h3>Journeyman</h3>
+          <ol>
+            <li data-status="drafted"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="drafted" /></li>
+            <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+          </ol>
+        </li>
+        <li class="part-card">
+          <h3>Master</h3>
+          <ol>
+            <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+            <li data-status="planned"><span class="copy-slot">TODO(content): chapter title</span><StatusMarker status="planned" /></li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+
     <section id="about" class="about-section shell" aria-labelledby="about-title">
       <div class="about-label"><p class="eyebrow">BEHIND THE WORK</p><span class="about-monogram" aria-hidden="true">cb.</span></div>
       <div class="about-copy">
         <h2 id="about-title">Chase Bryan.</h2>
         <p>I’m interested in how we describe complex systems—and how we make those descriptions precise enough to work with.</p>
         <p>Orange brings that work into focus: mathematics, language design, and cryptography, in one ongoing project.</p>
-        <a class="text-link" href="https://github.com/chasebryan">Elsewhere on GitHub <span aria-hidden="true">↗</span></a>
+        <a class="text-link link-external" href="https://github.com/chasebryan" rel="noopener noreferrer">Elsewhere on GitHub <span class="external-icon" aria-hidden="true">↗</span></a>
       </div>
       <div class="about-note"><span class="eyebrow">NO SUCH MACHINE</span><p>Independent research.<br />Open source.<br />A work in progress.</p></div>
     </section>
